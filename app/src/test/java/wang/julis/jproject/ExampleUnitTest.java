@@ -1,4 +1,4 @@
-package wang.julis.poster;
+package wang.julis.jproject;
 
 import org.junit.Test;
 

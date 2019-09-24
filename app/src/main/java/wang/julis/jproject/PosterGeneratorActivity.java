@@ -1,4 +1,4 @@
-package wang.julis.poster;
+package wang.julis.jproject;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -34,7 +34,7 @@ import wang.julis.jwbase.basecompact.BaseActivity;
  *
  * Created by julis.wang@beibei.com on 2019/09/23 10:27
  *
- * Description :
+ * Description : 博客海报生成
  * History   :
  *
  *******************************************************/
@@ -44,9 +44,6 @@ public class PosterGeneratorActivity extends BaseActivity implements View.OnClic
     private EditText etExt;
     private ImageView ivPoster;
     private WebView mWebView;
-    private TextView tvTitle;
-    private TextView tvSummary, tvTime, tvDesc;
-    private ImageView qrCode;
     private String mUrl, title, content, readTime, writeTime, type, visitor;
 
     @Override
@@ -116,6 +113,7 @@ public class PosterGeneratorActivity extends BaseActivity implements View.OnClic
         mWebView.setWebViewClient(new WebViewClient() {
             @Override
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
+                showLoadingDialog();
                 // 在开始加载网页时会回调
                 super.onPageStarted(view, url, favicon);
             }
@@ -131,6 +129,7 @@ public class PosterGeneratorActivity extends BaseActivity implements View.OnClic
 
             @Override
             public void onPageFinished(WebView view, String url) {
+                stopLoadingDialog();
                 // 在结束加载网页时会回调
                 String jsShowTitle = "javascript:window.java_obj.showTitle("
                         + "document.querySelector('body > section > div > div > " +
@@ -189,6 +188,7 @@ public class PosterGeneratorActivity extends BaseActivity implements View.OnClic
             }
 
         });
+        jumpTarget();
     }
 
     public final class InJavaScriptLocalObj {
@@ -243,11 +243,11 @@ public class PosterGeneratorActivity extends BaseActivity implements View.OnClic
     @SuppressLint("SetTextI18n")
     private void initPosterView() {
         View view = LayoutInflater.from(this).inflate(R.layout.layout_poster, null);
-        tvTitle = view.findViewById(R.id.tv_title);
-        tvSummary = view.findViewById(R.id.tv_summary);
-        qrCode = view.findViewById(R.id.qr_code);
-        tvTime = view.findViewById(R.id.tv_time);
-        tvDesc = view.findViewById(R.id.tv_desc);
+        TextView tvTitle = view.findViewById(R.id.tv_title);
+        TextView tvSummary = view.findViewById(R.id.tv_summary);
+        ImageView qrCode = view.findViewById(R.id.qr_code);
+        TextView tvTime = view.findViewById(R.id.tv_time);
+        TextView tvDesc = view.findViewById(R.id.tv_desc);
         tvSummary.setText(content);
         tvTitle.setText(title);
         tvTime.setText(writeTime + "\n NO:" + visitor + " By julis.wang");

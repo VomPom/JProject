@@ -1,0 +1,44 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/container">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:id="@+id/innerL">
+
+        <ImageView
+            android:id="@+id/img"
+            android:scaleType="fitXY"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:src="@drawable/julis"/>
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/local"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"/>
+
+    <TextView
+        android:id="@+id/global"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/local"
+        android:layout_below="@id/local"/>
+
+    <TextView
+        android:id="@+id/offset"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/local"
+        android:layout_below="@id/global"/>
+
+
+</RelativeLayout>

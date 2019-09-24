@@ -11,13 +11,19 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         android:usesCleartextTraffic="true">
-        <activity android:name="wang.julis.poster.PosterGeneratorActivity">
+        <activity android:name="wang.julis.jproject.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name="wang.julis.jproject.PosterGeneratorActivity" />
+        <activity android:name="wang.julis.jproject.Anim.AnimationActivity" />
+        <activity android:name="wang.julis.jproject.Anim.ValueAnimatorActivity" />
+        <activity android:name="wang.julis.jproject.Anim.ObjectAnimatorActivity" />
+        <activity android:name="wang.julis.jproject.Anim.AnimatorSetActivity" />
+        <activity android:name="wang.julis.jproject.Little.RectVisibleActivity"/>
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />

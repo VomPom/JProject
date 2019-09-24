@@ -30,21 +30,7 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-
+    implementation 'com.android.support:multidex:1.0.1'
     implementation project(':jwbase')
 
-    //基础工具库
-    implementation "com.github.tamsiree.RxTool:RxKit:2.3.9"
-
-    //UI库
-    implementation "com.github.tamsiree.RxTool:RxUI:2.3.9"
-
-    //相机库
-    implementation "com.github.tamsiree.RxTool:RxCamera:2.3.9"
-
-    //功能库（Zxing扫描与生成二维码条形码 支付宝 微信）
-    implementation "com.github.tamsiree.RxTool:RxFeature:2.3.9"
-
-    //ArcGis For Android工具库（API：100.1以上版本）
-    implementation "com.github.tamsiree.RxTool:RxArcGisKit:2.3.9"
 }

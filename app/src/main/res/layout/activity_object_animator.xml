@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal">
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/btn_rotation"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:textAllCaps="false"
+            android:text="rotation"/>
+        <Button
+            android:id="@+id/btn_rotationY"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:textAllCaps="false"
+            android:text="rotationY"/>
+        <Button
+            android:id="@+id/btn_rotationX"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:textAllCaps="false"
+            android:text="rotationX"/>
+
+        <Button
+            android:id="@+id/btn_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+
+            android:background="@color/colorPrimary"
+            android:text="Cancel" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+
+        <Button
+            android:id="@+id/btn_translationX"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:textAllCaps="false"
+            android:text="translationX"/>
+        <Button
+            android:id="@+id/btn_translationY"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:textAllCaps="false"
+            android:text="translationY"/>
+        <Button
+            android:id="@+id/btn_scaleX"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:textAllCaps="false"
+            android:text="scaleX"/>
+        <Button
+            android:id="@+id/btn_scaleY"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:textAllCaps="false"
+            android:text="scaleY"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/btn_PropertyValuesHolder"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:textAllCaps="false"
+            android:text="PropertyValuesHolder"/>
+        <Button
+            android:id="@+id/btn_keyframe"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:textAllCaps="false"
+            android:text="KeyFrame"/>
+    </LinearLayout>
+
+
+
+    <wang.julis.jproject.Anim.MyTextView
+        android:layout_marginTop="10dp"
+        android:id="@+id/tv_test"
+        android:layout_width="100dp"
+        android:layout_height="80dp"
+        android:background="@color/colorAccent"
+        android:textSize="25dp"
+        android:gravity="center"
+        android:text="X"/>
+
+</LinearLayout>

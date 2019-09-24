@@ -1,4 +1,4 @@
-package wang.julis.poster;
+package wang.julis.jproject;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
