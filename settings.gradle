@@ -1,0 +1,3 @@
+include ':app'
+include ':jwbase'
+project(':jwbase').projectDir = new File(rootDir, '../jw_base/jwbase')
