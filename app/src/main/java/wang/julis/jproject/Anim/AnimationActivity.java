@@ -1,7 +1,7 @@
 package wang.julis.jproject.Anim;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
@@ -36,7 +36,6 @@ public class AnimationActivity extends BaseActivity implements View.OnClickListe
     @Override
     public void initView() {
         tvTest = findViewById(R.id.tv_test);
-
         findViewById(R.id.btn_scale).setOnClickListener(this);
         findViewById(R.id.btn_alpha).setOnClickListener(this);
         findViewById(R.id.btn_rotate).setOnClickListener(this);
@@ -76,6 +75,7 @@ public class AnimationActivity extends BaseActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_scale:
+
                 Animation animation1 = AnimationUtils.loadAnimation(this, R.anim.scale_anim);
                 tvTest.startAnimation(animation1);
                 break;

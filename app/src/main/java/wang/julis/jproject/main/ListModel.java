@@ -1,4 +1,4 @@
-package wang.julis.jproject;
+package wang.julis.jproject.main;
 
 /*******************************************************
  *

@@ -1,4 +1,4 @@
-package wang.julis.jproject;
+package wang.julis.jproject.Utils;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -6,10 +6,10 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -163,6 +163,7 @@ public class PosterGeneratorActivity extends BaseActivity implements View.OnClic
                         "div > div > a').innerText);";
                 String jsVisitor = "javascript:window.java_obj.showVisitor("
                         + "document.querySelector(\"#busuanzi_value_site_uv\").innerText);";
+
                 view.loadUrl(jsVisitor);
                 view.loadUrl(jsType);
                 view.loadUrl(jsShowTitle);

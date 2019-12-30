@@ -1,9 +1,9 @@
 package wang.julis.jproject;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.julis.distance.R;
 
@@ -14,6 +14,9 @@ import wang.julis.jproject.Anim.AnimationActivity;
 import wang.julis.jproject.Anim.AnimatorSetActivity;
 import wang.julis.jproject.Anim.ObjectAnimatorActivity;
 import wang.julis.jproject.Anim.ValueAnimatorActivity;
+import wang.julis.jproject.Utils.PosterGeneratorActivity;
+import wang.julis.jproject.main.ListAdapter;
+import wang.julis.jproject.main.ListModel;
 import wang.julis.jwbase.basecompact.BaseActivity;
 
 /*******************************************************

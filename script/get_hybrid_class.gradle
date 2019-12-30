@@ -1,0 +1,13 @@
+/*******************************************************
+ *
+ * Created by julis_wang@beibei.com on 2019/12/30 16:30
+ *
+ * Description : 获取所有hybrid文件
+ * History   :
+ *
+ *******************************************************/
+
+
+gradle.buildFinished { r ->
+  println("julis_julis_julia+buildFinished " + r.failure)
+}

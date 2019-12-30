@@ -9,7 +9,7 @@ import android.util.AttributeSet;
  * Project:Intent
  * Description:
  */
-public class MyTextView extends android.support.v7.widget.AppCompatTextView{
+public class MyTextView extends androidx.appcompat.widget.AppCompatTextView{
 
 
     public MyTextView(Context context, AttributeSet attrs) {
