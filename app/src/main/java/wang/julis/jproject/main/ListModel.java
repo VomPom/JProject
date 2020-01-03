@@ -2,7 +2,7 @@ package wang.julis.jproject.main;
 
 /*******************************************************
  *
- * Created by julis.wang@beibei.com on 2019/09/24 14:19
+ * Created by julis.wang on 2019/09/24 14:19
  *
  * Description :
  * History   :

@@ -21,7 +21,7 @@ import wang.julis.jwbase.basecompact.BaseActivity;
 
 /*******************************************************
  *
- * Created by julis.wang@beibei.com on 2019/09/24 14:12
+ * Created by julis.wang on 2019/09/24 14:12
  *
  * Description :
  * History   :

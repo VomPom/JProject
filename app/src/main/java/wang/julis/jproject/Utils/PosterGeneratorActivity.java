@@ -6,10 +6,6 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +18,11 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+
 import com.julis.distance.R;
 
 import wang.julis.jwbase.Utils.CommonUtils;
@@ -32,7 +33,7 @@ import wang.julis.jwbase.basecompact.BaseActivity;
 
 /*******************************************************
  *
- * Created by julis.wang@beibei.com on 2019/09/23 10:27
+ * Created by julis.wang on 2019/09/23 10:27
  *
  * Description : 博客海报生成
  * History   :

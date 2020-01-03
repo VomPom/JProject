@@ -11,7 +11,7 @@ import com.julis.distance.R;
 
 /*******************************************************
  *
- * Created by julis.wang@beibei.com on 2019/09/24 14:16
+ * Created by julis.wang on 2019/09/24 14:16
  *
  * Description :
  * History   :

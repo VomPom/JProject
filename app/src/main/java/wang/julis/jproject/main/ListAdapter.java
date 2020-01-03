@@ -14,7 +14,7 @@ import java.util.List;
 
 /*******************************************************
  *
- * Created by julis.wang@beibei.com on 2019/09/24 14:15
+ * Created by julis.wang on 2019/09/24 14:15
  *
  * Description :
  * History   :
