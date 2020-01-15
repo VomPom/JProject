@@ -5,7 +5,10 @@ import android.annotation.SuppressLint;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.text.Html;
+import android.text.Spanned;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,6 +27,9 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.julis.distance.R;
+
+import java.io.InputStream;
+import java.net.URL;
 
 import wang.julis.jwbase.Utils.CommonUtils;
 import wang.julis.jwbase.Utils.ImageUtils;
@@ -148,7 +154,6 @@ public class PosterGeneratorActivity extends BaseActivity implements View.OnClic
                         "div:nth-child(1) > div.card-content.article > " +
                         "div.level.article-meta.is-size-7.is-uppercase.is-mobile.is-overflow-x-auto > " +
                         "div > span:nth-child(3)').innerText);";
-
                 String jsTime = "javascript:window.java_obj.showTime("
                         + "document.querySelector('body > section > div > div > " +
                         "div.column.is-8-tablet.is-8-desktop.is-6-widescreen.has-order-2.column-main > " +
@@ -244,7 +249,14 @@ public class PosterGeneratorActivity extends BaseActivity implements View.OnClic
      */
     @SuppressLint("SetTextI18n")
     private void initPosterView() {
+
         View view = LayoutInflater.from(this).inflate(R.layout.layout_poster, null);
+
+        int screenWidth = 1080; // CommonUtils.getWidth(this);
+        int screenHeight = 1920; //CommonUtils.getHeight(this);
+        int widthSpec = View.MeasureSpec.makeMeasureSpec(screenWidth, View.MeasureSpec.EXACTLY);
+        int heightSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
+
         TextView tvTitle = view.findViewById(R.id.tv_title);
         TextView tvSummary = view.findViewById(R.id.tv_summary);
         ImageView qrCode = view.findViewById(R.id.qr_code);
@@ -252,19 +264,40 @@ public class PosterGeneratorActivity extends BaseActivity implements View.OnClic
         TextView tvDesc = view.findViewById(R.id.tv_desc);
         tvSummary.setText(content);
         tvTitle.setText(title);
-        tvTime.setText(writeTime + "\n NO:" + visitor + " By julis.wang");
+        tvTime.setText(writeTime + view.getMeasuredWidth() + "\n NO:" + visitor + " By julis.wang");
         tvDesc.setText(type + " | " + readTime);
         Bitmap qrBitmap = QRUtils.createQRImage(mUrl, (int) CommonUtils.dip2px(60.0f), 0);
         qrCode.setImageBitmap(qrBitmap);
 
-        int screenWidth = 1080; // CommonUtils.getWidth(this);
-        int screenHeight = 1920; //CommonUtils.getHeight(this);
-        int widthSpec = View.MeasureSpec.makeMeasureSpec(screenWidth, View.MeasureSpec.EXACTLY);
-        int heightSpec = View.MeasureSpec.makeMeasureSpec(screenHeight, View.MeasureSpec.EXACTLY);
-
         view.measure(widthSpec, heightSpec);
         view.layout(0, 0, view.getMeasuredWidth(), view.getMeasuredHeight());
         realGenerator(view);
+    }
+
+    private void setContentWithImages(TextView tvSummary, String content) {
+        String html = "<h1>AAAthis is h1</h1>"
+                + "<p>This text is normal</p>"
+                + "<img src='http://h0.hucdn.com/images202002/8f97ac11a4c14bf1_750x280.png' />";
+
+
+        Spanned sp = Html.fromHtml(html, new Html.ImageGetter() {
+            @Override
+            public Drawable getDrawable(String source) {
+                InputStream is = null;
+                try {
+                    is = (InputStream) new URL(source).getContent();
+                    Drawable d = Drawable.createFromStream(is, "src");
+                    d.setBounds(0, 0, d.getIntrinsicWidth(),
+                            d.getIntrinsicHeight());
+                    is.close();
+                    return d;
+                } catch (Exception e) {
+                    return null;
+                }
+            }
+        }, null);
+        tvSummary.setText(sp);
+
     }
 
     /**

@@ -11,7 +11,7 @@
        android:layout_width="match_parent"
        android:layout_height="match_parent"
        android:background="@drawable/shape_bg_gold_stoke"
-       android:layout_margin="18dp">
+       android:layout_margin="10dp">
        <LinearLayout
            android:layout_width="match_parent"
            android:layout_height="match_parent"
@@ -25,8 +25,8 @@
                android:gravity="center">
 
                <de.hdodenhof.circleimageview.CircleImageView
-                   android:layout_width="40dp"
-                   android:layout_height="40dp"
+                   android:layout_width="45dp"
+                   android:layout_height="45dp"
                    android:src="@drawable/julis" />
 
                <View
@@ -40,7 +40,7 @@
                    android:layout_height="wrap_content"
                    android:text="落叶挽歌の博客"
                    android:textColor="@color/black"
-                   android:textSize="18dp" />
+                   android:textSize="16dp" />
 
            </LinearLayout>
 
@@ -60,7 +60,7 @@
                    android:maxLines="2"
                    android:ellipsize="end"
                    android:textColor="@color/goldenrod"
-                   android:textSize="15dp" />
+                   android:textSize="18dp" />
                <TextView
                    android:id="@+id/tv_desc"
                    android:layout_width="wrap_content"
@@ -75,10 +75,9 @@
                    android:layout_height="wrap_content"
                    android:layout_marginTop="20dp"
                    android:ellipsize="end"
-                   android:maxLines="14"
                    android:text="内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容"
                    android:textColor="#333333"
-                   android:textSize="13dp" />
+                   android:textSize="14dp" />
            </LinearLayout>
 
            <View
@@ -102,17 +101,27 @@
                <TextView
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
-                   android:layout_margin="10dp"
+                   android:layout_marginTop="10dp"
                    android:gravity="center_horizontal"
                    android:text="长按二维码查看原文"
                    android:textColor="@color/goldenrod"
                    android:textSize="12dp" />
+
+               <TextView
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:gravity="center_horizontal"
+                   android:text="どうぞよろしくお願いします"
+                   android:layout_margin="5dp"
+                   android:textColor="@color/goldenrod"
+                   android:textSize="10dp" />
+
                <TextView
                    android:id="@+id/tv_time"
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
                    android:layout_marginRight="20dp"
-                   android:layout_marginBottom="8dp"
+                   android:layout_marginBottom="12dp"
                    android:layout_gravity="right"
                    android:gravity="right"
                    tools:text="长按识长按识长按识\n别二维码"
