@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+   <FrameLayout
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       android:background="@drawable/shape_bg_gold_stoke"
+       android:layout_margin="10dp">
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="match_parent"
+           android:layout_margin="5dp"
+           android:background="@drawable/shape_bg_gold_stoke"
+           android:orientation="vertical">
+           <LinearLayout
+               android:layout_width="match_parent"
+               android:layout_marginTop="15dp"
+               android:layout_height="wrap_content"
+               android:gravity="center">
+
+               <de.hdodenhof.circleimageview.CircleImageView
+                   android:layout_width="45dp"
+                   android:layout_height="45dp"
+                   android:src="@drawable/julis" />
+
+               <View
+                   android:layout_width="1dp"
+                   android:layout_height="match_parent"
+                   android:layout_margin="8dp"
+                   android:background="@color/gainsboro" />
+
+               <TextView
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:text="落叶挽歌の文章"
+                   android:textColor="@color/black"
+                   android:textSize="16dp" />
+
+           </LinearLayout>
+
+           <LinearLayout
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:layout_weight="1"
+               android:layout_margin="15dp"
+               android:gravity="center_horizontal"
+               android:orientation="vertical">
+
+               <TextView
+                   android:id="@+id/tv_title"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:text="标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题"
+                   android:maxLines="2"
+                   android:ellipsize="end"
+                   android:layout_marginBottom="5dp"
+                   android:textColor="@color/goldenrod"
+                   android:textSize="18dp" />
+               <TextView
+                   android:id="@+id/tv_desc"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:text="内容内容内容容内容内容内容内容"
+                   android:textColor="@color/grey"
+                   android:textSize="10dp" />
+
+               <TextView
+                   android:id="@+id/tv_content"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_marginTop="20dp"
+                   android:ellipsize="end"
+                   android:text="内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容"
+                   android:textColor="#333333"
+                   android:textSize="14dp" />
+           </LinearLayout>
+
+           <View
+               android:layout_width="match_parent"
+               android:layout_height="0.5dp"
+               android:layout_marginLeft="20dp"
+               android:layout_marginRight="20dp"
+               android:layout_marginBottom="15dp"
+               android:background="@color/gainsboro" />
+
+           <LinearLayout
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:orientation="vertical"
+               android:gravity="center">
+               <ImageView
+                   android:id="@+id/qr_code"
+                   android:layout_width="100dp"
+                   android:layout_height="100dp"
+                   android:src="@drawable/julis" />
+               <TextView
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_marginTop="10dp"
+                   android:gravity="center_horizontal"
+                   android:text="长按二维码查看原文"
+                   android:textColor="@color/goldenrod"
+                   android:textSize="12dp" />
+
+               <TextView
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:gravity="center_horizontal"
+                   android:text="どうぞよろしくお願いします"
+                   android:layout_margin="5dp"
+                   android:textColor="@color/goldenrod"
+                   android:textSize="10dp" />
+
+               <TextView
+                   android:id="@+id/tv_time"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_marginRight="20dp"
+                   android:layout_marginBottom="12dp"
+                   android:layout_gravity="right"
+                   android:gravity="right"
+                   tools:text="长按识长按识长按识\n别二维码"
+                   android:textColor="@color/grey"
+                   android:textSize="10dp" />
+           </LinearLayout>
+
+
+       </LinearLayout>
+   </FrameLayout>
+
+
+
+
+</FrameLayout>

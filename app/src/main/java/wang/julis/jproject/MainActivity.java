@@ -14,6 +14,7 @@ import wang.julis.jproject.Anim.AnimationActivity;
 import wang.julis.jproject.Anim.AnimatorSetActivity;
 import wang.julis.jproject.Anim.ObjectAnimatorActivity;
 import wang.julis.jproject.Anim.ValueAnimatorActivity;
+import wang.julis.jproject.Utils.ArticlePosterGeneratorActivity;
 import wang.julis.jproject.Utils.PosterGeneratorActivity;
 import wang.julis.jproject.main.ListAdapter;
 import wang.julis.jproject.main.ListModel;
@@ -49,7 +50,8 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-        mDataList.add(new ListModel("海报生成", PosterGeneratorActivity.class));
+        mDataList.add(new ListModel("文章海报生成", ArticlePosterGeneratorActivity.class));
+        mDataList.add(new ListModel("博客海报生成", PosterGeneratorActivity.class));
         mDataList.add(new ListModel("补间动画", AnimationActivity.class));
         mDataList.add(new ListModel("ValueAnimator", ValueAnimatorActivity.class));
         mDataList.add(new ListModel("ObjectAnimator", ObjectAnimatorActivity.class));
