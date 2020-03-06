@@ -38,7 +38,7 @@
                <TextView
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
-                   android:text="落叶挽歌の文章"
+                   android:text="落叶挽歌の说说"
                    android:textColor="@color/black"
                    android:textSize="16dp" />
 
@@ -96,15 +96,15 @@
                android:gravity="center">
                <ImageView
                    android:id="@+id/qr_code"
-                   android:layout_width="100dp"
-                   android:layout_height="100dp"
+                   android:layout_width="60dp"
+                   android:layout_height="60dp"
                    android:src="@drawable/julis" />
                <TextView
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
                    android:layout_marginTop="10dp"
                    android:gravity="center_horizontal"
-                   android:text="长按二维码查看原文"
+                   android:text="识别二维码有惊喜"
                    android:textColor="@color/goldenrod"
                    android:textSize="12dp" />
 

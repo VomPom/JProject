@@ -32,6 +32,14 @@
                 android:gravity="top"
                 android:hint="内容"/>
 
+            <EditText
+                android:id="@+id/et_music"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLines="2"
+                android:maxEms="30"
+                android:hint="网易音乐"
+                android:textColorHint="@color/colorAccent"/>
 
             <LinearLayout
                 android:layout_width="match_parent"

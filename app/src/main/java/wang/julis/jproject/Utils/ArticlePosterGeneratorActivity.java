@@ -5,10 +5,8 @@ import android.annotation.SuppressLint;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.text.Html;
-import android.text.Spanned;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -23,8 +21,6 @@ import androidx.core.content.ContextCompat;
 import com.google.gson.annotations.SerializedName;
 import com.julis.distance.R;
 
-import java.io.InputStream;
-import java.net.URL;
 import java.util.List;
 import java.util.Locale;
 
@@ -51,7 +47,7 @@ public class ArticlePosterGeneratorActivity extends BaseActivity implements View
     private static final int PER_MINUTES_READ = 500; //每分钟读500字
 
     private Bitmap mPosterBitmap;
-    private EditText etTitle, etType, etContent;
+    private EditText etTitle, etType, etContent,etMusic;
     private ImageView ivPoster;
     private String mUrl;
 
@@ -66,6 +62,7 @@ public class ArticlePosterGeneratorActivity extends BaseActivity implements View
         ivPoster = findViewById(R.id.iv_generator);
         etType = findViewById(R.id.et_type);
         etTitle = findViewById(R.id.et_title);
+        etMusic = findViewById(R.id.et_music);
         etContent = findViewById(R.id.et_content);
         ivPoster.setOnClickListener(this);
         findViewById(R.id.btn_generator).setOnClickListener(this);
@@ -75,7 +72,7 @@ public class ArticlePosterGeneratorActivity extends BaseActivity implements View
 
     @Override
     protected void initData() {
-        mUrl = "http://julis.wang";
+        mUrl = "Have a good day! --by julis.wang";
     }
 
     @Override
@@ -113,18 +110,21 @@ public class ArticlePosterGeneratorActivity extends BaseActivity implements View
         ((TextView) view.findViewById(R.id.tv_desc)).setText(data.type + " | " + data.readTime);
         Bitmap qrBitmap = QRUtils.createQRImage(mUrl, (int) CommonUtils.dip2px(60.0f), 0);
         ((ImageView) view.findViewById(R.id.qr_code)).setImageBitmap(qrBitmap);
-
         view.measure(widthSpec, heightSpec);
         view.layout(0, 0, view.getMeasuredWidth(), view.getMeasuredHeight());
         realGenerator(view);
     }
 
     private ArticleModel getArticleData() {
+
         ArticleModel data = new ArticleModel();
         data.content = etContent.getText().toString();
+        if (!TextUtils.isEmpty(etMusic.getText().toString())) {
+            mUrl = etMusic.getText().toString();
+        }
         data.title = etTitle.getText().toString();
         data.type = etType.getText().toString();
-        data.writeTime = TimeUtils.changeLongToString3(System.currentTimeMillis() / 1000);
+        data.writeTime = TimeUtils.changeLongToString3(System.currentTimeMillis());
         data.readTime = String.format(Locale.CHINA,
                 "%d分钟读完（%d个字)", getReadTime(data.content.length()), data.content.length());
         return data;
@@ -178,31 +178,6 @@ public class ArticlePosterGeneratorActivity extends BaseActivity implements View
         }
     }
 
-    private void setContentWithImages(TextView tvSummary, String content) {
-        String html = "<h1>AAAthis is h1</h1>"
-                + "<p>This text is normal</p>"
-                + "<img src='http://h0.hucdn.com/images202002/8f97ac11a4c14bf1_750x280.png' />";
-
-
-        Spanned sp = Html.fromHtml(html, new Html.ImageGetter() {
-            @Override
-            public Drawable getDrawable(String source) {
-                InputStream is = null;
-                try {
-                    is = (InputStream) new URL(source).getContent();
-                    Drawable d = Drawable.createFromStream(is, "src");
-                    d.setBounds(0, 0, d.getIntrinsicWidth(),
-                            d.getIntrinsicHeight());
-                    is.close();
-                    return d;
-                } catch (Exception e) {
-                    return null;
-                }
-            }
-        }, null);
-        tvSummary.setText(sp);
-
-    }
 
     private static class ArticleModel {
         public String title;
