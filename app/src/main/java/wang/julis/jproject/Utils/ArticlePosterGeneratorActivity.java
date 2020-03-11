@@ -18,13 +18,13 @@ import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import com.google.gson.annotations.SerializedName;
 import com.julis.distance.R;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Locale;
 
-import wang.julis.jwbase.Request.BaseApiRequest;
+import wang.julis.jwbase.Cache.DiskLruCacheUtil;
 import wang.julis.jwbase.Utils.CommonUtils;
 import wang.julis.jwbase.Utils.ImageUtils;
 import wang.julis.jwbase.Utils.QRUtils;
@@ -46,10 +46,13 @@ public class ArticlePosterGeneratorActivity extends BaseActivity implements View
     private static final int POSTER_WIDTH = 1080;
     private static final int PER_MINUTES_READ = 500; //每分钟读500字
 
+    private static final String KEY = "poster";
+
     private Bitmap mPosterBitmap;
-    private EditText etTitle, etType, etContent,etMusic;
+    private DiskLruCacheUtil mDiskLruCacheUtil;
+    private EditText etTitle, etType, etContent, etMusic;
     private ImageView ivPoster;
-    private String mUrl;
+    private String mUrl = "";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -64,15 +67,24 @@ public class ArticlePosterGeneratorActivity extends BaseActivity implements View
         etTitle = findViewById(R.id.et_title);
         etMusic = findViewById(R.id.et_music);
         etContent = findViewById(R.id.et_content);
+
         ivPoster.setOnClickListener(this);
         findViewById(R.id.btn_generator).setOnClickListener(this);
         findViewById(R.id.btn_save).setOnClickListener(this);
-
+        findViewById(R.id.btn_clear).setOnClickListener(this);
     }
 
     @Override
     protected void initData() {
-        mUrl = "Have a good day! --by julis.wang";
+        mDiskLruCacheUtil = new DiskLruCacheUtil(this, "DISK_LRU_CACHE");
+        ArticleModel cacheData = mDiskLruCacheUtil.getObjectCache(KEY);
+        if (cacheData != null) {
+            etContent.setText(cacheData.content);
+            etMusic.setText(cacheData.music);
+            etType.setText(cacheData.type);
+            etTitle.setText(cacheData.title);
+        }
+
     }
 
     @Override
@@ -90,6 +102,12 @@ public class ArticlePosterGeneratorActivity extends BaseActivity implements View
             ImageUtils.saveImageToGallery(this, mPosterBitmap);
         } else if (vId == R.id.iv_generator) {
             ivPoster.setVisibility(View.GONE);
+        } else if (vId == R.id.btn_clear) {
+            etTitle.setText("");
+            etType.setText("");
+            etMusic.setText("");
+            etContent.setText("");
+            mDiskLruCacheUtil.put(KEY, new ArticleModel());
         }
     }
 
@@ -122,11 +140,13 @@ public class ArticlePosterGeneratorActivity extends BaseActivity implements View
         if (!TextUtils.isEmpty(etMusic.getText().toString())) {
             mUrl = etMusic.getText().toString();
         }
+        data.music = mUrl;
         data.title = etTitle.getText().toString();
         data.type = etType.getText().toString();
         data.writeTime = TimeUtils.changeLongToString3(System.currentTimeMillis());
         data.readTime = String.format(Locale.CHINA,
                 "%d分钟读完（%d个字)", getReadTime(data.content.length()), data.content.length());
+        mDiskLruCacheUtil.put(KEY, data);
         return data;
     }
 
@@ -179,35 +199,17 @@ public class ArticlePosterGeneratorActivity extends BaseActivity implements View
     }
 
 
-    private static class ArticleModel {
+    private static class ArticleModel implements Serializable {
         public String title;
         public String content;
         public String type;
         public String readTime;
         public String writeTime;
+        public String music;
         public List<String> mKeywords;
     }
 
-    private  class KeyWordsModel {
-        @SerializedName("code")
-        public int mCode;
-        @SerializedName("message")
-        public String mMessage;
-        @SerializedName("keywords")
-        public List<String> mKeywords;
-    }
 
-    private void getKeyWords() {
-
-    }
-
-    private class KeyWordsRequest extends BaseApiRequest<KeyWordsModel> {
-
-        @Override
-        public String getBaseUrl() {
-            return null;
-        }
-    }
 }
 
 

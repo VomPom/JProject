@@ -7,39 +7,42 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
             <EditText
                 android:id="@+id/et_type"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:maxLines="1"
-                android:hint="类型"/>
+                android:hint="类型"
+                android:maxLines="1" />
+
             <EditText
                 android:id="@+id/et_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:maxLines="2"
+                android:hint="标题"
                 android:maxEms="30"
-                android:hint="标题"/>
+                android:maxLines="2" />
 
             <EditText
                 android:id="@+id/et_content"
                 android:layout_width="match_parent"
                 android:layout_height="300dp"
                 android:gravity="top"
-                android:hint="内容"/>
+                android:hint="内容" />
 
             <EditText
                 android:id="@+id/et_music"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:maxLines="2"
-                android:maxEms="30"
                 android:hint="网易音乐"
-                android:textColorHint="@color/colorAccent"/>
+                android:maxEms="30"
+                android:maxLines="2"
+                android:textColorHint="@color/colorAccent" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -62,16 +65,24 @@
                     android:layout_weight="1"
                     android:text="保存" />
 
+                <Button
+                    android:id="@+id/btn_clear"
+                    android:layout_width="60dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="15dp"
+                    android:layout_weight="1"
+                    android:text="清空" />
 
             </LinearLayout>
 
         </LinearLayout>
+
         <ImageView
             android:id="@+id/iv_generator"
             android:layout_width="288dp"
             android:layout_height="512dp"
             android:layout_gravity="center"
-            android:visibility="gone"/>
+            android:visibility="gone" />
     </FrameLayout>
 
 
