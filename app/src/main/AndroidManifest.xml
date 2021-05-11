@@ -22,13 +22,30 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="wang.julis.jproject.Utils.PosterGeneratorActivity" />
-        <activity android:name="wang.julis.jproject.Utils.ArticlePosterGeneratorActivity" />
-        <activity android:name="wang.julis.jproject.Anim.AnimationActivity" />
-        <activity android:name="wang.julis.jproject.Anim.ValueAnimatorActivity" />
-        <activity android:name="wang.julis.jproject.Anim.ObjectAnimatorActivity" />
-        <activity android:name="wang.julis.jproject.Anim.AnimatorSetActivity" />
-        <activity android:name="wang.julis.jproject.Little.RectVisibleActivity" />
+        <activity android:name="wang.julis.jproject.blog.PosterGeneratorActivity" />
+        <activity android:name="wang.julis.jproject.blog.ArticlePosterGeneratorActivity" />
+        <activity android:name="wang.julis.jproject.example.Anim.AnimationActivity" />
+        <activity android:name="wang.julis.jproject.example.Anim.ValueAnimatorActivity" />
+        <activity android:name="wang.julis.jproject.example.Anim.ObjectAnimatorActivity" />
+        <activity android:name="wang.julis.jproject.example.Anim.AnimatorSetActivity" />
+        <activity android:name="wang.julis.jproject.example.binder.client.BinderTestActivity" />
+
+        <service android:name="wang.julis.jproject.example.binder.server.AIDLService">
+            <intent-filter>
+                <action android:name="julis.wang.binder.example" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </service>
+
+        <meta-data
+            android:name="xposedmodule"
+            android:value="true" />
+        <meta-data
+            android:name="xposeddescription"
+            android:value="Easy example which makes the status bar clock red and adds a smiley" />
+        <meta-data
+            android:name="xposedminversion"
+            android:value="89" />
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />

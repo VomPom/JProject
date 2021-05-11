@@ -1,6 +1,7 @@
 package wang.julis.jproject;
 
 import android.os.Bundle;
+
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -10,12 +11,13 @@ import com.julis.distance.R;
 import java.util.ArrayList;
 import java.util.List;
 
-import wang.julis.jproject.Anim.AnimationActivity;
-import wang.julis.jproject.Anim.AnimatorSetActivity;
-import wang.julis.jproject.Anim.ObjectAnimatorActivity;
-import wang.julis.jproject.Anim.ValueAnimatorActivity;
-import wang.julis.jproject.Utils.ArticlePosterGeneratorActivity;
-import wang.julis.jproject.Utils.PosterGeneratorActivity;
+import wang.julis.jproject.blog.ArticlePosterGeneratorActivity;
+import wang.julis.jproject.blog.PosterGeneratorActivity;
+import wang.julis.jproject.example.Anim.AnimationActivity;
+import wang.julis.jproject.example.Anim.AnimatorSetActivity;
+import wang.julis.jproject.example.Anim.ObjectAnimatorActivity;
+import wang.julis.jproject.example.Anim.ValueAnimatorActivity;
+import wang.julis.jproject.example.binder.client.BinderTestActivity;
 import wang.julis.jproject.main.ListAdapter;
 import wang.julis.jproject.main.ListModel;
 import wang.julis.jwbase.basecompact.BaseActivity;
@@ -40,12 +42,10 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-
         RecyclerView rvList = findViewById(R.id.rv_list);
         mAdapter = new ListAdapter(this);
         rvList.setAdapter(mAdapter);
         rvList.setLayoutManager(new LinearLayoutManager(this));
-
     }
 
     @Override
@@ -56,6 +56,7 @@ public class MainActivity extends BaseActivity {
         mDataList.add(new ListModel("ValueAnimator", ValueAnimatorActivity.class));
         mDataList.add(new ListModel("ObjectAnimator", ObjectAnimatorActivity.class));
         mDataList.add(new ListModel("AnimatorSet", AnimatorSetActivity.class));
+        mDataList.add(new ListModel("BinderExample", BinderTestActivity.class));
         mAdapter.updateData(mDataList);
     }
 

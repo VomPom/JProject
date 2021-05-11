@@ -84,7 +84,7 @@
 
 
 
-    <wang.julis.jproject.Anim.MyTextView
+    <wang.julis.jproject.example.Anim.MyTextView
         android:layout_marginTop="10dp"
         android:id="@+id/tv_test"
         android:layout_width="100dp"
