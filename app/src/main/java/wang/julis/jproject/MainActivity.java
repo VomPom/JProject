@@ -17,7 +17,10 @@ import wang.julis.jproject.example.Anim.AnimationActivity;
 import wang.julis.jproject.example.Anim.AnimatorSetActivity;
 import wang.julis.jproject.example.Anim.ObjectAnimatorActivity;
 import wang.julis.jproject.example.Anim.ValueAnimatorActivity;
+import wang.julis.jproject.example.Media.MediaCodecActivity;
+import wang.julis.jproject.example.Media.MediaPlayerActivity;
 import wang.julis.jproject.example.binder.client.BinderTestActivity;
+import wang.julis.jproject.example.okhttp.OkHttpTestActivity;
 import wang.julis.jproject.main.ListAdapter;
 import wang.julis.jproject.main.ListModel;
 import wang.julis.jwbase.basecompact.BaseActivity;
@@ -57,7 +60,11 @@ public class MainActivity extends BaseActivity {
         mDataList.add(new ListModel("ObjectAnimator", ObjectAnimatorActivity.class));
         mDataList.add(new ListModel("AnimatorSet", AnimatorSetActivity.class));
         mDataList.add(new ListModel("BinderExample", BinderTestActivity.class));
+        mDataList.add(new ListModel("OkHttpExample", OkHttpTestActivity.class));
+        mDataList.add(new ListModel("MediaPlayer", MediaPlayerActivity.class));
+        mDataList.add(new ListModel("MediaCodec", MediaCodecActivity.class));
         mAdapter.updateData(mDataList);
+
     }
 
     @Override
