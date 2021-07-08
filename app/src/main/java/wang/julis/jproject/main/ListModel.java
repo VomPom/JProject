@@ -11,9 +11,9 @@ package wang.julis.jproject.main;
 
 public class ListModel {
     public String activityName;
-    public Class activityClass;
+    public Class<?> activityClass;
 
-    public ListModel(String activityName, Class activityClass) {
+    public ListModel(String activityName, Class<?> activityClass) {
         this.activityName = activityName;
         this.activityClass = activityClass;
     }

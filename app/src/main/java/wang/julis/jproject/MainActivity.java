@@ -1,29 +1,12 @@
 package wang.julis.jproject;
 
-import android.os.Bundle;
-
-import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import com.julis.distance.R;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import wang.julis.jproject.blog.ArticlePosterGeneratorActivity;
 import wang.julis.jproject.blog.PosterGeneratorActivity;
-import wang.julis.jproject.example.Anim.AnimationActivity;
-import wang.julis.jproject.example.Anim.AnimatorSetActivity;
-import wang.julis.jproject.example.Anim.ObjectAnimatorActivity;
-import wang.julis.jproject.example.Anim.ValueAnimatorActivity;
-import wang.julis.jproject.example.Media.MediaCodecActivity;
-import wang.julis.jproject.example.Media.MediaPlayerActivity;
+import wang.julis.jproject.example.anim.AnimationMainActivity;
+import wang.julis.jproject.example.media.MediaMainActivity;
 import wang.julis.jproject.example.binder.client.BinderTestActivity;
 import wang.julis.jproject.example.okhttp.OkHttpTestActivity;
-import wang.julis.jproject.main.ListAdapter;
-import wang.julis.jproject.main.ListModel;
-import wang.julis.jwbase.basecompact.BaseActivity;
+import wang.julis.jproject.main.BaseListActivity;
 
 /*******************************************************
  *
@@ -34,41 +17,16 @@ import wang.julis.jwbase.basecompact.BaseActivity;
  *
  *******************************************************/
 
-public class MainActivity extends BaseActivity {
-    private ListAdapter mAdapter;
-    private List<ListModel> mDataList = new ArrayList<>();
-
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override
-    protected void initView() {
-        RecyclerView rvList = findViewById(R.id.rv_list);
-        mAdapter = new ListAdapter(this);
-        rvList.setAdapter(mAdapter);
-        rvList.setLayoutManager(new LinearLayoutManager(this));
-    }
-
+public class MainActivity extends BaseListActivity {
     @Override
     protected void initData() {
-        mDataList.add(new ListModel("文章海报生成", ArticlePosterGeneratorActivity.class));
-        mDataList.add(new ListModel("博客海报生成", PosterGeneratorActivity.class));
-        mDataList.add(new ListModel("补间动画", AnimationActivity.class));
-        mDataList.add(new ListModel("ValueAnimator", ValueAnimatorActivity.class));
-        mDataList.add(new ListModel("ObjectAnimator", ObjectAnimatorActivity.class));
-        mDataList.add(new ListModel("AnimatorSet", AnimatorSetActivity.class));
-        mDataList.add(new ListModel("BinderExample", BinderTestActivity.class));
-        mDataList.add(new ListModel("OkHttpExample", OkHttpTestActivity.class));
-        mDataList.add(new ListModel("MediaPlayer", MediaPlayerActivity.class));
-        mDataList.add(new ListModel("MediaCodec", MediaCodecActivity.class));
-        mAdapter.updateData(mDataList);
-
+        addActivity("文章海报生成", ArticlePosterGeneratorActivity.class);
+        addActivity("博客海报生成", PosterGeneratorActivity.class);
+        addActivity("动画相关", AnimationMainActivity.class);
+        addActivity("BinderExample", BinderTestActivity.class);
+        addActivity("OkHttpExample", OkHttpTestActivity.class);
+        addActivity("音视频", MediaMainActivity.class);
+        submitActivityList();
     }
 
-    @Override
-    protected int getContentView() {
-        return R.layout.activity_main;
-    }
 }

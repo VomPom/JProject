@@ -15,7 +15,7 @@
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:appComponentFactory">
-        <activity android:name="wang.julis.jproject.MainActivity">
+        <activity android:name="wang.julis.jproject.example.media.MediaMainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -24,14 +24,20 @@
         </activity>
         <activity android:name="wang.julis.jproject.blog.PosterGeneratorActivity" />
         <activity android:name="wang.julis.jproject.blog.ArticlePosterGeneratorActivity" />
-        <activity android:name="wang.julis.jproject.example.Anim.AnimationActivity" />
-        <activity android:name="wang.julis.jproject.example.Anim.ValueAnimatorActivity" />
-        <activity android:name="wang.julis.jproject.example.Anim.ObjectAnimatorActivity" />
-        <activity android:name="wang.julis.jproject.example.Anim.AnimatorSetActivity" />
+        <activity android:name="wang.julis.jproject.example.anim.AnimationActivity" />
+        <activity android:name="wang.julis.jproject.example.anim.ValueAnimatorActivity" />
+        <activity android:name="wang.julis.jproject.example.anim.ObjectAnimatorActivity" />
+        <activity android:name="wang.julis.jproject.example.anim.AnimatorSetActivity" />
         <activity android:name="wang.julis.jproject.example.binder.client.BinderTestActivity" />
         <activity android:name="wang.julis.jproject.example.okhttp.OkHttpTestActivity" />
-        <activity android:name="wang.julis.jproject.example.Media.MediaPlayerActivity" />
-        <activity android:name="wang.julis.jproject.example.Media.MediaCodecActivity" />
+        <activity android:name="wang.julis.jproject.example.media.MediaPlayerActivity" />
+        <activity android:name="wang.julis.jproject.example.media.codec.MediaCodecActivity" />
+        <activity android:name="wang.julis.jproject.example.anim.AnimationMainActivity" />
+        <activity android:name="wang.julis.jproject.example.media.drawimage.DrawImageActivity" />
+        <activity android:name="wang.julis.jproject.example.media.AudioMainActivity" />
+        <activity android:name="wang.julis.jproject.example.media.audio.AudioRecordActivity" />
+        <activity android:name="wang.julis.jproject.example.media.audio.AudioTrackActivity" />
+        <!--        <activity android:name="wang.julis.jproject.example.media.MediaMainActivity" />-->
 
         <service android:name="wang.julis.jproject.example.binder.server.AIDLService">
             <intent-filter>
@@ -51,6 +57,7 @@
             android:value="89" />
     </application>
 
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
