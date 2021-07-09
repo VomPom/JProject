@@ -34,9 +34,11 @@
         <activity android:name="wang.julis.jproject.example.media.codec.MediaCodecActivity" />
         <activity android:name="wang.julis.jproject.example.anim.AnimationMainActivity" />
         <activity android:name="wang.julis.jproject.example.media.drawimage.DrawImageActivity" />
-        <activity android:name="wang.julis.jproject.example.media.AudioMainActivity" />
-        <activity android:name="wang.julis.jproject.example.media.audio.AudioRecordActivity" />
-        <activity android:name="wang.julis.jproject.example.media.audio.AudioTrackActivity" />
+        <activity android:name="wang.julis.jproject.example.media.audio.AudioMainActivity" />
+        <activity android:name="wang.julis.jproject.example.media.audio.AudioRecordTrackActivity" />
+        <activity android:name="wang.julis.jproject.example.media.camera.SurfaceViewCameraActivity" />
+        <activity android:name="wang.julis.jproject.example.media.camera.TextureViewCameraActivity" />
+        <activity android:name="wang.julis.jproject.example.media.camera.CameraMainActivity" />
         <!--        <activity android:name="wang.julis.jproject.example.media.MediaMainActivity" />-->
 
         <service android:name="wang.julis.jproject.example.binder.server.AIDLService">
@@ -57,6 +59,7 @@
             android:value="89" />
     </application>
 
+    <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />

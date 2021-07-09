@@ -9,22 +9,31 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="50dp">
+        android:padding="10dp">
 
         <Button
             android:id="@+id/btn_recording_start"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:text="Start Recording" />
+            android:text="开始录音" />
 
         <Button
             android:id="@+id/btn_recording_stop"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical|end"
-            android:text="Stop Recording" />
+            android:text="停止录音" />
     </FrameLayout>
+
+    <TextView
+        android:id="@+id/tv_tips"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="20dp"
+        android:text=""
+        android:textColor="@color/black" />
 
     <Button
         android:id="@+id/btn_pcm_to_wav"
@@ -34,32 +43,41 @@
         android:text="pcm转wav" />
 
     <TextView
-        android:id="@+id/tv_tips"
+        android:id="@+id/tv_pcm_to_wav_tips"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="20dp"
-        android:text="Start开始录音，Stop停止录音"
+        android:layout_marginTop="10dp"
+        android:text=""
         android:textColor="@color/black" />
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="50dp">
+        android:padding="20dp">
 
         <Button
-            android:id="@+id/btn_play_start"
+            android:id="@+id/btn_play_in_stream"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:text="Play" />
+            android:text="流模式播放" />
 
         <Button
-            android:id="@+id/btn_play_stop"
+            android:id="@+id/btn_play_in_static"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical|end"
-            android:text="Stop Play" />
+            android:text="静态模式播放" />
     </FrameLayout>
+
+    <TextView
+        android:id="@+id/tv_error_tips"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="50dp"
+        android:text=""
+        android:textColor="@color/black" />
 
 </LinearLayout>

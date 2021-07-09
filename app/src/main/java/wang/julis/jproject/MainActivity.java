@@ -3,8 +3,8 @@ package wang.julis.jproject;
 import wang.julis.jproject.blog.ArticlePosterGeneratorActivity;
 import wang.julis.jproject.blog.PosterGeneratorActivity;
 import wang.julis.jproject.example.anim.AnimationMainActivity;
-import wang.julis.jproject.example.media.MediaMainActivity;
 import wang.julis.jproject.example.binder.client.BinderTestActivity;
+import wang.julis.jproject.example.media.MediaMainActivity;
 import wang.julis.jproject.example.okhttp.OkHttpTestActivity;
 import wang.julis.jproject.main.BaseListActivity;
 
@@ -29,4 +29,6 @@ public class MainActivity extends BaseListActivity {
         submitActivityList();
     }
 
+
 }
+
