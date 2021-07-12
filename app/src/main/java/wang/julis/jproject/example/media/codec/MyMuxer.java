@@ -3,7 +3,6 @@ package wang.julis.jproject.example.media.codec;
 import android.media.MediaCodec;
 import android.media.MediaFormat;
 import android.media.MediaMuxer;
-import android.os.Environment;
 
 import java.io.File;
 import java.io.IOException;
@@ -20,27 +19,23 @@ import java.nio.ByteBuffer;
  *******************************************************/
 
 public class MyMuxer {
-    private static final String SAVE_PATH = String.valueOf(Environment.getExternalStorageDirectory());
-    private static final String name = "mixVideo.mp4";
 
     private int audioId, videoId;
+    private String path;
     private MediaMuxer mediaMuxer;
     private MediaFormat audioFormat, videoFormat;
     private final MuxerListener muxerListener;
     private final MyExtractor audioExtractor = new MyExtractor();
     private final MyExtractor videoExtractor = new MyExtractor();
 
-    public MyMuxer(MuxerListener listener) {
+    public MyMuxer(String path, MuxerListener listener) {
         this.muxerListener = listener;
+        this.path = path;
         init();
     }
 
     private void init() {
-        File dir = new File(SAVE_PATH);
-        if (!dir.exists()) {
-            dir.mkdirs();
-        }
-        File file = new File(SAVE_PATH, name);
+        File file = new File(path);
         if (file.exists()) {
             file.delete();
         }
@@ -92,7 +87,7 @@ public class MyMuxer {
                     videoExtractor.release();
                     mediaMuxer.stop();
                     mediaMuxer.release();
-                    muxerListener.onSuccess(SAVE_PATH + File.separator + name);
+                    muxerListener.onSuccess(path);
                 } catch (Exception e) {
                     e.printStackTrace();
                     muxerListener.onFail(e.getMessage());

@@ -8,6 +8,7 @@ import wang.julis.jproject.example.media.audio.AudioMainActivity;
 import wang.julis.jproject.example.media.camera.CameraMainActivity;
 import wang.julis.jproject.example.media.codec.MediaCodecActivity;
 import wang.julis.jproject.example.media.drawimage.DrawImageActivity;
+import wang.julis.jproject.example.media.opengl.OpenGLMainActivity;
 import wang.julis.jproject.main.BaseListActivity;
 
 /*******************************************************
@@ -29,6 +30,7 @@ public class MediaMainActivity extends BaseListActivity {
         addActivity("DrawImage", DrawImageActivity.class);
         addActivity("Audio", AudioMainActivity.class);
         addActivity("Camera", CameraMainActivity.class);
+        addActivity("OpenGL ES", OpenGLMainActivity.class);
         submitActivityList();
         check();
     }

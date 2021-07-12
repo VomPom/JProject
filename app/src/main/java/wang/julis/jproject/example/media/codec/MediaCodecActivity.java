@@ -3,11 +3,12 @@ package wang.julis.jproject.example.media.codec;
 import android.annotation.SuppressLint;
 import android.os.Environment;
 import android.util.Log;
-import android.view.SurfaceHolder;
-import android.view.SurfaceView;
 import android.view.View;
+import android.widget.TextView;
 
 import com.julis.distance.R;
+
+import java.io.File;
 
 import wang.julis.jwbase.basecompact.BaseActivity;
 
@@ -22,43 +23,22 @@ import wang.julis.jwbase.basecompact.BaseActivity;
  *******************************************************/
 
 public class MediaCodecActivity extends BaseActivity implements View.OnClickListener {
-    public static final String PATH = Environment.getExternalStorageDirectory() + "/test.mp4";
-
-    private static final String url = "https://media.w3.org/2010/05/sintel/trailer.mp4";
+    public static final String SOURCE_PATH = Environment.getExternalStorageDirectory() + "/test.mp4";
+    private static final String SAVE_PATH = String.valueOf(Environment.getExternalStorageDirectory());
+    private static final String name = "mixVideo.mp4";
+    private TextView tvTips;
 
     @Override
     protected void initView() {
-        SurfaceView surfaceView = findViewById(R.id.sv_video);
-        findViewById(R.id.btn_recording_start).setOnClickListener(this);
-        findViewById(R.id.btn_end).setOnClickListener(this);
-        findViewById(R.id.btn_pause).setOnClickListener(this);
-
-        SurfaceHolder surfaceHolder = surfaceView.getHolder();
-        surfaceHolder.addCallback(new SurfaceHolder.Callback() {
-            @Override
-            public void surfaceCreated(SurfaceHolder holder) {
-
-            }
-
-            @Override
-            public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-
-            }
-
-            @Override
-            public void surfaceDestroyed(SurfaceHolder holder) {
-
-            }
-        });
-
-
+        findViewById(R.id.btn_muxer).setOnClickListener(this);
+        tvTips = findViewById(R.id.tv_tips);
     }
 
     /**
      * 音视频分离与合成
      */
-    private void testMediaCode() {
-        new MyMuxer(new MyMuxer.MuxerListener() {
+    private void testMuxer() {
+        new MyMuxer(SAVE_PATH + File.separator + name, new MyMuxer.MuxerListener() {
             @Override
             public void onStart() {
                 Log.e("julis", "Muxer start");
@@ -66,12 +46,12 @@ public class MediaCodecActivity extends BaseActivity implements View.OnClickList
 
             @Override
             public void onSuccess(String path) {
-                Log.e("julis", "Muxer onSuccess:" + path);
+                tvTips.setText("Muxer onSuccess,save in:" + path);
             }
 
             @Override
             public void onFail(String message) {
-                Log.e("julis", "Muxer onFail:" + message);
+                tvTips.setText("Muxer onFail:" + message);
             }
         }).start();
     }
@@ -83,7 +63,7 @@ public class MediaCodecActivity extends BaseActivity implements View.OnClickList
 
     @Override
     protected int getContentView() {
-        return R.layout.activity_media;
+        return R.layout.activity_media_muxer;
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -91,8 +71,8 @@ public class MediaCodecActivity extends BaseActivity implements View.OnClickList
     public void onClick(View v) {
         int viewId = v.getId();
         switch (viewId) {
-            default:
-                testMediaCode();
+            case R.id.btn_muxer:
+                testMuxer();
                 break;
         }
     }

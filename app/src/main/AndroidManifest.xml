@@ -3,6 +3,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.julis.distance">
 
+    <uses-feature
+        android:glEsVersion="0x00020000"
+        android:required="true" />
+
+    <supports-gl-texture android:name="GL_OES_compressed_ETC1_RGB8_texture" />
+    <supports-gl-texture android:name="GL_OES_compressed_paletted_texture" />
+
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
     <application
         android:name="wang.julis.jproject.MainApplication"
         android:allowBackup="true"
@@ -39,6 +52,9 @@
         <activity android:name="wang.julis.jproject.example.media.camera.SurfaceViewCameraActivity" />
         <activity android:name="wang.julis.jproject.example.media.camera.TextureViewCameraActivity" />
         <activity android:name="wang.julis.jproject.example.media.camera.CameraMainActivity" />
+        <activity android:name="wang.julis.jproject.example.media.opengl.OpenGLMainActivity" />
+        <activity android:name="wang.julis.jproject.example.media.opengl.OpenGLTriangleActivity" />
+        <activity android:name="wang.julis.jproject.example.media.opengl.OpenGLImageActivity" />
         <!--        <activity android:name="wang.julis.jproject.example.media.MediaMainActivity" />-->
 
         <service android:name="wang.julis.jproject.example.binder.server.AIDLService">
@@ -59,9 +75,5 @@
             android:value="89" />
     </application>
 
-    <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.RECORD_AUDIO" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
 </manifest>

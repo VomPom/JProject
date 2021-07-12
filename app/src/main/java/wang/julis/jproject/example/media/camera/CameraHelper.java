@@ -14,7 +14,6 @@ import android.hardware.camera2.CaptureFailure;
 import android.hardware.camera2.CaptureRequest;
 import android.hardware.camera2.TotalCaptureResult;
 import android.hardware.camera2.params.StreamConfigurationMap;
-import android.media.Image;
 import android.media.ImageReader;
 import android.os.Handler;
 import android.os.HandlerThread;
@@ -31,11 +30,6 @@ import androidx.lifecycle.LifecycleObserver;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.nio.ByteBuffer;
 import java.util.Arrays;
 
 /*******************************************************
@@ -65,7 +59,7 @@ public class CameraHelper implements LifecycleObserver {
     private static final int CAMERA_FACING = CameraCharacteristics.LENS_FACING_BACK;
     private static final int PREVIEW_WIDTH = 1080;
     private static final int PREVIEW_HEIGHT = 2340;
-    private Size previewSize = new Size(PREVIEW_WIDTH, PREVIEW_HEIGHT);
+    private final Size previewSize = new Size(PREVIEW_WIDTH, PREVIEW_HEIGHT);
 
     private final Context context;
     private TextureView textureView;
@@ -75,8 +69,6 @@ public class CameraHelper implements LifecycleObserver {
     private CameraDevice cameraDevice;
     private CameraManager cameraManager;
     private ImageReader imageReader;
-    private HandlerThread handlerThread;
-    private FileOutputStream outputStream;
 
     private Handler cameraHandler;
     private CameraCaptureSession cameraCaptureSession;
@@ -96,7 +88,7 @@ public class CameraHelper implements LifecycleObserver {
 
     private void innerInit() {
         cameraManager = (CameraManager) context.getSystemService(Context.CAMERA_SERVICE);
-        handlerThread = new HandlerThread("CameraThread");
+        HandlerThread handlerThread = new HandlerThread("CameraThread");
         handlerThread.start();
         cameraHandler = new Handler(handlerThread.getLooper());
 
@@ -274,80 +266,79 @@ public class CameraHelper implements LifecycleObserver {
         }
     };
 
-    //TODO: large file
-    public void recording(File file) {
-        try {
-            outputStream = new FileOutputStream(file);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        HandlerThread writerHandlerThread = new HandlerThread("writerHandlerThread");
-        writerHandlerThread.start();
-        Handler writerHandler = new Handler(writerHandlerThread.getLooper());
-
-        imageReader.setOnImageAvailableListener(reader -> {
-            Image image = reader.acquireNextImage();
-            byte[] bytes = new byte[imageReader.getWidth() * imageReader.getHeight() * 3 / 2];
-            int count = 0;
-            for (Image.Plane plane : image.getPlanes()) {
-                ByteBuffer byteBuffer = plane.getBuffer();
-                int pixelStride = plane.getPixelStride();
-                for (int i = 0; i < byteBuffer.remaining(); i += pixelStride) {
-                    bytes[count++] = byteBuffer.get(i);
-                }
-            }
-            try {
-                outputStream.write(bytes);
-            } catch (IOException e) {
-                e.printStackTrace();
-            } finally {
-                image.close();
-            }
-        }, writerHandler);
-
-        Surface surface;
-        if (surfaceView != null) {
-            surface = surfaceView.getHolder().getSurface();
-        } else {
-            surface = new Surface(textureView.getSurfaceTexture());
-        }
-
-        if (surface == null) {
-            throw new IllegalStateException("Surface 错误");
-        }
-        try {
-            CaptureRequest.Builder captureRequestBuilder =
-                    cameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_RECORD);
-            captureRequestBuilder.addTarget(imageReader.getSurface());
-            captureRequestBuilder.addTarget(surface);
-            captureRequestBuilder.set(
-                    CaptureRequest.CONTROL_AE_MODE,
-                    CaptureRequest.CONTROL_AE_ANTIBANDING_MODE_AUTO
-            );
-            captureRequestBuilder.set(
-                    CaptureRequest.CONTROL_AF_MODE,
-                    CaptureRequest.CONTROL_AF_MODE_CONTINUOUS_PICTURE
-            );
-            cameraCaptureSession.setRepeatingRequest(captureRequestBuilder.build(), new CameraCaptureSession.CaptureCallback() {
-                @Override
-                public void onCaptureStarted(@NonNull @NotNull CameraCaptureSession session, @NonNull @NotNull CaptureRequest request, long timestamp, long frameNumber) {
-                    super.onCaptureStarted(session, request, timestamp, frameNumber);
-                }
-            }, cameraHandler);
-        } catch (CameraAccessException e) {
-            e.printStackTrace();
-        }
-    }
-
     private void close() {
         cameraCaptureSession.close();
         cameraCaptureSession = null;
         cameraDevice.close();
-//        outputStream.close();
         if (imageReader != null) {
             imageReader.close();
         }
     }
+
+//TODO2: large file
+//    public void recording(File file) {
+//        try {
+//            outputStream = new FileOutputStream(file);
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//        }
+//        HandlerThread writerHandlerThread = new HandlerThread("writerHandlerThread");
+//        writerHandlerThread.start();
+//        Handler writerHandler = new Handler(writerHandlerThread.getLooper());
+//
+//        imageReader.setOnImageAvailableListener(reader -> {
+//            Image image = reader.acquireNextImage();
+//            byte[] bytes = new byte[imageReader.getWidth() * imageReader.getHeight() * 3 / 2];
+//            int count = 0;
+//            for (Image.Plane plane : image.getPlanes()) {
+//                ByteBuffer byteBuffer = plane.getBuffer();
+//                int pixelStride = plane.getPixelStride();
+//                for (int i = 0; i < byteBuffer.remaining(); i += pixelStride) {
+//                    bytes[count++] = byteBuffer.get(i);
+//                }
+//            }
+//            try {
+//                outputStream.write(bytes);
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            } finally {
+//                image.close();
+//            }
+//        }, writerHandler);
+//
+//        Surface surface;
+//        if (surfaceView != null) {
+//            surface = surfaceView.getHolder().getSurface();
+//        } else {
+//            surface = new Surface(textureView.getSurfaceTexture());
+//        }
+//
+//        if (surface == null) {
+//            throw new IllegalStateException("Surface 错误");
+//        }
+//        try {
+//            CaptureRequest.Builder captureRequestBuilder =
+//                    cameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_RECORD);
+//            captureRequestBuilder.addTarget(imageReader.getSurface());
+//            captureRequestBuilder.addTarget(surface);
+//            captureRequestBuilder.set(
+//                    CaptureRequest.CONTROL_AE_MODE,
+//                    CaptureRequest.CONTROL_AE_ANTIBANDING_MODE_AUTO
+//            );
+//            captureRequestBuilder.set(
+//                    CaptureRequest.CONTROL_AF_MODE,
+//                    CaptureRequest.CONTROL_AF_MODE_CONTINUOUS_PICTURE
+//            );
+//            cameraCaptureSession.setRepeatingRequest(captureRequestBuilder.build(), new CameraCaptureSession.CaptureCallback() {
+//                @Override
+//                public void onCaptureStarted(@NonNull @NotNull CameraCaptureSession session, @NonNull @NotNull CaptureRequest request, long timestamp, long frameNumber) {
+//                    super.onCaptureStarted(session, request, timestamp, frameNumber);
+//                }
+//            }, cameraHandler);
+//        } catch (CameraAccessException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
 
 }

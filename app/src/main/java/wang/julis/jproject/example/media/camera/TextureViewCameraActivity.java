@@ -1,11 +1,8 @@
 package wang.julis.jproject.example.media.camera;
 
-import android.os.Environment;
 import android.view.TextureView;
 
 import com.julis.distance.R;
-
-import java.io.File;
 
 import wang.julis.jwbase.basecompact.BaseActivity;
 
@@ -25,12 +22,6 @@ public class TextureViewCameraActivity extends BaseActivity {
     protected void initView() {
         TextureView textureView = findViewById(R.id.ture_camera);
         CameraHelper helper = new CameraHelper(this, textureView);
-        findViewById(R.id.btn_recording).setOnClickListener(v -> {
-            File file = new File(getExternalFilesDir(Environment.DIRECTORY_MOVIES), "test.mp4");
-            helper.recording(file);
-        });
-        findViewById(R.id.btn_take_photo).setOnClickListener(v -> {
-        });
     }
 
     @Override
