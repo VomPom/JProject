@@ -1,4 +1,4 @@
-package wang.julis.jproject.example.media.decode.async;
+package wang.julis.jproject.example.media.codec.decode.async;
 
 import android.media.AudioAttributes;
 import android.media.AudioFormat;

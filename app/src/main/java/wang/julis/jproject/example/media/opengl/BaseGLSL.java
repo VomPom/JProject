@@ -23,7 +23,7 @@ public abstract class BaseGLSL {
      *
      * @param type       加载着色器类型
      * @param shaderCode 加载着色器的代码
-     * @return
+     * @return shader
      */
     public static int loadShader(int type, String shaderCode) {
         //根据type创建顶点着色器或者片元着色器

@@ -70,14 +70,14 @@ public class GLTriangle extends BaseGLSL {
                     " }";
 
     // 定义三角形的坐标
-    public static float triangleCoords[] = {
+    public static float[] triangleCoords = {
             0.0f, 0.622008459f, 0.0f, // top
             -0.5f, -0.311004243f, 0.0f, // bottom left
-            0.5f, -0.311004243f, 0.0f  // bottom right
+            0.5f, -0.311004243f, 0.0f,  // bottom right
     };
 
     // 定义三角形的颜色——白色
-    public static float color[] = {1.0f, 1.0f, 1.0f, 1.0f};
+    public static float[] color = {1.0f, 1.0f, 1.0f, 1.0f};
 
     // 顶点个数
     public static final int vertexCount = triangleCoords.length / COORDS_PER_VERTEX;

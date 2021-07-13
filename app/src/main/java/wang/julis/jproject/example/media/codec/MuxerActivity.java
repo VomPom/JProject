@@ -22,7 +22,7 @@ import wang.julis.jwbase.basecompact.BaseActivity;
  *
  *******************************************************/
 
-public class MediaCodecActivity extends BaseActivity implements View.OnClickListener {
+public class MuxerActivity extends BaseActivity implements View.OnClickListener {
     public static final String SOURCE_PATH = Environment.getExternalStorageDirectory() + "/test.mp4";
     private static final String SAVE_PATH = String.valueOf(Environment.getExternalStorageDirectory());
     private static final String name = "mixVideo.mp4";

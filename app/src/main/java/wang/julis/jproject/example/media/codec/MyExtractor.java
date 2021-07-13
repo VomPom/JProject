@@ -35,7 +35,7 @@ public class MyExtractor {
     private void init() {
         try {
             mediaExtractor = new MediaExtractor();
-            mediaExtractor.setDataSource(MediaCodecActivity.SOURCE_PATH);
+            mediaExtractor.setDataSource(MuxerActivity.SOURCE_PATH);
         } catch (IOException e) {
             e.printStackTrace();
         }

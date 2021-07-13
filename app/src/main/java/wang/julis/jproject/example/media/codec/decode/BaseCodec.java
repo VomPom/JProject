@@ -1,9 +1,11 @@
-package wang.julis.jproject.example.media.codec;
+package wang.julis.jproject.example.media.codec.decode;
 
 import android.media.MediaCodec;
 import android.media.MediaFormat;
 
 import java.io.IOException;
+
+import wang.julis.jproject.example.media.codec.MyExtractor;
 
 public abstract class BaseCodec {
     private static final String TAG = "BaseCodec";

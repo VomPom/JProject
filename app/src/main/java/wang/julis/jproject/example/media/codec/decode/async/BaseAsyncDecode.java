@@ -1,4 +1,4 @@
-package wang.julis.jproject.example.media.decode.async;
+package wang.julis.jproject.example.media.codec.decode.async;
 
 import android.os.Handler;
 import android.os.HandlerThread;
@@ -6,7 +6,7 @@ import android.os.Message;
 
 import androidx.annotation.NonNull;
 
-import wang.julis.jproject.example.media.codec.BaseCodec;
+import wang.julis.jproject.example.media.codec.decode.BaseCodec;
 
 public abstract class BaseAsyncDecode extends BaseCodec implements Handler.Callback {
     private static final String TAG = "BaseAsyncDecode";

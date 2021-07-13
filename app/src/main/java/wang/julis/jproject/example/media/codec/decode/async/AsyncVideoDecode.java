@@ -1,4 +1,4 @@
-package wang.julis.jproject.example.media.decode.async;
+package wang.julis.jproject.example.media.codec.decode.async;
 
 import android.graphics.SurfaceTexture;
 import android.media.MediaCodec;

@@ -44,7 +44,7 @@
         <activity android:name="wang.julis.jproject.example.binder.client.BinderTestActivity" />
         <activity android:name="wang.julis.jproject.example.okhttp.OkHttpTestActivity" />
         <activity android:name="wang.julis.jproject.example.media.MediaPlayerActivity" />
-        <activity android:name="wang.julis.jproject.example.media.codec.MediaCodecActivity" />
+        <activity android:name="wang.julis.jproject.example.media.codec.MuxerActivity" />
         <activity android:name="wang.julis.jproject.example.anim.AnimationMainActivity" />
         <activity android:name="wang.julis.jproject.example.media.drawimage.DrawImageActivity" />
         <activity android:name="wang.julis.jproject.example.media.audio.AudioMainActivity" />
@@ -55,6 +55,7 @@
         <activity android:name="wang.julis.jproject.example.media.opengl.OpenGLMainActivity" />
         <activity android:name="wang.julis.jproject.example.media.opengl.OpenGLTriangleActivity" />
         <activity android:name="wang.julis.jproject.example.media.opengl.OpenGLImageActivity" />
+        <activity android:name="wang.julis.jproject.example.media.codec.MediaCodecMainActivity" />
         <!--        <activity android:name="wang.julis.jproject.example.media.MediaMainActivity" />-->
 
         <service android:name="wang.julis.jproject.example.binder.server.AIDLService">
