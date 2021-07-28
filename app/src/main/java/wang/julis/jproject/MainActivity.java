@@ -5,7 +5,6 @@ import wang.julis.jproject.blog.PosterGeneratorActivity;
 import wang.julis.jproject.example.anim.AnimationMainActivity;
 import wang.julis.jproject.example.binder.client.BinderTestActivity;
 import wang.julis.jproject.example.media.MediaMainActivity;
-import wang.julis.jproject.example.okhttp.OkHttpTestActivity;
 import wang.julis.jproject.main.BaseListActivity;
 
 /*******************************************************
@@ -24,7 +23,6 @@ public class MainActivity extends BaseListActivity {
         addActivity("博客海报生成", PosterGeneratorActivity.class);
         addActivity("动画相关", AnimationMainActivity.class);
         addActivity("BinderExample", BinderTestActivity.class);
-        addActivity("OkHttpExample", OkHttpTestActivity.class);
         addActivity("音视频", MediaMainActivity.class);
         submitActivityList();
     }

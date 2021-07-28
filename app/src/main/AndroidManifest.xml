@@ -42,7 +42,6 @@
         <activity android:name="wang.julis.jproject.example.anim.ObjectAnimatorActivity" />
         <activity android:name="wang.julis.jproject.example.anim.AnimatorSetActivity" />
         <activity android:name="wang.julis.jproject.example.binder.client.BinderTestActivity" />
-        <activity android:name="wang.julis.jproject.example.okhttp.OkHttpTestActivity" />
         <activity android:name="wang.julis.jproject.example.media.MediaPlayerActivity" />
         <activity android:name="wang.julis.jproject.example.media.codec.MuxerActivity" />
         <activity android:name="wang.julis.jproject.example.anim.AnimationMainActivity" />
@@ -56,7 +55,7 @@
         <activity android:name="wang.julis.jproject.example.media.opengl.OpenGLTriangleActivity" />
         <activity android:name="wang.julis.jproject.example.media.opengl.OpenGLImageActivity" />
         <activity android:name="wang.julis.jproject.example.media.codec.MediaCodecMainActivity" />
-        <!--        <activity android:name="wang.julis.jproject.example.media.MediaMainActivity" />-->
+        <activity android:name="wang.julis.jproject.example.media.screenrecord.ScreenRecordActivity" />
 
         <service android:name="wang.julis.jproject.example.binder.server.AIDLService">
             <intent-filter>

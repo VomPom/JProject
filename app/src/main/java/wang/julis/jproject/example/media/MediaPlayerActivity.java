@@ -35,7 +35,7 @@ public class MediaPlayerActivity extends BaseActivity implements View.OnClickLis
         SurfaceView surfaceView = findViewById(R.id.sv_video);
         viewBg = findViewById(R.id.view_bg);
         findViewById(R.id.btn_recording_start).setOnClickListener(this);
-        findViewById(R.id.btn_end).setOnClickListener(this);
+        findViewById(R.id.btn_stop).setOnClickListener(this);
         findViewById(R.id.btn_pause).setOnClickListener(this);
 
         surfaceHolder = surfaceView.getHolder();
@@ -96,7 +96,7 @@ public class MediaPlayerActivity extends BaseActivity implements View.OnClickLis
             case R.id.btn_pause:
                 mPlayer.pause();
                 break;
-            case R.id.btn_end:
+            case R.id.btn_stop:
                 mPlayer.stop();
                 break;
 
