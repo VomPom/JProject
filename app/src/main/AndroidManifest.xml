@@ -56,6 +56,7 @@
         <activity android:name="wang.julis.jproject.example.media.opengl.OpenGLImageActivity" />
         <activity android:name="wang.julis.jproject.example.media.codec.MediaCodecMainActivity" />
         <activity android:name="wang.julis.jproject.example.media.screenrecord.ScreenRecordActivity" />
+        <activity android:name="wang.julis.jproject.example.media.codec.H264Activity" />
 
         <service android:name="wang.julis.jproject.example.binder.server.AIDLService">
             <intent-filter>

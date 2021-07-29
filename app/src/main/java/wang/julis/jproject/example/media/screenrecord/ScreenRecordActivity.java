@@ -156,7 +156,7 @@ public class ScreenRecordActivity extends BaseActivity implements View.OnClickLi
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable @org.jetbrains.annotations.Nullable Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         if (requestCode == REQUEST_CODE) {
             if (resultCode == RESULT_OK && data != null) {
                 mediaProjection = projectionManager.getMediaProjection(resultCode, data);
@@ -174,7 +174,8 @@ public class ScreenRecordActivity extends BaseActivity implements View.OnClickLi
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull @NotNull String[] permissions, @NonNull @NotNull int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull @NotNull String[] permissions,
+                                           @NonNull @NotNull int[] grantResults) {
         if (requestCode == 100) {
             for (int grantResult : grantResults) {
                 if (PackageManager.PERMISSION_GRANTED != grantResult) {
@@ -200,7 +201,7 @@ public class ScreenRecordActivity extends BaseActivity implements View.OnClickLi
         int width = Math.min(displayMetrics.widthPixels, 1080);
         int height = Math.min(displayMetrics.heightPixels, 1920);
         mediaRecorder = new MediaRecorder();
-//        mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+        mediaRecorder.setAudioSource(MediaRecorder.AudioSource.REMOTE_SUBMIX);
         mediaRecorder.setVideoSource(MediaRecorder.VideoSource.SURFACE);
         mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
         mediaRecorder.setVideoEncoder(MediaRecorder.VideoEncoder.H264);
