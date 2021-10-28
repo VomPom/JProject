@@ -197,11 +197,10 @@ public class ScreenRecordActivity extends BaseActivity implements View.OnClickLi
             saveFile.delete();
         }
         DisplayMetrics displayMetrics = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         int width = Math.min(displayMetrics.widthPixels, 1080);
         int height = Math.min(displayMetrics.heightPixels, 1920);
         mediaRecorder = new MediaRecorder();
-        mediaRecorder.setAudioSource(MediaRecorder.AudioSource.REMOTE_SUBMIX);
+        mediaRecorder.setAudioSource(android.media.MediaRecorder.AudioSource.MIC);
         mediaRecorder.setVideoSource(MediaRecorder.VideoSource.SURFACE);
         mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
         mediaRecorder.setVideoEncoder(MediaRecorder.VideoEncoder.H264);
@@ -209,7 +208,6 @@ public class ScreenRecordActivity extends BaseActivity implements View.OnClickLi
         mediaRecorder.setVideoSize(width, height);
         mediaRecorder.setVideoEncodingBitRate(8 * 1024 * 1024);
         mediaRecorder.setVideoFrameRate(VIDEO_FRAME_RATE);
-
         try {
             mediaRecorder.prepare();
             virtualDisplay = mediaProjection.createVirtualDisplay(

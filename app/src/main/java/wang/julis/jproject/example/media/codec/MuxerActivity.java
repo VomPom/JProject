@@ -41,7 +41,7 @@ public class MuxerActivity extends BaseActivity implements View.OnClickListener 
         new MyMuxer(SAVE_PATH + File.separator + name, new MyMuxer.MuxerListener() {
             @Override
             public void onStart() {
-                Log.e("julis", "Muxer start");
+                Log.e("----julis", "Muxer start");
             }
 
             @Override

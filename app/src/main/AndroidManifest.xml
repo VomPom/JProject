@@ -28,7 +28,7 @@
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:appComponentFactory">
-        <activity android:name="wang.julis.jproject.example.media.MediaMainActivity">
+        <activity android:name="wang.julis.jproject.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -56,7 +56,12 @@
         <activity android:name="wang.julis.jproject.example.media.opengl.OpenGLImageActivity" />
         <activity android:name="wang.julis.jproject.example.media.codec.MediaCodecMainActivity" />
         <activity android:name="wang.julis.jproject.example.media.screenrecord.ScreenRecordActivity" />
+        <activity android:name="wang.julis.jproject.example.media.screenrecord.MediaProjectionDemoActivity" />
         <activity android:name="wang.julis.jproject.example.media.codec.H264Activity" />
+        <activity android:name="wang.julis.jproject.example.media.codec.MediaExtractorActivity" />
+        <activity android:name="wang.julis.jproject.example.media.MediaMainActivity" />
+        <activity android:name="wang.julis.jproject.example.media.little.JsonTestActivity" />
+        <activity android:name="wang.julis.jproject.example.media.frames.ExtractMpegFramesActivity" />
 
         <service android:name="wang.julis.jproject.example.binder.server.AIDLService">
             <intent-filter>

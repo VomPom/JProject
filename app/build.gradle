@@ -43,6 +43,6 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
 
     implementation 'com.squareup.okhttp3:okhttp:3.10.0'
-
+    implementation 'nl.bravobit:android-ffmpeg:1.1.7'
 }
 //apply from: '../script/get_hybrid_class.gradle'

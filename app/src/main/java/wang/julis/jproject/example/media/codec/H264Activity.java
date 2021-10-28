@@ -2,6 +2,7 @@ package wang.julis.jproject.example.media.codec;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.ImageFormat;
 import android.graphics.Rect;
 import android.graphics.YuvImage;
 import android.media.Image;
@@ -9,6 +10,7 @@ import android.media.MediaCodec;
 import android.media.MediaFormat;
 import android.os.Build;
 import android.os.Environment;
+import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
@@ -40,6 +42,16 @@ import wang.julis.jwbase.basecompact.BaseActivity;
 
 public class H264Activity extends BaseActivity {
 
+    private DataInputStream mInputStream;
+    private static final String FILE_PATH = Environment.getExternalStorageDirectory().getPath() + "/h264.h264";
+    private SurfaceView mSurfaceView;
+    private SurfaceHolder mSurfaceHolder;
+    private MediaCodec mCodec;
+    private boolean mStopFlag;
+    private Thread mDecodeThread;
+    private boolean useSPSandPPS = true;
+
+
     @Override
     protected void initView() {
         mSurfaceView = findViewById(R.id.sv_video);
@@ -55,15 +67,6 @@ public class H264Activity extends BaseActivity {
     protected int getContentView() {
         return R.layout.activity_h264;
     }
-
-    private DataInputStream mInputStream;
-    private static final String FILE_PATH = Environment.getExternalStorageDirectory().getPath() + "/h264.h264";
-    private SurfaceView mSurfaceView;
-    private SurfaceHolder mSurfaceHolder;
-    private MediaCodec mCodec;
-    private boolean mStopFlag;
-    private Thread mDecodeThread;
-    private boolean useSPSandPPS = true;
 
 
     private void start() {
@@ -208,10 +211,16 @@ public class H264Activity extends BaseActivity {
                     }
 
                     int outputIndex = mCodec.dequeueOutputBuffer(info, timeoutUs);
-//                    Image image = mCodec.getOutputImage(outputIndex);
-//                    YuvImage yuvImage = new YuvImage(YUV_420_888toNV21(image), ImageFormat.NV21, 1080, 1920, null);
-//                    getBitmap(yuvImage);
+
                     if (outputIndex >= 0) {
+                        Log.e("julis", String.valueOf(outputIndex));
+
+                        Image image = mCodec.getOutputImage(outputIndex);
+                        if (image != null) {
+                            YuvImage yuvImage = new YuvImage(YUV_420_888toNV21(image), ImageFormat.NV21, 1080, 1920, null);
+                            getBitmap(yuvImage);
+                        }
+
                         //帧控制是不在这种情况下工作，因为没有PTS H264是可用的
                         while (info.presentationTimeUs / 1000 > System.currentTimeMillis() - startMs) {
                             try {

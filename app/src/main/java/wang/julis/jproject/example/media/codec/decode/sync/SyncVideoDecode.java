@@ -3,6 +3,7 @@ package wang.julis.jproject.example.media.codec.decode.sync;
 import android.graphics.SurfaceTexture;
 import android.media.MediaCodec;
 import android.util.Log;
+import android.view.Surface;
 
 /**
  * 视频解码
@@ -14,7 +15,10 @@ public class SyncVideoDecode extends BaseSyncDecode {
 
     public SyncVideoDecode(SurfaceTexture surfaceTexture) {
         super(surfaceTexture);
+    }
 
+    public SyncVideoDecode(Surface surface) {
+        super(surface);
     }
 
     @Override

@@ -36,10 +36,17 @@ public abstract class BaseSyncDecode extends BaseCodec implements Runnable {
         mediaCodec.start();
     }
 
+    public BaseSyncDecode(Surface surface) {
+        super();
+        mSurface = surface;
+        //由子类去配置
+        configure();
+        //开始工作，进入编解码状态
+        mediaCodec.start();
+    }
+
     @Override
     public void run() {
-
-
         try {
             //编码
             while (!isDone) {
