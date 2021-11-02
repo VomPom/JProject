@@ -1,5 +1,6 @@
 package wang.julis.jproject;
 
+import julis.wang.kotlinlearn.KotlinMainActivity;
 import wang.julis.jproject.blog.ArticlePosterGeneratorActivity;
 import wang.julis.jproject.blog.PosterGeneratorActivity;
 import wang.julis.jproject.example.anim.AnimationMainActivity;
@@ -26,6 +27,7 @@ public class MainActivity extends BaseListActivity {
         addActivity("BinderExample", BinderTestActivity.class);
         addActivity("音视频", MediaMainActivity.class);
         addActivity("JsonTest", JsonTestActivity.class);
+        addActivity("Kotlin", KotlinMainActivity.class);
         submitActivityList();
     }
 
