@@ -4,8 +4,9 @@
 
     <application
         android:allowBackup="true"
+        android:exported="false"
         android:supportsRtl="true">
         <activity android:name=".KotlinMainActivity" />
-        <activity android:name=".viewmodel.ViewModelTestActivity" />
+        <activity android:name=".jetpack.ViewModelTestActivity" />
     </application>
 </manifest>

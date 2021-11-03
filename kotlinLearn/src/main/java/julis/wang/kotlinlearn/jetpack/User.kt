@@ -1,4 +1,4 @@
-package julis.wang.kotlinlearn.viewmodel
+package julis.wang.kotlinlearn.jetpack
 
 /*******************************************************
  *
@@ -9,4 +9,8 @@ package julis.wang.kotlinlearn.viewmodel
  *
  *******************************************************/
 
-data class User(val sex: Int, val name: String)
+data class User(val sex: Int, var name: String) : BaseData(sex) {
+    fun printUserInfo(): String {
+        return "sex:$sex name:$name"
+    }
+}

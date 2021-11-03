@@ -1,7 +1,7 @@
 package julis.wang.kotlinlearn
 
+import julis.wang.kotlinlearn.jetpack.ViewModelTestActivity
 import julis.wang.kotlinlearn.main.BaseListActivity
-import julis.wang.kotlinlearn.viewmodel.ViewModelTestActivity
 
 /*******************************************************
  *
