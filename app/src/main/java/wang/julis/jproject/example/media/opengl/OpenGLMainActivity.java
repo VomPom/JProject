@@ -20,6 +20,6 @@ public class OpenGLMainActivity extends BaseListActivity {
     protected void initData() {
         addActivity("绘制一个三角形", OpenGLTriangleActivity.class);
         addActivity("OpenGL 显示一张图片", OpenGLImageActivity.class);
-        addActivity("NDK OpenGL", OpenGLNDKActivity.class);
+        addActivity("NDK OpenGL", OpenGLNDKListActivity.class);
     }
 }

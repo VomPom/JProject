@@ -25,7 +25,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         android:usesCleartextTraffic="true">
-        <activity android:name="wang.julis.jproject.MainActivity">
+        <activity android:name="wang.julis.jproject.example.media.opengl.OpenGLNDKListActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -60,7 +60,7 @@
         <activity android:name="wang.julis.jproject.example.media.little.JsonTestActivity" />
         <activity android:name="wang.julis.jproject.example.media.frames.ExtractMpegFramesActivity" />
         <activity android:name="wang.julis.jproject.example.media.little.LittleMainActivity" />
-        <activity android:name="wang.julis.jproject.example.media.opengl.OpenGLNDKActivity" />
+<!--        <activity android:name="wang.julis.jproject.example.media.opengl.OpenGLNDKListActivity" />-->
 
         <service android:name="wang.julis.jproject.example.binder.server.AIDLService">
             <intent-filter>

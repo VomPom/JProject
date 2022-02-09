@@ -27,7 +27,7 @@ public class MyGLSurfaceView extends GLSurfaceView implements ScaleGestureDetect
     private int mXAngle;
     private int mYAngle;
 
-    private final MyGLRender mGLRender;
+    private MyGLRender mGLRender;
 
     private int mRatioWidth = 0;
     private int mRatioHeight = 0;

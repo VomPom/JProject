@@ -1,9 +1,10 @@
 //
 // Created by ByteFlow on 2019/7/9.
 //
+#include "MyGLRenderContext.h"
 
 #include "../sample/TriangleSample.h"
-#include "MyGLRenderContext.h"
+#include "../sample/TextureMapSample.h"
 
 MyGLRenderContext *MyGLRenderContext::m_pContext = nullptr;
 
@@ -39,6 +40,24 @@ void MyGLRenderContext::SetParamsInt(int paramType, int value0, int value1) {
             case SAMPLE_TYPE_KEY_TRIANGLE:
                 m_pCurSample = new TriangleSample();
                 break;
+            case SAMPLE_TYPE_KEY_TEXTURE_MAP:
+                m_pCurSample = new TextureMapSample();
+                break;
+//            case SAMPLE_TYPE_KEY_YUV_TEXTURE_MAP:
+//                m_pCurSample = new NV21TextureMapSample();
+//                break;
+//            case SAMPLE_TYPE_KEY_VAO:
+//                m_pCurSample = new VaoSample();
+//                break;
+//            case SAMPLE_TYPE_KEY_FBO:
+//                m_pCurSample = new FBOSample();
+//                break;
+//            case SAMPLE_TYPE_KEY_FBO_LEG_LENGTHEN:
+//                m_pCurSample = new FBOLegLengthenSample();
+//                break;
+//            case SAMPLE_TYPE_KEY_COORD_SYSTEM:
+//                m_pCurSample = new CoordSystemSample();
+//                break;
 
             default:
                 m_pCurSample = nullptr;
