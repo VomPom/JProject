@@ -1,4 +1,4 @@
-package wang.julis.jproject.example.media.opengl;
+package wang.julis.jproject.example.media.opengl.basefunc;
 
 import android.opengl.GLES20;
 
@@ -58,7 +58,7 @@ public class GLTriangle extends BaseGLSL {
     public static final String vertexShaderCode =
             "attribute vec4 vPosition;\n" +
                     " void main() {\n" +
-                    "     gl_Position   = vPosition;\n" +
+                    "     gl_Position = vPosition;\n" +
                     " }";
 
     // 简单的片元着色器

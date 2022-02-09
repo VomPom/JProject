@@ -9,7 +9,6 @@ import wang.julis.jproject.example.media.camera.CameraMainActivity;
 import wang.julis.jproject.example.media.codec.MediaCodecMainActivity;
 import wang.julis.jproject.example.media.drawimage.DrawImageActivity;
 import wang.julis.jproject.example.media.frames.ExtractMpegFramesActivity;
-import wang.julis.jproject.example.media.opengl.OpenGLMainActivity;
 import wang.julis.jproject.example.media.screenrecord.MediaProjectionDemoActivity;
 import wang.julis.jproject.example.media.screenrecord.ScreenRecordActivity;
 import wang.julis.jproject.main.BaseListActivity;
@@ -33,11 +32,9 @@ public class MediaMainActivity extends BaseListActivity {
         addActivity("多种方式绘制图片", DrawImageActivity.class);
         addActivity("Audio", AudioMainActivity.class);
         addActivity("摄像头捕获数据", CameraMainActivity.class);
-        addActivity("OpenGL ES", OpenGLMainActivity.class);
         addActivity("手机录屏", ScreenRecordActivity.class);
         addActivity("提取帧", ExtractMpegFramesActivity.class);
         addActivity("MediaProjectionDemo", MediaProjectionDemoActivity.class);
-        submitActivityList();
         check();
     }
 

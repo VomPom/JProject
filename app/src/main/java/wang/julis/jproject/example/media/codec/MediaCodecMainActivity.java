@@ -19,7 +19,6 @@ public class MediaCodecMainActivity extends BaseListActivity {
         addActivity("合成新视频", MuxerActivity.class);
         addActivity("H.264硬解码/软解码", H264Activity.class);
         addActivity("test", MediaExtractorActivity.class);
-        submitActivityList();
     }
 
 

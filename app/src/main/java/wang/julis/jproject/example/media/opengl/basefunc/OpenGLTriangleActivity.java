@@ -1,4 +1,4 @@
-package wang.julis.jproject.example.media.opengl;
+package wang.julis.jproject.example.media.opengl.basefunc;
 
 import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;

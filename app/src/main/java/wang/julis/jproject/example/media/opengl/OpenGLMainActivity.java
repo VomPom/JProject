@@ -1,5 +1,7 @@
 package wang.julis.jproject.example.media.opengl;
 
+import wang.julis.jproject.example.media.opengl.basefunc.OpenGLImageActivity;
+import wang.julis.jproject.example.media.opengl.basefunc.OpenGLTriangleActivity;
 import wang.julis.jproject.main.BaseListActivity;
 
 /*******************************************************
@@ -16,10 +18,8 @@ public class OpenGLMainActivity extends BaseListActivity {
 
     @Override
     protected void initData() {
-        addActivity("OpenGL Base", OpenGLTriangleActivity.class);
+        addActivity("绘制一个三角形", OpenGLTriangleActivity.class);
         addActivity("OpenGL 显示一张图片", OpenGLImageActivity.class);
-        submitActivityList();
+        addActivity("NDK OpenGL", OpenGLNDKActivity.class);
     }
-
-
 }

@@ -49,8 +49,8 @@
         <activity android:name="wang.julis.jproject.example.media.camera.TextureViewCameraActivity" />
         <activity android:name="wang.julis.jproject.example.media.camera.CameraMainActivity" />
         <activity android:name="wang.julis.jproject.example.media.opengl.OpenGLMainActivity" />
-        <activity android:name="wang.julis.jproject.example.media.opengl.OpenGLTriangleActivity" />
-        <activity android:name="wang.julis.jproject.example.media.opengl.OpenGLImageActivity" />
+        <activity android:name="wang.julis.jproject.example.media.opengl.basefunc.OpenGLTriangleActivity" />
+        <activity android:name="wang.julis.jproject.example.media.opengl.basefunc.OpenGLImageActivity" />
         <activity android:name="wang.julis.jproject.example.media.codec.MediaCodecMainActivity" />
         <activity android:name="wang.julis.jproject.example.media.screenrecord.ScreenRecordActivity" />
         <activity android:name="wang.julis.jproject.example.media.screenrecord.MediaProjectionDemoActivity" />
@@ -59,6 +59,8 @@
         <activity android:name="wang.julis.jproject.example.media.MediaMainActivity" />
         <activity android:name="wang.julis.jproject.example.media.little.JsonTestActivity" />
         <activity android:name="wang.julis.jproject.example.media.frames.ExtractMpegFramesActivity" />
+        <activity android:name="wang.julis.jproject.example.media.little.LittleMainActivity" />
+        <activity android:name="wang.julis.jproject.example.media.opengl.OpenGLNDKActivity" />
 
         <service android:name="wang.julis.jproject.example.binder.server.AIDLService">
             <intent-filter>

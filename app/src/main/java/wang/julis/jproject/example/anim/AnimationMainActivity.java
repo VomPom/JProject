@@ -19,7 +19,6 @@ public class AnimationMainActivity extends BaseListActivity {
         addActivity("ValueAnimator", ValueAnimatorActivity.class);
         addActivity("ObjectAnimator", ObjectAnimatorActivity.class);
         addActivity("AnimatorSet", AnimatorSetActivity.class);
-        submitActivityList();
     }
 
 }

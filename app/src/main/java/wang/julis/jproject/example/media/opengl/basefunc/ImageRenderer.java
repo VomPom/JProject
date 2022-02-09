@@ -1,4 +1,4 @@
-package wang.julis.jproject.example.media.opengl;
+package wang.julis.jproject.example.media.opengl.basefunc;
 
 import android.content.Context;
 import android.graphics.Bitmap;

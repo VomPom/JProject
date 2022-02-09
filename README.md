@@ -14,8 +14,9 @@
 
 ## Example
 
-![main](.img/main.jpg)
+![main](.img/main.png)
 ![animation](.img/animation.jpg)
+![media](.img/media.png)
 ![poster](.img/poster.jpg)
 ![blog](.img/blog.jpg)
 ![poster2](.img/poster2.jpg)

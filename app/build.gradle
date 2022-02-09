@@ -10,6 +10,16 @@ android {
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
+        externalNativeBuild {
+            cmake {
+                cppFlags '-std=c++11'
+                //arguments '-DANDROID_TOOLCHAIN=clang', '-DANDROID_ARM_MODE=arm', '-DANDROID_STL=c++_shared'
+                cppFlags "-std=c++11 -frtti -fexceptions"
+            }
+        }
+        ndk {
+            abiFilters 'armeabi-v7a', "arm64-v8a"
+        }
     }
     buildTypes {
         release {
@@ -23,6 +33,11 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+    }
+    externalNativeBuild {
+        cmake {
+            path "src/main/cpp/CMakeLists.txt"
+        }
     }
 }
 
@@ -44,6 +59,10 @@ dependencies {
     implementation 'nl.bravobit:android-ffmpeg:1.1.7'
     implementation project(path: ':kotlinLearn')
     implementation project(':JWBase')
+
+    compile 'tv.danmaku.ijk.media:ijkplayer-java:0.8.8'
+    compile 'tv.danmaku.ijk.media:ijkplayer-armv7a:0.8.8'
+    compile 'tv.danmaku.ijk.media:ijkplayer-arm64:0.8.8'
 
 }
 //apply from: '../script/get_hybrid_class.gradle'

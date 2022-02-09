@@ -35,6 +35,5 @@ public class CameraMainActivity extends BaseListActivity {
     protected void initData() {
         addActivity("SurfaceView Camera", SurfaceViewCameraActivity.class);
         addActivity("TextureView Camera", TextureViewCameraActivity.class);
-        submitActivityList();
     }
 }

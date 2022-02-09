@@ -1,6 +1,9 @@
 package wang.julis.jproject.example.media.frames;
 
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
+import android.widget.TextView;
 
 import com.julis.distance.R;
 
@@ -16,19 +19,33 @@ import wang.julis.jwbase.basecompact.BaseActivity;
  *******************************************************/
 
 public class ExtractMpegFramesActivity extends BaseActivity {
+
+    private TextView tvCost;
+
     @Override
     protected void initView() {
+        tvCost = findViewById(R.id.tv_cost);
         findViewById(R.id.btn_start).setOnClickListener(v -> extractMpegFrames());
     }
 
+
     private void extractMpegFrames() {
-        ExtractMpegFramesCore test = new ExtractMpegFramesCore();
 
         new Thread(() -> {
             try {
+                ExtractMpegFramesCore test = new ExtractMpegFramesCore();
+
                 long startTime = System.currentTimeMillis();
                 ExtractMpegFramesWrapper.runTest(test);
-                Log.e("julis", "Cost:" + (System.currentTimeMillis() - startTime));
+                String msg = "Cost:" + (System.currentTimeMillis() - startTime) / 1000.0 + "s";
+                Log.e("julis", msg);
+                new Handler(Looper.getMainLooper()).post(new Runnable() {
+                    @Override
+                    public void run() {
+                        tvCost.setText(msg);
+                    }
+                });
+
             } catch (Throwable throwable) {
                 throwable.printStackTrace();
                 Log.e("julis", "throwable:" + throwable.getMessage());
