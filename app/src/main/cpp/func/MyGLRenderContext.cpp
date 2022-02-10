@@ -5,6 +5,9 @@
 
 #include "../sample/TriangleSample.h"
 #include "../sample/TextureMapSample.h"
+#include "../sample/NV21TextureMapSample.h"
+#include "../sample/VaoSample.h"
+#include "../sample/FBOSample.h"
 
 MyGLRenderContext *MyGLRenderContext::m_pContext = nullptr;
 
@@ -43,15 +46,15 @@ void MyGLRenderContext::SetParamsInt(int paramType, int value0, int value1) {
             case SAMPLE_TYPE_KEY_TEXTURE_MAP:
                 m_pCurSample = new TextureMapSample();
                 break;
-//            case SAMPLE_TYPE_KEY_YUV_TEXTURE_MAP:
-//                m_pCurSample = new NV21TextureMapSample();
-//                break;
-//            case SAMPLE_TYPE_KEY_VAO:
-//                m_pCurSample = new VaoSample();
-//                break;
-//            case SAMPLE_TYPE_KEY_FBO:
-//                m_pCurSample = new FBOSample();
-//                break;
+            case SAMPLE_TYPE_KEY_YUV_TEXTURE_MAP:
+                m_pCurSample = new NV21TextureMapSample();
+                break;
+            case SAMPLE_TYPE_KEY_VAO:
+                m_pCurSample = new VaoSample();
+                break;
+            case SAMPLE_TYPE_KEY_FBO:
+                m_pCurSample = new FBOSample();
+                break;
 //            case SAMPLE_TYPE_KEY_FBO_LEG_LENGTHEN:
 //                m_pCurSample = new FBOLegLengthenSample();
 //                break;

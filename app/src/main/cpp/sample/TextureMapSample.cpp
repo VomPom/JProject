@@ -84,6 +84,7 @@ void TextureMapSample::Init() {
 
     m_ProgramObj = GLUtils::CreateProgram(vShaderStr, fShaderStr, m_VertexShader, m_FragmentShader);
     if (m_ProgramObj) {
+        //获取统一变量的位置
         m_SamplerLoc = glGetUniformLocation(m_ProgramObj, "s_TextureMap");
     } else {
         LOGCATE("TextureMapSample::Init create program fail");
@@ -121,6 +122,8 @@ void TextureMapSample::Draw(int screenW, int screenH) {
     //加载 RGBA 格式的图像数据
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, m_RenderImage.width, m_RenderImage.height, 0, GL_RGBA, GL_UNSIGNED_BYTE,
                  m_RenderImage.ppPlane[0]);
+
+    // 解绑纹理
     glBindTexture(GL_TEXTURE_2D, GL_NONE);
 
     // Use the program object

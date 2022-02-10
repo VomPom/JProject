@@ -25,9 +25,12 @@ import wang.julis.jproject.example.media.opengl.glitem.GLItemListModel;
 import wang.julis.jwbase.basecompact.BaseActivity;
 
 import static android.opengl.GLSurfaceView.RENDERMODE_WHEN_DIRTY;
+import static wang.julis.jproject.example.media.opengl.MyGLSurfaceView.IMAGE_FORMAT_NV21;
 import static wang.julis.jproject.example.media.opengl.MyGLSurfaceView.IMAGE_FORMAT_RGBA;
+import static wang.julis.jproject.example.media.opengl.MyNativeRender.SAMPLE_TYPE_FBO;
 import static wang.julis.jproject.example.media.opengl.MyNativeRender.SAMPLE_TYPE_TEXTURE_MAP;
 import static wang.julis.jproject.example.media.opengl.MyNativeRender.SAMPLE_TYPE_TRIANGLE;
+import static wang.julis.jproject.example.media.opengl.MyNativeRender.SAMPLE_TYPE_VAO;
 import static wang.julis.jproject.example.media.opengl.MyNativeRender.SAMPLE_TYPE_YUV_TEXTURE_MAP;
 
 
@@ -95,12 +98,16 @@ public class OpenGLNDKListActivity extends BaseActivity {
 
         switch (sampleType) {
             case SAMPLE_TYPE_TRIANGLE:
+            case SAMPLE_TYPE_VAO:
                 break;
             case SAMPLE_TYPE_TEXTURE_MAP:
+            case SAMPLE_TYPE_FBO:
                 loadRGBAImage(R.drawable.julis);
                 break;
             case SAMPLE_TYPE_YUV_TEXTURE_MAP:
+                loadNV21Image();
                 break;
+            default:
         }
 
         mGLSurfaceView.requestRender();
@@ -148,11 +155,36 @@ public class OpenGLNDKListActivity extends BaseActivity {
         return bitmap;
     }
 
+    private void loadNV21Image() {
+        InputStream is = null;
+        try {
+            is = getAssets().open("YUV_Image_840x1074.NV21");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        int lenght = 0;
+        try {
+            lenght = is.available();
+            byte[] buffer = new byte[lenght];
+            is.read(buffer);
+            mGLRender.setImageData(IMAGE_FORMAT_NV21, 840, 1074, buffer);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                is.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+    }
 
     private static final String[] SAMPLE_TITLES = {
             "基础三角形",
             "纹理映射",
-            "YUV Rendering",
+            "YUV 渲染",
             "VAO&VBO",
             "FBO Offscreen Rendering",
             "EGL Background Rendering",

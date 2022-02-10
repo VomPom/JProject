@@ -57,13 +57,17 @@
 GLuint GLUtils::LoadShader(GLenum shaderType, const char *pSource) {
     GLuint shader = 0;
     FUN_BEGIN_TIME("GLUtils::LoadShader")
+        //1、创建一个顶点/片段着色器对象 GL_VERTEX_SHADER->顶点着色器 GL_FRAGMENT_SHADER片段着色器
         shader = glCreateShader(shaderType);
         if (shader) {
-            // 导入着色器代码
+            // 导入着色器代码 count:着色器只付出数量，可以由多个源字符串组成，但只能由一个main函数
             glShaderSource(shader, 1, &pSource, NULL);
+
             // 编译着色器
             glCompileShader(shader);
+
             GLint compiled = 0;
+            //glGetShaderiv 查询着色器是否编译成功
             glGetShaderiv(shader, GL_COMPILE_STATUS, &compiled);
             if (!compiled) {
                 GLint infoLen = 0;
@@ -75,6 +79,9 @@ GLuint GLUtils::LoadShader(GLenum shaderType, const char *pSource) {
                         LOGCATE("GLUtils::LoadShader Could not compile shader %d:\n%s\n", shaderType, buf);
                         free(buf);
                     }
+
+                    // 完成着色器对象时删除 note:如果一个着色器连接到一个program对象，调用 glDeleteShader 不会立刻删除着色器对象，
+                    // 而是将着色器标记为删除，当着色器不再连接到任何program对象，内存将被释放
                     glDeleteShader(shader);
                     shader = 0;
                 }
@@ -93,8 +100,8 @@ GLuint GLUtils::LoadShader(GLenum shaderType, const char *pSource) {
  * @return 着色器程序
  */
 GLuint
-GLUtils::CreateProgram(const char *pVertexShaderSource, const char *pFragShaderSource, GLuint &vertexShaderHandle,
-                       GLuint &fragShaderHandle) {
+GLUtils::CreateProgram(const char *pVertexShaderSource, const char *pFragShaderSource,
+                       GLuint &vertexShaderHandle, GLuint &fragShaderHandle) {
     GLuint program = 0;
     FUN_BEGIN_TIME("GLUtils::CreateProgram")
 
@@ -107,7 +114,7 @@ GLUtils::CreateProgram(const char *pVertexShaderSource, const char *pFragShaderS
         program = glCreateProgram();
 
         if (program) {
-            // 将着色器附加到程序上
+            // glAttachShader 连接着色器和程序
             glAttachShader(program, vertexShaderHandle);
             CheckGLError("glAttachShader");
             glAttachShader(program, fragShaderHandle);
@@ -115,18 +122,22 @@ GLUtils::CreateProgram(const char *pVertexShaderSource, const char *pFragShaderS
 
             //链接着色器程序
             glLinkProgram(program);
+
             GLint linkStatus = GL_FALSE;
             glGetProgramiv(program, GL_LINK_STATUS, &linkStatus);
             glDetachShader(program, vertexShaderHandle);
 
-            //删除附加过的着色器，释放空间
+            //断开附加过的着色器，释放空间
             glDeleteShader(vertexShaderHandle);
             vertexShaderHandle = 0;
             glDetachShader(program, fragShaderHandle);
             glDeleteShader(fragShaderHandle);
             fragShaderHandle = 0;
+
             if (linkStatus != GL_TRUE) {
                 GLint bufLength = 0;
+
+                //glGetProgramiv 查询是否programl连接成功
                 glGetProgramiv(program, GL_INFO_LOG_LENGTH, &bufLength);
                 if (bufLength) {
                     char *buf = (char *) malloc((size_t) bufLength);

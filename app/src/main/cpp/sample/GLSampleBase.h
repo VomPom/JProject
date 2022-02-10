@@ -52,12 +52,12 @@
 #define SAMPLE_TYPE_KEY_UBO                     SAMPLE_TYPE + 34
 #define SAMPLE_TYPE_KEY_RGB2YUYV                SAMPLE_TYPE + 35
 #define SAMPLE_TYPE_KEY_MULTI_THREAD_RENDER     SAMPLE_TYPE + 36
-#define SAMPLE_TYPE_KEY_TEXT_RENDER     		SAMPLE_TYPE + 37
-#define SAMPLE_TYPE_KEY_STAY_COLOR       		SAMPLE_TYPE + 38
-#define SAMPLE_TYPE_KEY_TRANSITIONS_1      		SAMPLE_TYPE + 39
-#define SAMPLE_TYPE_KEY_TRANSITIONS_2      		SAMPLE_TYPE + 40
-#define SAMPLE_TYPE_KEY_TRANSITIONS_3      		SAMPLE_TYPE + 41
-#define SAMPLE_TYPE_KEY_TRANSITIONS_4      		SAMPLE_TYPE + 42
+#define SAMPLE_TYPE_KEY_TEXT_RENDER            SAMPLE_TYPE + 37
+#define SAMPLE_TYPE_KEY_STAY_COLOR            SAMPLE_TYPE + 38
+#define SAMPLE_TYPE_KEY_TRANSITIONS_1            SAMPLE_TYPE + 39
+#define SAMPLE_TYPE_KEY_TRANSITIONS_2            SAMPLE_TYPE + 40
+#define SAMPLE_TYPE_KEY_TRANSITIONS_3            SAMPLE_TYPE + 41
+#define SAMPLE_TYPE_KEY_TRANSITIONS_4            SAMPLE_TYPE + 42
 #define SAMPLE_TYPE_KEY_RGB2NV21                SAMPLE_TYPE + 43
 #define SAMPLE_TYPE_KEY_RGB2I420                SAMPLE_TYPE + 44
 #define SAMPLE_TYPE_KEY_RGB2I444                SAMPLE_TYPE + 45
@@ -67,55 +67,48 @@
 #define SAMPLE_TYPE_SET_GRAVITY_XY              SAMPLE_TYPE + 1000
 
 #define DEFAULT_OGL_ASSETS_DIR "/sdcard/Android/data/com.byteflow.app/files/Download"
-class GLSampleBase
-{
+
+class GLSampleBase {
 public:
-	GLSampleBase()
-	{
-		m_ProgramObj = 0;
-		m_VertexShader = 0;
-		m_FragmentShader = 0;
+    GLSampleBase() {
+        m_ProgramObj = 0;
+        m_VertexShader = 0;
+        m_FragmentShader = 0;
 
-		m_SurfaceWidth = 0;
-		m_SurfaceHeight = 0;
+        m_SurfaceWidth = 0;
+        m_SurfaceHeight = 0;
 
-	}
+    }
 
-	virtual ~GLSampleBase()
-	{
+    virtual ~GLSampleBase() {
 
-	}
+    }
 
-	virtual void LoadImage(NativeImage *pImage)
-	{};
+    virtual void LoadImage(NativeImage *pImage) {};
 
-	virtual void LoadMultiImageWithIndex(int index, NativeImage *pImage)
-	{};
+    virtual void LoadMultiImageWithIndex(int index, NativeImage *pImage) {};
 
-	virtual void LoadShortArrData(short *const pShortArr, int arrSize)
-	{}
+    virtual void LoadShortArrData(short *const pShortArr, int arrSize) {}
 
-	virtual void UpdateTransformMatrix(float rotateX, float rotateY, float scaleX, float scaleY)
-	{}
+    virtual void UpdateTransformMatrix(float rotateX, float rotateY, float scaleX, float scaleY) {}
 
-	virtual void SetTouchLocation(float x, float y)
-	{}
+    virtual void SetTouchLocation(float x, float y) {}
 
-	virtual void SetGravityXY(float x, float y)
-	{}
+    virtual void SetGravityXY(float x, float y) {}
 
-	virtual void Init() = 0;
-	virtual void Draw(int screenW, int screenH) = 0;
+    virtual void Init() = 0;
 
-	virtual void Destroy() = 0;
+    virtual void Draw(int screenW, int screenH) = 0;
+
+    virtual void Destroy() = 0;
 
 protected:
-	GLuint m_VertexShader;
-	GLuint m_FragmentShader;
-	GLuint m_ProgramObj;
+    GLuint m_VertexShader;
+    GLuint m_FragmentShader;
+    GLuint m_ProgramObj;
 //	MySyncLock m_Lock;
-	int m_SurfaceWidth;
-	int m_SurfaceHeight;
+    int m_SurfaceWidth;
+    int m_SurfaceHeight;
 };
 
 

@@ -64,8 +64,13 @@ void TriangleSample::Draw(int screenW, int screenH) {
     //          normalized：若标准化，则所有数据都会被映射到 [0-1] 之间
     //          stride: 步长，连续顶点属性组之间的间隔，两个相同属性之间的间隔，单位为 byte
     //          ptr: Java 层，该参数为一个 Buffer 引用；native 层为数据的指针
-
+    //
+    //  这里的 index =0 与上面 "layout(location = 0) in vec4 vPosition" 的location=0 对应，或者用下面的方式：
+    //
+    //    int location = glGetAttribLocation(m_ProgramObj, "vPosition");
+    //    glVertexAttribPointer(location, 3, GL_FLOAT, GL_FALSE, 0, vVertices);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, vVertices);
+
 
     // 启用顶点属性
     glEnableVertexAttribArray(0);
@@ -75,9 +80,11 @@ void TriangleSample::Draw(int screenW, int screenH) {
     //           first：要绘制的顶点的起始位置，由于本任务中只画一次，所以从 0 开始
     //           count: 要绘制的顶点数量
     //       12、使用 glDisableVertexAttribArray() 关掉顶点属性
-    glDrawArrays(GL_TRIANGLES, 0, 3);
+    glDrawArrays(GL_TRIANGLES, 0, 6);
     glUseProgram(GL_NONE);
-//    glDisableVertexAttribArray(0);
+    //    glDisableVertexAttribArray(0);
+
+
 }
 
 void TriangleSample::Destroy() {
