@@ -1,5 +1,5 @@
 //
-// Created by ByteFlow on 2019/7/16.
+// Created by julis.wang on 2022/2/11.
 //
 
 #include "FBOSample.h"
@@ -10,7 +10,8 @@
 
 //FBO（Frame Buffer Object）即帧缓冲区对象，实际上是一个可添加缓冲区的容器，可以为其添加纹理或渲染缓冲区对象（RBO）。
 //
-//FBO 本身不能用于渲染，只有添加了纹理或者渲染缓冲区之后才能作为渲染目标，它仅且提供了 3 种附着（Attachment），分别是颜色附着、深度附着和模板附着。
+//FBO 本身不能用于渲染，只有添加了纹理或者渲染缓冲区之后才能作为渲染目标，它仅且提供了三种附着（Attachment），分别是
+// 颜色附着、深度附着和模板附着。
 
 
 
@@ -176,6 +177,8 @@ void FBOSample::Init() {
     GO_CHECK_GL_ERROR();
     glBindVertexArray(GL_NONE);
 
+
+
     // 创建并初始化图像纹理
     glGenTextures(1, &m_ImageTextureId);
     glBindTexture(GL_TEXTURE_2D, m_ImageTextureId);
@@ -202,6 +205,12 @@ void FBOSample::Draw(int screenW, int screenH) {
 
     // Do FBO off screen rendering
     glBindFramebuffer(GL_FRAMEBUFFER, m_FboId);
+
+    // 完成离屏渲染后，结果图数据便保存在我们之前连接到 FBO 的纹理 m_FboTextureId 。
+    // 我们再拿 FBO 纹理 m_FboTextureId 做一次普通渲染便可将之前离屏渲染的结果绘制到屏幕上。
+    // 这里我们编译连接了 2 个 program ,一个用作离屏渲染的 m_FboProgramObj，一个用于普通渲染的 m_ProgramObj
+    //选定另外一个着色器程序，以 m_FboTextureId 纹理作为输入进行普通渲染
+
     glUseProgram(m_FboProgramObj);
     glBindVertexArray(m_VaoIds[1]);
     glActiveTexture(GL_TEXTURE0);
@@ -213,17 +222,17 @@ void FBOSample::Draw(int screenW, int screenH) {
     glBindVertexArray(0);
     glBindTexture(GL_TEXTURE_2D, 0);
 
-//	uint8_t *pBuffer = new uint8_t[m_RenderImage.width * m_RenderImage.height * 4];
-//
-//	NativeImage nativeImage = m_RenderImage;
-//	nativeImage.format = IMAGE_FORMAT_RGBA;
-//	nativeImage.ppPlane[0] = pBuffer;
-//	FUN_BEGIN_TIME("FBO glReadPixels")
-//		glReadPixels(0, 0, nativeImage.width, nativeImage.height, GL_RGBA, GL_UNSIGNED_BYTE, pBuffer);
-//	FUN_END_TIME("FBO cost glReadPixels")
-//
-//	NativeImageUtil::DumpNativeImage(&nativeImage, "/sdcard/DCIM", "NDK");
-//	delete []pBuffer;
+	uint8_t *pBuffer = new uint8_t[m_RenderImage.width * m_RenderImage.height * 4];
+
+	NativeImage nativeImage = m_RenderImage;
+	nativeImage.format = IMAGE_FORMAT_RGBA;
+	nativeImage.ppPlane[0] = pBuffer;
+	FUN_BEGIN_TIME("FBO glReadPixels")
+		glReadPixels(0, 0, nativeImage.width, nativeImage.height, GL_RGBA, GL_UNSIGNED_BYTE, pBuffer);
+	FUN_END_TIME("FBO cost glReadPixels")
+
+	NativeImageUtil::DumpNativeImage(&nativeImage, "/sdcard/", "NDK");
+	delete []pBuffer;
 
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
 

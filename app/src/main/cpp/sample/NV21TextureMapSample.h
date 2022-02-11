@@ -1,5 +1,5 @@
 //
-// Created by ByteFlow on 2019/7/10.
+// Created by julis.wang on 2022/2/11.
 //
 
 #ifndef NDK_OPENGLES_3_0_YUVTEXTUREMAPSAMPLE_H

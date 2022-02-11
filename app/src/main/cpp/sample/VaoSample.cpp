@@ -1,5 +1,5 @@
 //
-// Created by ByteFlow on 2019/7/15.
+// Created by julis.wang on 2022/2/11.
 //
 
 #include "VaoSample.h"
@@ -16,6 +16,9 @@
 // 顶点数组对象：Vertex Array Object，VAO
 // 顶点缓冲对象：Vertex Buffer Object，VBO
 // 索引缓冲对象：Element Buffer Object，EBO或Index Buffer Object，IBO
+
+// VAO（Vertex Array Object）是指顶点数组对象，VAO 的主要作用是用于管理 VBO 或 EBO ，
+// 减少 glBindBuffer 、glEnableVertexAttribArray、 glVertexAttribPointer 这些调用操作，高效地实现在顶点数组配置之间切换
 
 //OpenGLES2.0 编程中，用于绘制的顶点数组数据首先保存在 CPU 内存，在调用 glDrawArrays 或者 glDrawElements 等进行绘制时，
 // 需要将顶点数组数据从 CPU 内存拷贝到显存。但是很多时候我们没必要每次绘制的时候都去进行内存拷贝，如果可以在显存中缓存这些数据，
@@ -108,7 +111,6 @@ void VaoSample::Init() {
     //
     // GL_ARRAY_BUFFER         标志指定的缓冲区对象用于保存顶点数组，
     // GL_ELEMENT_ARRAY_BUFFER 标志指定的缓存区对象用于保存图元索引。
-
     glBindBuffer(GL_ARRAY_BUFFER, m_VboIds[0]);
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
@@ -123,6 +125,11 @@ void VaoSample::Init() {
     glEnableVertexAttribArray(VERTEX_COLOR_INDX);
 
     // 使用 VBO 的绘制
+    //
+    //VAO怎么知道这个属性是对哪一个vbo呢？
+    // 根据官方文档，glVertexAttribPointer会去读取之前glBindBuffer设置的那个全局变量(VBO 句柄），
+    // 然后把这个句柄和这些属性 打包 到一起 存到 对应的 VAO 元素中
+
     glVertexAttribPointer(VERTEX_POS_INDX, VERTEX_POS_SIZE, GL_FLOAT, GL_FALSE, VERTEX_STRIDE, (const void *) 0);
     glVertexAttribPointer(VERTEX_COLOR_INDX, VERTEX_COLOR_SIZE, GL_FLOAT, GL_FALSE, VERTEX_STRIDE,
                           (const void *) (VERTEX_POS_SIZE * sizeof(GLfloat)));

@@ -3,6 +3,13 @@
 #include <stdlib.h>
 #include <cstring>
 #include <GLES2/gl2ext.h>
+#include <string>
+
+#include<iostream>
+#include<string>
+#include<fstream>
+
+using namespace std;
 
 //
 // Created by julis.wang on 2022/2/9.

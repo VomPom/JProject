@@ -60,7 +60,10 @@
         <activity android:name="wang.julis.jproject.example.media.little.JsonTestActivity" />
         <activity android:name="wang.julis.jproject.example.media.frames.ExtractMpegFramesActivity" />
         <activity android:name="wang.julis.jproject.example.media.little.LittleMainActivity" />
-<!--        <activity android:name="wang.julis.jproject.example.media.opengl.OpenGLNDKListActivity" />-->
+        <activity
+            android:name="wang.julis.jproject.example.media.opengl.egl.EGLActivity"
+            android:theme="@style/AppTheme" />
+        <!--        <activity android:name="wang.julis.jproject.example.media.opengl.OpenGLNDKListActivity" />-->
 
         <service android:name="wang.julis.jproject.example.binder.server.AIDLService">
             <intent-filter>

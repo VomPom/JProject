@@ -1,6 +1,7 @@
 //
-// Created by ByteFlow on 2019/7/9.
+// Created by julis.wang on 2022/2/11.
 //
+
 #include "MyGLRenderContext.h"
 
 #include "../sample/TriangleSample.h"
@@ -8,6 +9,9 @@
 #include "../sample/NV21TextureMapSample.h"
 #include "../sample/VaoSample.h"
 #include "../sample/FBOSample.h"
+#include "../sample/CoordSystemSample.h"
+#include "../sample/BasicLightingSample.h"
+#include "../sample/DepthTestingSample.h"
 
 MyGLRenderContext *MyGLRenderContext::m_pContext = nullptr;
 
@@ -55,12 +59,18 @@ void MyGLRenderContext::SetParamsInt(int paramType, int value0, int value1) {
             case SAMPLE_TYPE_KEY_FBO:
                 m_pCurSample = new FBOSample();
                 break;
+            case SAMPLE_TYPE_KEY_BASIC_LIGHTING:
+                m_pCurSample = new BasicLightingSample();
+                break;
 //            case SAMPLE_TYPE_KEY_FBO_LEG_LENGTHEN:
 //                m_pCurSample = new FBOLegLengthenSample();
 //                break;
-//            case SAMPLE_TYPE_KEY_COORD_SYSTEM:
-//                m_pCurSample = new CoordSystemSample();
-//                break;
+            case SAMPLE_TYPE_KEY_COORD_SYSTEM:
+                m_pCurSample = new CoordSystemSample();
+                break;
+            case SAMPLE_TYPE_KEY_DEPTH_TESTING:
+                m_pCurSample = new DepthTestingSample();
+                break;
 
             default:
                 m_pCurSample = nullptr;

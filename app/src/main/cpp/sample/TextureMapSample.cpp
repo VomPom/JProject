@@ -1,7 +1,6 @@
 //
-// Created by ByteFlow on 2019/7/10.
+// Created by julis.wang on 2022/2/11.
 //
-
 
 #include "TextureMapSample.h"
 #include "../util/GLUtils.h"

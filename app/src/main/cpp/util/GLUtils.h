@@ -1,10 +1,6 @@
-/**
- *
- * Created by 公众号：字节流动 on 2021/3/12.
- * https://github.com/githubhaohao/NDK_OpenGLES_3_0
- * 最新文章首发于公众号：字节流动，有疑问或者技术交流可以添加微信 Byte-Flow ,领取视频教程, 拉你进技术交流群
- *
- * */
+//
+// Created by julis.wang on 2022/2/11.
+//
 
 #ifndef _BYTE_FLOW_GL_UTILS_H_
 #define _BYTE_FLOW_GL_UTILS_H_
@@ -91,6 +87,9 @@ public:
 //        return glm::vec3(2 * texCoord.x - 1, 1 - 2 * texCoord.y, 0);
 //    }
 
+    char *openTextFile(const char *path);
+
+    static const char *loadShaderFromFile(const char *filePath);
 };
 
 #endif // _BYTE_FLOW_GL_UTILS_H_

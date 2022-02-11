@@ -1,0 +1,11 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.byteflow.openglcamera2.MainActivity">
+    <item
+        android:id="@+id/action_change_sample"
+        android:icon="@drawable/sign"
+        android:title="EGL"
+        app:showAsAction="ifRoom" />
+
+</menu>

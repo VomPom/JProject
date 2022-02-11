@@ -60,8 +60,7 @@ public class MyGLSurfaceView extends GLSurfaceView implements ScaleGestureDetect
         if (e.getPointerCount() == 1) {
             consumeTouchEvent(e);
             long currentTimeMillis = System.currentTimeMillis();
-            if (currentTimeMillis - mLastMultiTouchTime > 200)
-            {
+            if (currentTimeMillis - mLastMultiTouchTime > 200) {
                 float y = e.getY();
                 float x = e.getX();
                 switch (e.getAction()) {
@@ -145,8 +144,7 @@ public class MyGLSurfaceView extends GLSurfaceView implements ScaleGestureDetect
             case SAMPLE_TYPE_INSTANCING:
             case SAMPLE_TYPE_3D_MODEL:
             case SAMPLE_TYPE_KEY_VISUALIZE_AUDIO:
-            case SAMPLE_TYPE_KEY_TEXT_RENDER:
-            {
+            case SAMPLE_TYPE_KEY_TEXT_RENDER: {
                 float preSpan = detector.getPreviousSpan();
                 float curSpan = detector.getCurrentSpan();
                 if (curSpan < preSpan) {

@@ -5,6 +5,9 @@ cmake_minimum_required(VERSION 3.4.1)
 
 # 支持C++11标准和GNU扩展特性
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++11")
+include_directories(
+        glm
+)
 
 # 查找代码中使用到的系统库
 find_library( # Sets the name of the path variable.

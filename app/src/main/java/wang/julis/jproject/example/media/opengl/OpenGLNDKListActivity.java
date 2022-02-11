@@ -1,5 +1,6 @@
 package wang.julis.jproject.example.media.opengl;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -20,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import wang.julis.jproject.example.media.opengl.egl.EGLActivity;
 import wang.julis.jproject.example.media.opengl.glitem.GLItemListAdapter;
 import wang.julis.jproject.example.media.opengl.glitem.GLItemListModel;
 import wang.julis.jwbase.basecompact.BaseActivity;
@@ -27,8 +29,17 @@ import wang.julis.jwbase.basecompact.BaseActivity;
 import static android.opengl.GLSurfaceView.RENDERMODE_WHEN_DIRTY;
 import static wang.julis.jproject.example.media.opengl.MyGLSurfaceView.IMAGE_FORMAT_NV21;
 import static wang.julis.jproject.example.media.opengl.MyGLSurfaceView.IMAGE_FORMAT_RGBA;
+import static wang.julis.jproject.example.media.opengl.MyNativeRender.SAMPLE_TYPE_BASIC_LIGHTING;
+import static wang.julis.jproject.example.media.opengl.MyNativeRender.SAMPLE_TYPE_COORD_SYSTEM;
+import static wang.julis.jproject.example.media.opengl.MyNativeRender.SAMPLE_TYPE_DEPTH_TESTING;
+import static wang.julis.jproject.example.media.opengl.MyNativeRender.SAMPLE_TYPE_EGL;
 import static wang.julis.jproject.example.media.opengl.MyNativeRender.SAMPLE_TYPE_FBO;
+import static wang.julis.jproject.example.media.opengl.MyNativeRender.SAMPLE_TYPE_FBO_LEG;
+import static wang.julis.jproject.example.media.opengl.MyNativeRender.SAMPLE_TYPE_INSTANCING;
+import static wang.julis.jproject.example.media.opengl.MyNativeRender.SAMPLE_TYPE_MULTI_LIGHTS;
+import static wang.julis.jproject.example.media.opengl.MyNativeRender.SAMPLE_TYPE_STENCIL_TESTING;
 import static wang.julis.jproject.example.media.opengl.MyNativeRender.SAMPLE_TYPE_TEXTURE_MAP;
+import static wang.julis.jproject.example.media.opengl.MyNativeRender.SAMPLE_TYPE_TRANS_FEEDBACK;
 import static wang.julis.jproject.example.media.opengl.MyNativeRender.SAMPLE_TYPE_TRIANGLE;
 import static wang.julis.jproject.example.media.opengl.MyNativeRender.SAMPLE_TYPE_VAO;
 import static wang.julis.jproject.example.media.opengl.MyNativeRender.SAMPLE_TYPE_YUV_TEXTURE_MAP;
@@ -50,6 +61,7 @@ public class OpenGLNDKListActivity extends BaseActivity {
     private MyGLSurfaceView mGLSurfaceView;
     private FrameLayout mContainer;
     protected GLItemListAdapter mAdapter;
+    private ImageView ivClose;
     protected final List<GLItemListModel> mDataList = new ArrayList<>();
 
     private int index = 0;
@@ -72,7 +84,7 @@ public class OpenGLNDKListActivity extends BaseActivity {
         rvList.setAdapter(mAdapter);
         rvList.setLayoutManager(new LinearLayoutManager(this));
 
-        ImageView ivClose = findViewById(R.id.iv_close);
+        ivClose = findViewById(R.id.iv_close);
         ivClose.setOnClickListener(v -> {
             mContainer.removeView(mGLSurfaceView);
             ivClose.setVisibility(View.GONE);
@@ -102,10 +114,24 @@ public class OpenGLNDKListActivity extends BaseActivity {
                 break;
             case SAMPLE_TYPE_TEXTURE_MAP:
             case SAMPLE_TYPE_FBO:
-                loadRGBAImage(R.drawable.julis);
+            case SAMPLE_TYPE_FBO_LEG:
+                loadRGBAImage(R.drawable.person);
                 break;
             case SAMPLE_TYPE_YUV_TEXTURE_MAP:
                 loadNV21Image();
+                break;
+            case SAMPLE_TYPE_COORD_SYSTEM:
+            case SAMPLE_TYPE_BASIC_LIGHTING:
+            case SAMPLE_TYPE_TRANS_FEEDBACK:
+            case SAMPLE_TYPE_MULTI_LIGHTS:
+            case SAMPLE_TYPE_DEPTH_TESTING:
+            case SAMPLE_TYPE_INSTANCING:
+            case SAMPLE_TYPE_STENCIL_TESTING:
+                loadRGBAImage(R.drawable.board_texture);
+                break;
+            case SAMPLE_TYPE_EGL:
+                ivClose.performClick();
+                startActivity(new Intent(this, EGLActivity.class));
                 break;
             default:
         }
@@ -133,7 +159,7 @@ public class OpenGLNDKListActivity extends BaseActivity {
         return R.layout.activity_opengl_list;
     }
 
-    private Bitmap loadRGBAImage(int resId) {
+    private void loadRGBAImage(int resId) {
         InputStream is = this.getResources().openRawResource(resId);
         Bitmap bitmap;
         try {
@@ -152,7 +178,6 @@ public class OpenGLNDKListActivity extends BaseActivity {
                 e.printStackTrace();
             }
         }
-        return bitmap;
     }
 
     private void loadNV21Image() {
@@ -178,7 +203,6 @@ public class OpenGLNDKListActivity extends BaseActivity {
                 e.printStackTrace();
             }
         }
-
     }
 
     private static final String[] SAMPLE_TITLES = {
@@ -186,14 +210,14 @@ public class OpenGLNDKListActivity extends BaseActivity {
             "纹理映射",
             "YUV 渲染",
             "VAO&VBO",
-            "FBO Offscreen Rendering",
-            "EGL Background Rendering",
+            "FBO离屏渲染",
+            "EGL后台渲染",
             "FBO Stretching",
-            "Coordinate System",
-            "Basic Lighting",
+            "坐标系统",
+            "基础光照",
             "Transform Feedback",
-            "Complex Lighting",
-            "Depth Testing",
+            "复杂光照",
+            "深度测试",
             "Instancing",
             "Stencil Testing",
             "Blending",
