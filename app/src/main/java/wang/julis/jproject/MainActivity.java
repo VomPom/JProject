@@ -6,7 +6,7 @@ import wang.julis.jproject.blog.PosterGeneratorActivity;
 import wang.julis.jproject.example.anim.AnimationMainActivity;
 import wang.julis.jproject.example.media.MediaMainActivity;
 import wang.julis.jproject.example.media.little.LittleMainActivity;
-import wang.julis.jproject.example.media.opengl.OpenGLMainActivity;
+import julis.wang.learnopengl.opengl.OpenGLMainActivity;
 import wang.julis.jproject.main.BaseListActivity;
 
 /*******************************************************

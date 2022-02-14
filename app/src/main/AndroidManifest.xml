@@ -25,7 +25,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         android:usesCleartextTraffic="true">
-        <activity android:name="wang.julis.jproject.example.media.opengl.OpenGLNDKListActivity">
+        <activity android:name="julis.wang.learnopengl.opengl.OpenGLNDKListActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -48,9 +48,9 @@
         <activity android:name="wang.julis.jproject.example.media.camera.SurfaceViewCameraActivity" />
         <activity android:name="wang.julis.jproject.example.media.camera.TextureViewCameraActivity" />
         <activity android:name="wang.julis.jproject.example.media.camera.CameraMainActivity" />
-        <activity android:name="wang.julis.jproject.example.media.opengl.OpenGLMainActivity" />
-        <activity android:name="wang.julis.jproject.example.media.opengl.basefunc.OpenGLTriangleActivity" />
-        <activity android:name="wang.julis.jproject.example.media.opengl.basefunc.OpenGLImageActivity" />
+        <activity android:name="julis.wang.learnopengl.opengl.OpenGLMainActivity" />
+        <activity android:name="julis.wang.learnopengl.opengl.basefunc.OpenGLTriangleActivity" />
+        <activity android:name="julis.wang.learnopengl.opengl.basefunc.OpenGLImageActivity" />
         <activity android:name="wang.julis.jproject.example.media.codec.MediaCodecMainActivity" />
         <activity android:name="wang.julis.jproject.example.media.screenrecord.ScreenRecordActivity" />
         <activity android:name="wang.julis.jproject.example.media.screenrecord.MediaProjectionDemoActivity" />
@@ -61,9 +61,9 @@
         <activity android:name="wang.julis.jproject.example.media.frames.ExtractMpegFramesActivity" />
         <activity android:name="wang.julis.jproject.example.media.little.LittleMainActivity" />
         <activity
-            android:name="wang.julis.jproject.example.media.opengl.egl.EGLActivity"
+            android:name="julis.wang.learnopengl.opengl.egl.EGLActivity"
             android:theme="@style/AppTheme" />
-        <!--        <activity android:name="wang.julis.jproject.example.media.opengl.OpenGLNDKListActivity" />-->
+        <!--        <activity android:name="julis.wang.learnopengl.opengl.OpenGLNDKListActivity" />-->
 
         <service android:name="wang.julis.jproject.example.binder.server.AIDLService">
             <intent-filter>

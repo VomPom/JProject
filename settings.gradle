@@ -2,3 +2,4 @@ include ':app'
 include ':JWBase'
 project(':JWBase').projectDir = new File(rootDir, '../JWBase/jwbase')
 include ':kotlinLearn'
+include ':learnopengl'
