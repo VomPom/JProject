@@ -12,6 +12,12 @@
 #include "../sample/CoordSystemSample.h"
 #include "../sample/BasicLightingSample.h"
 #include "../sample/DepthTestingSample.h"
+#include "../sample/StencilTestingSample.h"
+#include "../sample/BlendingSample.h"
+#include "../sample/Instancing3DSample.h"
+#include "../sample/InstancingSample.h"
+#include "../sample/ParticlesSample.h"
+#include "../sample/SkyBoxSample.h"
 
 MyGLRenderContext *MyGLRenderContext::m_pContext = nullptr;
 
@@ -71,6 +77,34 @@ void MyGLRenderContext::SetParamsInt(int paramType, int value0, int value1) {
             case SAMPLE_TYPE_KEY_DEPTH_TESTING:
                 m_pCurSample = new DepthTestingSample();
                 break;
+            case SAMPLE_TYPE_KEY_INSTANCING:
+//                m_pCurSample = new InstancingSample();
+                m_pCurSample = new Instancing3DSample();
+                break;
+            case SAMPLE_TYPE_KEY_STENCIL_TESTING:
+                m_pCurSample = new StencilTestingSample();
+                break;
+            case SAMPLE_TYPE_KEY_BLENDING:
+                m_pCurSample = new BlendingSample();
+                break;
+            case SAMPLE_TYPE_KEY_PARTICLES:
+                m_pCurSample = new ParticlesSample();
+                break;
+            case SAMPLE_TYPE_KEY_SKYBOX:
+                m_pCurSample = new SkyBoxSample();
+                break;
+//            case SAMPLE_TYPE_KEY_3D_MODEL:
+//                m_pCurSample = new Model3DSample();
+//                break;
+//            case SAMPLE_TYPE_KEY_PBO:
+//                m_pCurSample = new PBOSample();
+//                break;
+//            case SAMPLE_TYPE_KEY_BEATING_HEART:
+//                m_pCurSample = new BeatingHeartSample();
+//                break;
+//            case SAMPLE_TYPE_KEY_CLOUD:
+//                m_pCurSample = new CloudSample();
+//                break;
 
             default:
                 m_pCurSample = nullptr;

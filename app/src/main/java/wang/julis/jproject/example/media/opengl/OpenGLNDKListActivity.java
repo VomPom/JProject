@@ -26,10 +26,12 @@ import wang.julis.jproject.example.media.opengl.glitem.GLItemListAdapter;
 import wang.julis.jproject.example.media.opengl.glitem.GLItemListModel;
 import wang.julis.jwbase.basecompact.BaseActivity;
 
+import static android.opengl.GLSurfaceView.RENDERMODE_CONTINUOUSLY;
 import static android.opengl.GLSurfaceView.RENDERMODE_WHEN_DIRTY;
 import static wang.julis.jproject.example.media.opengl.MyGLSurfaceView.IMAGE_FORMAT_NV21;
 import static wang.julis.jproject.example.media.opengl.MyGLSurfaceView.IMAGE_FORMAT_RGBA;
 import static wang.julis.jproject.example.media.opengl.MyNativeRender.SAMPLE_TYPE_BASIC_LIGHTING;
+import static wang.julis.jproject.example.media.opengl.MyNativeRender.SAMPLE_TYPE_BLENDING;
 import static wang.julis.jproject.example.media.opengl.MyNativeRender.SAMPLE_TYPE_COORD_SYSTEM;
 import static wang.julis.jproject.example.media.opengl.MyNativeRender.SAMPLE_TYPE_DEPTH_TESTING;
 import static wang.julis.jproject.example.media.opengl.MyNativeRender.SAMPLE_TYPE_EGL;
@@ -37,6 +39,8 @@ import static wang.julis.jproject.example.media.opengl.MyNativeRender.SAMPLE_TYP
 import static wang.julis.jproject.example.media.opengl.MyNativeRender.SAMPLE_TYPE_FBO_LEG;
 import static wang.julis.jproject.example.media.opengl.MyNativeRender.SAMPLE_TYPE_INSTANCING;
 import static wang.julis.jproject.example.media.opengl.MyNativeRender.SAMPLE_TYPE_MULTI_LIGHTS;
+import static wang.julis.jproject.example.media.opengl.MyNativeRender.SAMPLE_TYPE_PARTICLES;
+import static wang.julis.jproject.example.media.opengl.MyNativeRender.SAMPLE_TYPE_SKYBOX;
 import static wang.julis.jproject.example.media.opengl.MyNativeRender.SAMPLE_TYPE_STENCIL_TESTING;
 import static wang.julis.jproject.example.media.opengl.MyNativeRender.SAMPLE_TYPE_TEXTURE_MAP;
 import static wang.julis.jproject.example.media.opengl.MyNativeRender.SAMPLE_TYPE_TRANS_FEEDBACK;
@@ -129,6 +133,23 @@ public class OpenGLNDKListActivity extends BaseActivity {
             case SAMPLE_TYPE_STENCIL_TESTING:
                 loadRGBAImage(R.drawable.board_texture);
                 break;
+            case SAMPLE_TYPE_BLENDING:
+                loadRGBAImage(R.drawable.board_texture, 0);
+                loadRGBAImage(R.drawable.floor, 1);
+                loadRGBAImage(R.drawable.window, 2);
+                break;
+            case SAMPLE_TYPE_PARTICLES:
+                loadRGBAImage(R.drawable.board_texture);
+                mGLSurfaceView.setRenderMode(RENDERMODE_CONTINUOUSLY);
+                break;
+            case SAMPLE_TYPE_SKYBOX:
+                loadRGBAImage(R.drawable.right, 0);
+                loadRGBAImage(R.drawable.left, 1);
+                loadRGBAImage(R.drawable.top, 2);
+                loadRGBAImage(R.drawable.bottom, 3);
+                loadRGBAImage(R.drawable.back, 4);
+                loadRGBAImage(R.drawable.front, 5);
+                break;
             case SAMPLE_TYPE_EGL:
                 ivClose.performClick();
                 startActivity(new Intent(this, EGLActivity.class));
@@ -160,6 +181,10 @@ public class OpenGLNDKListActivity extends BaseActivity {
     }
 
     private void loadRGBAImage(int resId) {
+        loadRGBAImage(resId, -1);
+    }
+
+    private void loadRGBAImage(int resId, int index) {
         InputStream is = this.getResources().openRawResource(resId);
         Bitmap bitmap;
         try {
@@ -169,7 +194,11 @@ public class OpenGLNDKListActivity extends BaseActivity {
                 ByteBuffer buf = ByteBuffer.allocate(bytes);
                 bitmap.copyPixelsToBuffer(buf);
                 byte[] byteArray = buf.array();
-                mGLRender.setImageData(IMAGE_FORMAT_RGBA, bitmap.getWidth(), bitmap.getHeight(), byteArray);
+                if (index == -1) {
+                    mGLRender.setImageData(IMAGE_FORMAT_RGBA, bitmap.getWidth(), bitmap.getHeight(), byteArray);
+                } else {
+                    mGLRender.setImageDataWithIndex(index, IMAGE_FORMAT_RGBA, bitmap.getWidth(), bitmap.getHeight(), byteArray);
+                }
             }
         } finally {
             try {
@@ -218,11 +247,11 @@ public class OpenGLNDKListActivity extends BaseActivity {
             "Transform Feedback",
             "复杂光照",
             "深度测试",
-            "Instancing",
-            "Stencil Testing",
-            "Blending",
-            "Particles",
-            "SkyBox",
+            "实例化",
+            "模板测试",
+            "混合",
+            "粒子",
+            "立方体贴图",
             "Assimp Load 3D Model",
             "PBO",
             "Beating Heart",
