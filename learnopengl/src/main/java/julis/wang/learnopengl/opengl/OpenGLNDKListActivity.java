@@ -35,10 +35,12 @@ import static julis.wang.learnopengl.opengl.MyNativeRender.SAMPLE_TYPE_COORD_SYS
 import static julis.wang.learnopengl.opengl.MyNativeRender.SAMPLE_TYPE_DEPTH_TESTING;
 import static julis.wang.learnopengl.opengl.MyNativeRender.SAMPLE_TYPE_EGL;
 import static julis.wang.learnopengl.opengl.MyNativeRender.SAMPLE_TYPE_FBO;
-import static julis.wang.learnopengl.opengl.MyNativeRender.SAMPLE_TYPE_FBO_LEG;
 import static julis.wang.learnopengl.opengl.MyNativeRender.SAMPLE_TYPE_INSTANCING;
+import static julis.wang.learnopengl.opengl.MyNativeRender.SAMPLE_TYPE_KEY_TBO;
+import static julis.wang.learnopengl.opengl.MyNativeRender.SAMPLE_TYPE_KEY_TEXT_RENDER;
 import static julis.wang.learnopengl.opengl.MyNativeRender.SAMPLE_TYPE_MULTI_LIGHTS;
 import static julis.wang.learnopengl.opengl.MyNativeRender.SAMPLE_TYPE_PARTICLES;
+import static julis.wang.learnopengl.opengl.MyNativeRender.SAMPLE_TYPE_PBO;
 import static julis.wang.learnopengl.opengl.MyNativeRender.SAMPLE_TYPE_SKYBOX;
 import static julis.wang.learnopengl.opengl.MyNativeRender.SAMPLE_TYPE_STENCIL_TESTING;
 import static julis.wang.learnopengl.opengl.MyNativeRender.SAMPLE_TYPE_TEXTURE_MAP;
@@ -117,9 +119,6 @@ public class OpenGLNDKListActivity extends BaseActivity {
                 break;
             case SAMPLE_TYPE_TEXTURE_MAP:
             case SAMPLE_TYPE_FBO:
-            case SAMPLE_TYPE_FBO_LEG:
-                loadRGBAImage(R.drawable.person);
-                break;
             case SAMPLE_TYPE_YUV_TEXTURE_MAP:
                 loadNV21Image();
                 break;
@@ -131,6 +130,15 @@ public class OpenGLNDKListActivity extends BaseActivity {
             case SAMPLE_TYPE_INSTANCING:
             case SAMPLE_TYPE_STENCIL_TESTING:
                 loadRGBAImage(R.drawable.board_texture);
+                break;
+            case SAMPLE_TYPE_KEY_TEXT_RENDER:
+                Bitmap b3 = loadRGBAImage(R.drawable.person);
+                mGLSurfaceView.setAspectRatio(b3.getWidth(), b3.getHeight());
+                mGLSurfaceView.setRenderMode(RENDERMODE_CONTINUOUSLY);
+                break;
+            case SAMPLE_TYPE_KEY_TBO:
+                Bitmap b4 = loadRGBAImage(R.drawable.person);
+                mGLSurfaceView.setAspectRatio(b4.getWidth(), b4.getHeight());
                 break;
             case SAMPLE_TYPE_BLENDING:
                 loadRGBAImage(R.drawable.board_texture, 0);
@@ -148,6 +156,10 @@ public class OpenGLNDKListActivity extends BaseActivity {
                 loadRGBAImage(R.drawable.bottom, 3);
                 loadRGBAImage(R.drawable.back, 4);
                 loadRGBAImage(R.drawable.front, 5);
+                break;
+            case SAMPLE_TYPE_PBO:
+                loadRGBAImage(R.drawable.front);
+                mGLSurfaceView.setRenderMode(RENDERMODE_CONTINUOUSLY);
                 break;
             case SAMPLE_TYPE_EGL:
                 ivClose.performClick();
@@ -179,11 +191,11 @@ public class OpenGLNDKListActivity extends BaseActivity {
         return R.layout.activity_opengl_list;
     }
 
-    private void loadRGBAImage(int resId) {
-        loadRGBAImage(resId, -1);
+    private Bitmap loadRGBAImage(int resId) {
+        return loadRGBAImage(resId, -1);
     }
 
-    private void loadRGBAImage(int resId, int index) {
+    private Bitmap loadRGBAImage(int resId, int index) {
         InputStream is = this.getResources().openRawResource(resId);
         Bitmap bitmap;
         try {
@@ -205,6 +217,17 @@ public class OpenGLNDKListActivity extends BaseActivity {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }
+        return bitmap;
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (mContainer.getChildCount() != 0) {
+            mContainer.removeView(mGLSurfaceView);
+            ivClose.setVisibility(View.GONE);
+        } else {
+            super.onBackPressed();
         }
     }
 
@@ -236,14 +259,14 @@ public class OpenGLNDKListActivity extends BaseActivity {
     private static final String[] SAMPLE_TITLES = {
             "基础三角形",
             "纹理映射",
-            "YUV 渲染",
+            "YUV渲染",
             "VAO&VBO",
             "FBO离屏渲染",
             "EGL后台渲染",
-            "FBO Stretching",
+            "文字渲染",
             "坐标系统",
+            "变换反馈",
             "基础光照",
-            "Transform Feedback",
             "复杂光照",
             "深度测试",
             "实例化",
@@ -251,34 +274,9 @@ public class OpenGLNDKListActivity extends BaseActivity {
             "混合",
             "粒子",
             "立方体贴图",
-            "Assimp Load 3D Model",
-            "PBO",
-            "Beating Heart",
-            "Cloud",
-            "Time Tunnel",
-            "Bezier Curve",
-            "Big Eyes",
-            "Face Slender",
-            "Big Head",
-            "Rotary Head",
-            "Visualize Audio",
-            "Scratch Card",
-            "3D Avatar",
-            "Shock Wave",
-            "MRT",
-            "FBO Blit",
-            "Texture Buffer",
-            "Uniform Buffer",
-            "RGB to YUYV",
-            "Multi-Thread Render",
-            "Text Render",
-            "Portrait stay color",
-            "GL Transitions_1",
-            "GL Transitions_2",
-            "GL Transitions_3",
-            "GL Transitions_4",
-            "RGB to NV21",
-            "RGB to I420",
+            "Assimp 加载3D模型",
+            "PBO离屏渲染",
+            "TBO缓存纹理",
     };
 
 }

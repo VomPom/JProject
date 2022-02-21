@@ -18,6 +18,10 @@
 #include "../sample/InstancingSample.h"
 #include "../sample/ParticlesSample.h"
 #include "../sample/SkyBoxSample.h"
+#include "../sample/PBOSample.h"
+#include "../sample/TextureBufferSample.h"
+#include "../sample/TransformFeedbackSample.h"
+#include "../sample/MultiLightsSample.h"
 
 MyGLRenderContext *MyGLRenderContext::m_pContext = nullptr;
 
@@ -59,6 +63,12 @@ void MyGLRenderContext::SetParamsInt(int paramType, int value0, int value1) {
             case SAMPLE_TYPE_KEY_YUV_TEXTURE_MAP:
                 m_pCurSample = new NV21TextureMapSample();
                 break;
+            case SAMPLE_TYPE_KEY_TRANSFORM_FEEDBACK:
+                m_pCurSample = new TransformFeedbackSample();
+                break;
+            case SAMPLE_TYPE_KEY_MULTI_LIGHTS:
+                m_pCurSample = new MultiLightsSample();
+                break;
             case SAMPLE_TYPE_KEY_VAO:
                 m_pCurSample = new VaoSample();
                 break;
@@ -68,9 +78,6 @@ void MyGLRenderContext::SetParamsInt(int paramType, int value0, int value1) {
             case SAMPLE_TYPE_KEY_BASIC_LIGHTING:
                 m_pCurSample = new BasicLightingSample();
                 break;
-//            case SAMPLE_TYPE_KEY_FBO_LEG_LENGTHEN:
-//                m_pCurSample = new FBOLegLengthenSample();
-//                break;
             case SAMPLE_TYPE_KEY_COORD_SYSTEM:
                 m_pCurSample = new CoordSystemSample();
                 break;
@@ -78,7 +85,6 @@ void MyGLRenderContext::SetParamsInt(int paramType, int value0, int value1) {
                 m_pCurSample = new DepthTestingSample();
                 break;
             case SAMPLE_TYPE_KEY_INSTANCING:
-//                m_pCurSample = new InstancingSample();
                 m_pCurSample = new Instancing3DSample();
                 break;
             case SAMPLE_TYPE_KEY_STENCIL_TESTING:
@@ -93,19 +99,15 @@ void MyGLRenderContext::SetParamsInt(int paramType, int value0, int value1) {
             case SAMPLE_TYPE_KEY_SKYBOX:
                 m_pCurSample = new SkyBoxSample();
                 break;
-//            case SAMPLE_TYPE_KEY_3D_MODEL:
-//                m_pCurSample = new Model3DSample();
-//                break;
-//            case SAMPLE_TYPE_KEY_PBO:
-//                m_pCurSample = new PBOSample();
-//                break;
-//            case SAMPLE_TYPE_KEY_BEATING_HEART:
-//                m_pCurSample = new BeatingHeartSample();
-//                break;
-//            case SAMPLE_TYPE_KEY_CLOUD:
-//                m_pCurSample = new CloudSample();
-//                break;
-
+            case SAMPLE_TYPE_KEY_PBO:
+                m_pCurSample = new PBOSample();
+                break;
+            case SAMPLE_TYPE_KEY_TBO:
+                m_pCurSample = new TextureBufferSample();
+                break;
+            case SAMPLE_TYPE_KEY_TEXT_RENDER:
+//                m_pCurSample = new TextRenderSample();
+                break;
             default:
                 m_pCurSample = nullptr;
                 break;

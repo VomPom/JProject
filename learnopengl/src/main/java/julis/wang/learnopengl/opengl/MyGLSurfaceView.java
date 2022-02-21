@@ -74,7 +74,6 @@ public class MyGLSurfaceView extends GLSurfaceView implements ScaleGestureDetect
                 mPreviousX = x;
 
                 switch (mGLRender.getSampleType()) {
-                    case SAMPLE_TYPE_FBO_LEG:
                     case SAMPLE_TYPE_COORD_SYSTEM:
                     case SAMPLE_TYPE_BASIC_LIGHTING:
                     case SAMPLE_TYPE_TRANS_FEEDBACK:
