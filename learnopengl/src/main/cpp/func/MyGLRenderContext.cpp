@@ -2,6 +2,8 @@
 // Created by julis.wang on 2022/2/11.
 //
 
+#include <Model3DSample.h>
+#include <GLTransitionExample.h>
 #include "MyGLRenderContext.h"
 
 #include "../sample/TriangleSample.h"
@@ -108,6 +110,20 @@ void MyGLRenderContext::SetParamsInt(int paramType, int value0, int value1) {
             case SAMPLE_TYPE_KEY_TEXT_RENDER:
 //                m_pCurSample = new TextRenderSample();
                 break;
+            case SAMPLE_TYPE_KEY_3D_MODEL:
+                m_pCurSample = new Model3DSample();
+                break;
+            case SAMPLE_TYPE_KEY_TRANSITIONS_1:
+                m_pCurSample = new GLTransitionExample();
+                break;
+//            case SAMPLE_TYPE_KEY_TRANSITIONS_2:
+//                m_pCurSample = new GLTransitionExample_2();
+//                break;
+//            case SAMPLE_TYPE_KEY_TRANSITIONS_3:
+//                m_pCurSample = new GLTransitionExample_3();
+//                break;
+//            case SAMPLE_TYPE_KEY_TRANSITIONS_4:
+//                m_pCurSample = new GLTransitionExample_4();
             default:
                 m_pCurSample = nullptr;
                 break;

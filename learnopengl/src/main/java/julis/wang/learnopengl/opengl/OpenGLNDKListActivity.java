@@ -38,6 +38,10 @@ import static julis.wang.learnopengl.opengl.MyNativeRender.SAMPLE_TYPE_FBO;
 import static julis.wang.learnopengl.opengl.MyNativeRender.SAMPLE_TYPE_INSTANCING;
 import static julis.wang.learnopengl.opengl.MyNativeRender.SAMPLE_TYPE_KEY_TBO;
 import static julis.wang.learnopengl.opengl.MyNativeRender.SAMPLE_TYPE_KEY_TEXT_RENDER;
+import static julis.wang.learnopengl.opengl.MyNativeRender.SAMPLE_TYPE_KEY_TRANSITIONS_1;
+import static julis.wang.learnopengl.opengl.MyNativeRender.SAMPLE_TYPE_KEY_TRANSITIONS_2;
+import static julis.wang.learnopengl.opengl.MyNativeRender.SAMPLE_TYPE_KEY_TRANSITIONS_3;
+import static julis.wang.learnopengl.opengl.MyNativeRender.SAMPLE_TYPE_KEY_TRANSITIONS_4;
 import static julis.wang.learnopengl.opengl.MyNativeRender.SAMPLE_TYPE_MULTI_LIGHTS;
 import static julis.wang.learnopengl.opengl.MyNativeRender.SAMPLE_TYPE_PARTICLES;
 import static julis.wang.learnopengl.opengl.MyNativeRender.SAMPLE_TYPE_PBO;
@@ -112,7 +116,7 @@ public class OpenGLNDKListActivity extends BaseActivity {
         mContainer.addView(mGLSurfaceView, new FrameLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
-
+        Bitmap tmp;
         switch (sampleType) {
             case SAMPLE_TYPE_TRIANGLE:
             case SAMPLE_TYPE_VAO:
@@ -164,6 +168,19 @@ public class OpenGLNDKListActivity extends BaseActivity {
             case SAMPLE_TYPE_EGL:
                 ivClose.performClick();
                 startActivity(new Intent(this, EGLActivity.class));
+                break;
+            case SAMPLE_TYPE_KEY_TRANSITIONS_1:
+            case SAMPLE_TYPE_KEY_TRANSITIONS_2:
+            case SAMPLE_TYPE_KEY_TRANSITIONS_3:
+            case SAMPLE_TYPE_KEY_TRANSITIONS_4:
+                loadRGBAImage(R.drawable.lye, 0);
+                loadRGBAImage(R.drawable.lye4, 1);
+                loadRGBAImage(R.drawable.lye5, 2);
+                loadRGBAImage(R.drawable.lye6, 3);
+                loadRGBAImage(R.drawable.lye7, 4);
+                tmp = loadRGBAImage(R.drawable.lye8, 5);
+                mGLSurfaceView.setAspectRatio(tmp.getWidth(), tmp.getHeight());
+                mGLSurfaceView.setRenderMode(RENDERMODE_CONTINUOUSLY);
                 break;
             default:
         }
@@ -277,6 +294,8 @@ public class OpenGLNDKListActivity extends BaseActivity {
             "Assimp 加载3D模型",
             "PBO离屏渲染",
             "TBO缓存纹理",
+            "转场-翻页"
+
     };
 
 }

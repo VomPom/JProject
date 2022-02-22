@@ -8,8 +8,8 @@
 
 #include <detail/type_mat.hpp>
 #include <detail/type_mat4x4.hpp>
-//#include <shader.h>
-//#include <model.h>
+#include <shader.h>
+#include <model.h>
 #include "GLSampleBase.h"
 
 class Model3DSample : public GLSampleBase
@@ -33,8 +33,8 @@ public:
 private:
 	glm::mat4 m_MVPMatrix;
 	glm::mat4 m_ModelMatrix;
-//	Shader *m_pShader;
-//	Model *m_pModel;
+	Shader *m_pShader;
+	Model *m_pModel;
 
 	int m_AngleX;
 	int m_AngleY;

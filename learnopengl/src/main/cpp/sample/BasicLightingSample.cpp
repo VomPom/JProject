@@ -8,7 +8,7 @@
 
 #include <gtc/matrix_transform.hpp>
 #include "BasicLightingSample.h"
-#include "../util/GLUtils.h"
+#include <GLUtils.h>
 
 BasicLightingSample::BasicLightingSample() {
 

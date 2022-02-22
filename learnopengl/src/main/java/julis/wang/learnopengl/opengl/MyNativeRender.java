@@ -32,7 +32,7 @@ public class MyNativeRender {
     public static final int SAMPLE_TYPE_3D_MODEL                = SAMPLE_TYPE + 17;
     public static final int SAMPLE_TYPE_PBO                     = SAMPLE_TYPE + 18;
     public static final int SAMPLE_TYPE_KEY_TBO                 = SAMPLE_TYPE + 19;
-    public static final int SAMPLE_TYPE_KEY_CLOUD               = SAMPLE_TYPE + 20;
+    public static final int SAMPLE_TYPE_KEY_TRANSITIONS_1       = SAMPLE_TYPE + 20;
     public static final int SAMPLE_TYPE_KEY_TIME_TUNNEL         = SAMPLE_TYPE + 21;
     public static final int SAMPLE_TYPE_KEY_BEZIER_CURVE        = SAMPLE_TYPE + 22;
     public static final int SAMPLE_TYPE_KEY_BIG_EYES            = SAMPLE_TYPE + 23;
@@ -51,7 +51,7 @@ public class MyNativeRender {
     public static final int SAMPLE_TYPE_KEY_MULTI_THREAD_RENDER = SAMPLE_TYPE + 36;
     public static final int SAMPLE_TYPE_FBO_LEG                 = SAMPLE_TYPE + 37;
     public static final int SAMPLE_TYPE_KEY_STAY_COLOR          = SAMPLE_TYPE + 38;
-    public static final int SAMPLE_TYPE_KEY_TRANSITIONS_1       = SAMPLE_TYPE + 39;
+    public static final int SAMPLE_TYPE_KEY_CLOUD               = SAMPLE_TYPE + 39;
     public static final int SAMPLE_TYPE_KEY_TRANSITIONS_2       = SAMPLE_TYPE + 40;
     public static final int SAMPLE_TYPE_KEY_TRANSITIONS_3       = SAMPLE_TYPE + 41;
     public static final int SAMPLE_TYPE_KEY_TRANSITIONS_4       = SAMPLE_TYPE + 42;

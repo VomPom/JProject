@@ -31,7 +31,7 @@
 #define SAMPLE_TYPE_KEY_3D_MODEL                SAMPLE_TYPE + 17
 #define SAMPLE_TYPE_KEY_PBO                     SAMPLE_TYPE + 18
 #define SAMPLE_TYPE_KEY_TBO                     SAMPLE_TYPE + 19
-#define SAMPLE_TYPE_KEY_CLOUD                   SAMPLE_TYPE + 20
+#define SAMPLE_TYPE_KEY_TRANSITIONS_1           SAMPLE_TYPE + 20
 #define SAMPLE_TYPE_KEY_TIME_TUNNEL             SAMPLE_TYPE + 21
 #define SAMPLE_TYPE_KEY_BEZIER_CURVE            SAMPLE_TYPE + 22
 #define SAMPLE_TYPE_KEY_BIG_EYES                SAMPLE_TYPE + 23
@@ -48,9 +48,9 @@
 #define SAMPLE_TYPE_KEY_UBO                     SAMPLE_TYPE + 34
 #define SAMPLE_TYPE_KEY_RGB2YUYV                SAMPLE_TYPE + 35
 #define SAMPLE_TYPE_KEY_MULTI_THREAD_RENDER     SAMPLE_TYPE + 36
-#define SAMPLE_TYPE_KEY_FBO_LEG_LENGTHEN             SAMPLE_TYPE + 37
+#define SAMPLE_TYPE_KEY_FBO_LEG_LENGTHEN        SAMPLE_TYPE + 37
 #define SAMPLE_TYPE_KEY_STAY_COLOR              SAMPLE_TYPE + 38
-#define SAMPLE_TYPE_KEY_TRANSITIONS_1           SAMPLE_TYPE + 39
+#define SAMPLE_TYPE_KEY_CLOUD                   SAMPLE_TYPE + 39
 #define SAMPLE_TYPE_KEY_TRANSITIONS_2           SAMPLE_TYPE + 40
 #define SAMPLE_TYPE_KEY_TRANSITIONS_3           SAMPLE_TYPE + 41
 #define SAMPLE_TYPE_KEY_TRANSITIONS_4           SAMPLE_TYPE + 42
@@ -62,7 +62,7 @@
 #define SAMPLE_TYPE_KEY_SET_TOUCH_LOC           SAMPLE_TYPE + 999
 #define SAMPLE_TYPE_SET_GRAVITY_XY              SAMPLE_TYPE + 1000
 
-#define DEFAULT_OGL_ASSETS_DIR "/sdcard/Android/data/com.wang.julis.jproject.app/files/Download"
+#define DEFAULT_OGL_ASSETS_DIR "/sdcard/download"
 
 class GLSampleBase {
 public:
