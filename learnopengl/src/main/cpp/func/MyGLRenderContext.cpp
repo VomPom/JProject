@@ -4,6 +4,7 @@
 
 #include <Model3DSample.h>
 #include <GLTransitionExample.h>
+#include <TextRenderSample.h>
 #include "MyGLRenderContext.h"
 
 #include "../sample/TriangleSample.h"
@@ -108,7 +109,7 @@ void MyGLRenderContext::SetParamsInt(int paramType, int value0, int value1) {
                 m_pCurSample = new TextureBufferSample();
                 break;
             case SAMPLE_TYPE_KEY_TEXT_RENDER:
-//                m_pCurSample = new TextRenderSample();
+                m_pCurSample = new TextRenderSample();
                 break;
             case SAMPLE_TYPE_KEY_3D_MODEL:
                 m_pCurSample = new Model3DSample();
