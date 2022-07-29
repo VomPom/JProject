@@ -1,6 +1,7 @@
 package wang.julis.jproject.example.anim;
 
-import wang.julis.jproject.main.BaseListActivity;
+
+import wang.julis.jwbase.basecompact.baseList.BaseListActivity;
 
 /*******************************************************
  *

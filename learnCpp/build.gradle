@@ -1,5 +1,6 @@
 plugins {
     id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
 }
 apply from: '../deps.gradle'
 android {
@@ -14,13 +15,8 @@ android {
         consumerProguardFiles "consumer-rules.pro"
         externalNativeBuild {
             cmake {
-                cppFlags '-std=c++11'
-                //arguments '-DANDROID_TOOLCHAIN=clang', '-DANDROID_ARM_MODE=arm', '-DANDROID_STL=c++_shared'
-                cppFlags "-std=c++11 -frtti -fexceptions"
+                cppFlags ""
             }
-        }
-        ndk {
-            abiFilters 'armeabi-v7a', "arm64-v8a"
         }
     }
 
@@ -30,18 +26,18 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    externalNativeBuild {
+        cmake {
+            path "src/main/cpp/CMakeLists.txt"
+            version "3.18.1"
+        }
+    }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-    externalNativeBuild {
-        cmake {
-            path "src/main/cpp/CMakeLists.txt"
-        }
-    }
-    packagingOptions {
-        pickFirst 'lib/arm64-v8a/libopencv_java3.so'
-        pickFirst 'lib/arm64-v8a/libassimp.so'
+    kotlinOptions {
+        jvmTarget = '1.8'
     }
 }
 

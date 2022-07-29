@@ -25,7 +25,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         android:usesCleartextTraffic="true">
-        <activity android:name="julis.wang.learnopengl.opengl.OpenGLNDKListActivity">
+        <activity android:name="wang.julis.jproject.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -48,9 +48,6 @@
         <activity android:name="wang.julis.jproject.example.media.camera.SurfaceViewCameraActivity" />
         <activity android:name="wang.julis.jproject.example.media.camera.TextureViewCameraActivity" />
         <activity android:name="wang.julis.jproject.example.media.camera.CameraMainActivity" />
-        <activity android:name="julis.wang.learnopengl.opengl.OpenGLMainActivity" />
-        <activity android:name="julis.wang.learnopengl.opengl.basefunc.OpenGLTriangleActivity" />
-        <activity android:name="julis.wang.learnopengl.opengl.basefunc.OpenGLImageActivity" />
         <activity android:name="wang.julis.jproject.example.media.codec.MediaCodecMainActivity" />
         <activity android:name="wang.julis.jproject.example.media.screenrecord.ScreenRecordActivity" />
         <activity android:name="wang.julis.jproject.example.media.screenrecord.MediaProjectionDemoActivity" />
@@ -60,27 +57,25 @@
         <activity android:name="wang.julis.jproject.example.media.little.JsonTestActivity" />
         <activity android:name="wang.julis.jproject.example.media.frames.ExtractMpegFramesActivity" />
         <activity android:name="wang.julis.jproject.example.media.little.LittleMainActivity" />
+        <activity android:name="wang.julis.jproject.example.media.little.ToolsMainActivity" />
+
+        <activity android:name="julis.wang.learnopengl.opengl.OpenGLNDKListActivity" />
+        <activity android:name="julis.wang.learnopengl.opengl.basefunc.OpenGLTriangleActivity" />
+        <activity android:name="julis.wang.learnopengl.opengl.basefunc.OpenGLImageActivity" />
+
         <activity
             android:name="julis.wang.learnopengl.opengl.egl.EGLActivity"
             android:theme="@style/AppTheme" />
-        <!--        <activity android:name="julis.wang.learnopengl.opengl.OpenGLNDKListActivity" />-->
 
-        <service android:name="wang.julis.jproject.example.binder.server.AIDLService">
+        <service
+            android:name="wang.julis.jproject.example.binder.server.AIDLService"
+            android:exported="true">
             <intent-filter>
                 <action android:name="julis.wang.binder.example" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </service>
 
-        <meta-data
-            android:name="xposedmodule"
-            android:value="true" />
-        <meta-data
-            android:name="xposeddescription"
-            android:value="Easy example which makes the status bar clock red and adds a smiley" />
-        <meta-data
-            android:name="xposedminversion"
-            android:value="89" />
     </application>
 
 

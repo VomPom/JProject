@@ -1,11 +1,15 @@
 apply plugin: 'com.android.application'
 
+apply from: '../deps.gradle'
+
 android {
-    compileSdkVersion 30
+    compileSdkVersion Ver.compile_sdk
+    buildToolsVersion Ver.build_tools
+
     defaultConfig {
         applicationId "cn.julis.app"
-        minSdkVersion 26
-        targetSdkVersion 30
+        minSdkVersion Ver.min_sdk
+        targetSdkVersion Ver.target_sdk
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -29,23 +33,26 @@ android {
 dependencies {
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'androidx.appcompat:appcompat:1.3.1'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.1'
-    testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
-    implementation 'androidx.multidex:multidex:2.0.1'
 
-    def lifecycle_version = "2.2.0"
-    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
+    testImplementation Deps.test.junit
+    androidTestImplementation Deps.test.junit_ext
+    androidTestImplementation Deps.test.espresso
 
-    implementation 'com.squareup.okhttp3:okhttp:4.9.1'
+    implementation Deps.androidx.appcompat
+    implementation Deps.androidx.material
+    implementation Deps.androidx.constraintlayout
+    implementation Deps.androidx.core
+    implementation Deps.androidx.multidex
+
+    implementation Deps.android.lifecycle.extensions
+    implementation Deps.kotlin.stdlib
+    implementation Deps.android.lifecycle.livedata
+    implementation Deps.android.lifecycle.viewmodel
+    implementation Deps.android.lifecycle.livedata_ktx
+    implementation Deps.square.okhttp
+
     implementation project(path: ':kotlinLearn')
     implementation project(path: ':learnopengl')
-
     implementation project(':JWBase')
-
-
 }
 //apply from: '../script/get_hybrid_class.gradle'

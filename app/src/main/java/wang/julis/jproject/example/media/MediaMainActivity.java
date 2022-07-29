@@ -11,7 +11,7 @@ import wang.julis.jproject.example.media.drawimage.DrawImageActivity;
 import wang.julis.jproject.example.media.frames.ExtractMpegFramesActivity;
 import wang.julis.jproject.example.media.screenrecord.MediaProjectionDemoActivity;
 import wang.julis.jproject.example.media.screenrecord.ScreenRecordActivity;
-import wang.julis.jproject.main.BaseListActivity;
+import wang.julis.jwbase.basecompact.baseList.BaseListActivity;
 
 /*******************************************************
  *

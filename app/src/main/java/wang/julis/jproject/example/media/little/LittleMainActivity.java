@@ -1,7 +1,7 @@
 package wang.julis.jproject.example.media.little;
 
 import wang.julis.jproject.example.binder.client.BinderTestActivity;
-import wang.julis.jproject.main.BaseListActivity;
+import wang.julis.jwbase.basecompact.baseList.BaseListActivity;
 
 /*******************************************************
  *

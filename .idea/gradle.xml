@@ -4,19 +4,19 @@
   <component name="GradleSettings">
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
-        <option name="testRunner" value="PLATFORM" />
+        <option name="testRunner" value="GRADLE" />
         <option name="distributionType" value="DEFAULT_WRAPPED" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/JWBase/jwbase" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/kotlinLearn" />
+            <option value="$PROJECT_DIR$/learnCpp" />
             <option value="$PROJECT_DIR$/learnopengl" />
-            <option value="$PROJECT_DIR$/../JWBase/jwbase" />
           </set>
         </option>
-        <option name="resolveModulePerSourceSet" value="false" />
       </GradleProjectSettings>
     </option>
   </component>

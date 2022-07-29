@@ -1,0 +1,3 @@
+[submodule "JWBase"]
+	path = JWBase
+	url = https://github.com/VomPom/JWBase
