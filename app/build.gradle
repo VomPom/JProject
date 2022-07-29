@@ -51,8 +51,10 @@ dependencies {
     implementation Deps.android.lifecycle.livedata_ktx
     implementation Deps.square.okhttp
 
-    implementation project(path: ':kotlinLearn')
-    implementation project(path: ':learnopengl')
+    implementation project(':kotlinLearn')
+    implementation project(':learnopengl')
     implementation project(':JWBase')
+    implementation project(':learnCpp')
+
 }
 //apply from: '../script/get_hybrid_class.gradle'

@@ -7,6 +7,7 @@ import wang.julis.jproject.example.media.MediaMainActivity;
 import wang.julis.jproject.example.media.little.LittleMainActivity;
 import wang.julis.jproject.example.media.little.ToolsMainActivity;
 import wang.julis.jwbase.basecompact.baseList.BaseListActivity;
+import wang.julis.learncpp.CppMainActivity;
 
 /*******************************************************
  *
@@ -23,9 +24,12 @@ public class MainActivity extends BaseListActivity {
         addActivity("动画相关", AnimationMainActivity.class);
         addActivity("音视频", MediaMainActivity.class);
         addActivity("Kotlin", KotlinMainActivity.class);
+        addActivity("Cpp", CppMainActivity.class);
         addActivity("OpenGL ES", OpenGLNDKListActivity.class);
         addActivity("小测试", LittleMainActivity.class);
         addActivity("小工具", ToolsMainActivity.class);
+
+
     }
 
 

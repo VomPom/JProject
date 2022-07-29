@@ -2,4 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="wang.julis.learncpp">
 
+    <application>
+        <activity android:name=".CppMainActivity" />
+        <activity android:name=".bitmap.BitmapOperationActivity" />
+        <activity android:name=".page.MethodActivity" />
+        <activity android:name=".page.ThreadActivity" />
+    </application>
 </manifest>

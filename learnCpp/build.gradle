@@ -15,7 +15,7 @@ android {
         consumerProguardFiles "consumer-rules.pro"
         externalNativeBuild {
             cmake {
-                cppFlags ""
+                cppFlags "-std=c++11"
             }
         }
     }
@@ -29,7 +29,6 @@ android {
     externalNativeBuild {
         cmake {
             path "src/main/cpp/CMakeLists.txt"
-            version "3.18.1"
         }
     }
     compileOptions {
@@ -49,6 +48,8 @@ dependencies {
 
     implementation Deps.androidx.activity
     implementation Deps.androidx.fragment
+    implementation Deps.androidx.constraintlayout
+
 
     implementation Deps.androidx.appcompat
     implementation Deps.androidx.material

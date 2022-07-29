@@ -15,7 +15,6 @@ import wang.julis.jwbase.basecompact.baseList.BaseListActivity
 class KotlinMainActivity : BaseListActivity() {
     override fun initData() {
         addActivity("ViewModel", ViewModelTestActivity::class.java)
-        submitActivityList()
     }
 
 }
