@@ -8,6 +8,7 @@ import android.util.Log;
  * Description :
  */
 abstract public class BaseOperation {
+    protected static final String TAG = "--julis";
 
     static {
         System.loadLibrary("learncpp");

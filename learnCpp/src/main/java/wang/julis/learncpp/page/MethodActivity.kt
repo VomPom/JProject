@@ -16,7 +16,7 @@ import wang.julis.learncpp.ops.CacheFieldAndMethodOps
 class MethodActivity : BaseActivity() {
     private val cacheFieldAndMethodOps = CacheFieldAndMethodOps()
     override fun initView() {
-        findViewById<TextView>(R.id.btn_start).setOnClickListener {
+        findViewById<TextView>(R.id.btn_command).setOnClickListener {
             cacheFieldAndMethodOps.invoke()
         }
 

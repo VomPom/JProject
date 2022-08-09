@@ -62,7 +62,7 @@ public class ScreenRecordActivity extends BaseActivity implements View.OnClickLi
 
     @Override
     protected void initView() {
-        findViewById(R.id.btn_start).setOnClickListener(this);
+        findViewById(R.id.btn_command).setOnClickListener(this);
         findViewById(R.id.btn_stop).setOnClickListener(this);
     }
 
@@ -81,7 +81,7 @@ public class ScreenRecordActivity extends BaseActivity implements View.OnClickLi
     public void onClick(View view) {
         int viewID = view.getId();
         switch (viewID) {
-            case R.id.btn_start:
+            case R.id.btn_command:
                 startRecord();
                 break;
             case R.id.btn_stop:

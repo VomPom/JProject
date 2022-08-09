@@ -24,7 +24,10 @@ add_library( # Sets the name of the library.
         # Provides a relative path to your source file(s).
         bitmap_operation.cpp
         cache_filed_and_method.cpp
-        thread_operation.cpp
+#        thread_operation.cpp
+        native/design_ops.cpp
+        android/hello-jni.cpp
+        android/jni_callback.cpp
         )
 
 add_library(

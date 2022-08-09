@@ -7,5 +7,8 @@
         <activity android:name=".bitmap.BitmapOperationActivity" />
         <activity android:name=".page.MethodActivity" />
         <activity android:name=".page.ThreadActivity" />
+        <activity android:name=".page.DesignActivity" />
+        <activity android:name=".page.LittleJniActivity" />
+        <activity android:name=".page.JniCallbackActivity" />
     </application>
 </manifest>

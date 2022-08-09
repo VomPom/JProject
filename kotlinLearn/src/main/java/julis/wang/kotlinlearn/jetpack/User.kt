@@ -9,8 +9,10 @@ package julis.wang.kotlinlearn.jetpack
  *
  *******************************************************/
 
-data class User(val sex: Int, var name: String) : BaseData(sex) {
+data class User(val sex: Int, var name: String, val address: Address? = null) : BaseData(sex) {
     fun printUserInfo(): String {
         return "sex:$sex name:$name"
     }
 }
+
+data class Address(val id: String, val detail: String?)

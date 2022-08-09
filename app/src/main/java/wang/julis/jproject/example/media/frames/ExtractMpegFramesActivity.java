@@ -25,7 +25,7 @@ public class ExtractMpegFramesActivity extends BaseActivity {
     @Override
     protected void initView() {
         tvCost = findViewById(R.id.tv_cost);
-        findViewById(R.id.btn_start).setOnClickListener(v -> extractMpegFrames());
+        findViewById(R.id.btn_command).setOnClickListener(v -> extractMpegFrames());
     }
 
 
