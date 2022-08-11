@@ -10,5 +10,16 @@
         <activity android:name=".page.DesignActivity" />
         <activity android:name=".page.LittleJniActivity" />
         <activity android:name=".page.JniCallbackActivity" />
+        <activity android:name="android.app.NativeActivity">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="native-activity" />
+        </activity>
+
+        <activity android:name=".page.WebPNativeActivity">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="webp_view" />
+        </activity>
     </application>
 </manifest>

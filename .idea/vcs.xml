@@ -3,5 +3,7 @@
   <component name="VcsDirectoryMappings">
     <mapping directory="" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/JWBase" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/learnCpp/libwebp" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/libwebp" vcs="Git" />
   </component>
 </project>
