@@ -21,5 +21,6 @@
                 android:name="android.app.lib_name"
                 android:value="webp_view" />
         </activity>
+        <activity android:name=".mediacodec.NativeCodecActivity" />
     </application>
 </manifest>

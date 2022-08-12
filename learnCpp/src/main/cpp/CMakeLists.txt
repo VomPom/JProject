@@ -135,3 +135,18 @@ target_link_libraries(webp_view android log m native_app_glue webp)
 
 
 ############################## WEBP ACTIVITY END ##################################
+
+########################## NATIVE MEDIACODEC ACTIVITY START ############################
+
+add_library(native-codec-jni SHARED
+        android/mediacodec/looper.cpp
+        android/mediacodec/native-codec-jni.cpp)
+
+# Include libraries needed for native-codec-jni lib
+target_link_libraries(native-codec-jni
+        android
+        log
+        mediandk
+        OpenMAXAL)
+
+########################## NATIVE MEDIACODEC ACTIVITY END ############################
