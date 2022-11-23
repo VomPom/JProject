@@ -59,7 +59,7 @@
         <activity android:name="wang.julis.jproject.example.media.little.LittleMainActivity" />
         <activity android:name="wang.julis.jproject.example.media.little.ToolsMainActivity" />
 
-        <activity android:name="julis.wang.learnopengl.opengl.OpenGLNDKListActivity" />
+<!--        <activity android:name="julis.wang.learnopengl.opengl.OpenGLNDKListActivity" />-->
         <activity android:name="julis.wang.learnopengl.opengl.basefunc.OpenGLTriangleActivity" />
         <activity android:name="julis.wang.learnopengl.opengl.basefunc.OpenGLImageActivity" />
 
