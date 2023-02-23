@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="qtl_purple_200">#FFBB86FC</color>
+    <color name="qtl_purple_500">#FF6200EE</color>
+    <color name="qtl_purple_700">#FF3700B3</color>
+    <color name="gt_teal_200">#FF03DAC5</color>
+    <color name="gt_teal_700">#FF018786</color>
+    <color name="gt_black">#FF000000</color>
+    <color name="gt_white">#FFFFFFFF</color>
+    <color name="default_black_bg">#40808080</color>
+    <color name="default_shadow_bg">#10808080</color>
+    <color name="transparent">#00000000</color>
+
+    <color name="main_color_c1">#FEE545</color>
+    <color name="main_color_c2">#0B0E12</color>
+    <color name="main_color_c3">#121314</color>
+    <color name="main_color_c4">#202224</color>
+    <color name="main_color_c5">#18191A</color>
+    <color name="main_color_c6">#222123</color>
+
+    <color name="white_alpha_03">#08ffffff</color>
+    <color name="white_alpha_04">#0affffff</color>
+    <color name="white_alpha_07">#12ffffff</color>
+    <color name="white_alpha_08">#14ffffff</color>
+    <color name="white_alpha_10">#1Affffff</color>
+    <color name="white_alpha_20">#33ffffff</color>
+    <color name="white_alpha_27">#45ffffff</color>
+    <color name="white_alpha_30">#4dffffff</color>
+    <color name="white_alpha_40">#66ffffff</color>
+    <color name="white_alpha_50">#80ffffff</color>
+    <color name="white_alpha_60">#99FFFFFF</color>
+    <color name="white_alpha_65">#a6ffffff</color>
+    <color name="white_alpha_70">#B3FFFFFF</color>
+    <color name="white_alpha_75">#BFFFFFFF</color>
+    <color name="white_alpha_80">#CCFFFFFF</color>
+    <color name="white_alpha_85">#26ffffff</color>
+    <color name="white_alpha_90">#E6FFFFFF</color>
+
+    <color name="black_alpha_40">#66000000</color>
+
+    <!-- 主题色：用于需要突出的按钮、icon、字体等 -->
+    <color name="common_theme_c1">#FEE545</color>
+    <!-- 辅助色：用于主题色按钮中的文字等 -->
+    <color name="common_assist_c2">#0B0E12</color>
+    <color name="template_tag_text_color">#909192</color>
+    <color name="background_main">#FF161616</color>
+    <color name="qtl_teal_200">#FF03DAC5</color>
+    <color name="qtl_teal_700">#FF018786</color>
+    <color name="qtl_black">#FF000000</color>
+    <color name="qtl_white">#FFFFFFFF</color>
+    <color name="recording_clarity_button_text_black">#1C1C1C</color>
+    <color name="recording_grey_alpha_50">#80FFFFFF</color>
+
+    <color name="bg_black">@color/background_main</color>
+    <color name="bg_white">#FFFFFFFF</color>
+    <color name="text_black">#FF000000</color>
+    <color name="text_white">#FFFFFFFF</color>
+
+    <color name="blue_74cfd5">#74cfd5</color>
+    <color name="blue_74bbe8">#74bbe8</color>
+    <color name="red_alpha_85">#26ff0000</color>
+    <color name="red_ff4273">#ff4273</color>
+    <color name="yellow_e4cca4">#e4cca4</color>
+    <color name="gray_4d474950">#4d474950</color>
+    <color name="gray_4d2f3132">#4d2f3132</color>
+    <color name="gray_36383a">#36383a</color>
+    <color name="green_63a49e">#63a49e</color>
+    <color name="blue_008d99">#008d99</color>
+    <color name="tag_unselected_bg_color">#eff1f5</color>
+    <!--title的分割线颜色-->
+    <color name="gc_divided_line_title">#26EDF0F0</color>
+    <!--挑战列表搜索栏背景色-->
+    <color name="aic_background_edit_text">#33F0F3F7</color>
+    <!--tabLayout选中字体颜色-->
+    <color name="aic_tab_layout_selected_text">#E6FFFFFF</color>
+    <!--tabLayout未选中字体颜色-->
+    <color name="aic_tab_layout_no_selected_text">#80FFFFFF</color>
+    <color name="aic_divided_line_challenge">#26EDF0F0</color>
+    <color name="gc_seek_bar_bottom_text">#1C1C1C</color>
+
+    <!-- 主背景颜色 -->
+    <color name="aic_background_main">#FF161616</color>
+    <color name="aic_color_dialog_text">#FFDADEE6</color>
+
+    <color name="aic_advanced_hint">#757E7F</color>r
+    <color name="white_80">#80FFFFFF</color>
+    <color name="white_50">#50FFFFFF</color>
+    <color name="aic_grey">#282828</color>
+    <color name="aic_icon_error_red">#BF503F</color>
+    <color name="aic_status_bar">#0E1210</color>
+    <color name="aic_right_drawable">#7F1C1C1C</color>
+    <color name="aic_right_no_select_drawable">#B2FFFFFF</color>
+    <color name="bottom_dialog_divide_line">#F0F3F7</color>
+    <color name="music_played_indicator_color">#BF503F</color>
+</resources>

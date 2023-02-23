@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tool="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/d50"
+    android:layout_marginBottom="@dimen/d05"
+    android:background="@color/default_black_bg">
+
+    <View
+        android:id="@+id/iv_music_cover"
+        android:layout_width="@dimen/d100"
+        android:layout_height="@dimen/d25"
+        android:layout_marginStart="@dimen/d10"
+        android:background="@color/default_black_bg"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

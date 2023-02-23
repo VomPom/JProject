@@ -10,5 +10,6 @@
         <activity android:name=".jetpack.ViewModelTestActivity" />
         <activity android:name=".feature.KeywordActivity" />
         <activity android:name=".feature.CoroutinesActivity" />
+        <activity android:name=".RecyclerViewActivity" />
     </application>
 </manifest>

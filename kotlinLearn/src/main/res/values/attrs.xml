@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="SectionSeekBar">
+        <attr name="sectionCount" format="integer"/>
+        <attr name="sectionWidth" format="dimension"/>
+        <attr name="sectionHeight" format="dimension"/>
+        <attr name="sectionColor" format="color"/>
+        <attr name="sectionSelectedColor" format="color"/>
+        <attr name="sectionTextColor" format="color"/>
+    </declare-styleable>
+
+    <declare-styleable name="TrackIconRelativeLayout">
+        <attr name="iconContainerWidth" format="dimension"/>
+        <attr name="iconContainerBackgroundColor" format="color"/>
+    </declare-styleable>
+
+</resources>
