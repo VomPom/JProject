@@ -25,7 +25,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         android:usesCleartextTraffic="true">
-        <activity android:name="wang.julis.jproject.MainActivity">
+        <activity android:name="julis.wang.learnopengl.opengl.view2gl.ViewToGLActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -59,7 +59,7 @@
         <activity android:name="wang.julis.jproject.example.media.little.LittleMainActivity" />
         <activity android:name="wang.julis.jproject.example.media.little.ToolsMainActivity" />
 
-<!--        <activity android:name="julis.wang.learnopengl.opengl.OpenGLNDKListActivity" />-->
+        <activity android:name="julis.wang.learnopengl.opengl.OpenGLNDKListActivity" />
         <activity android:name="julis.wang.learnopengl.opengl.basefunc.OpenGLTriangleActivity" />
         <activity android:name="julis.wang.learnopengl.opengl.basefunc.OpenGLImageActivity" />
 

@@ -9,7 +9,6 @@ import wang.julis.jproject.example.media.camera.CameraMainActivity;
 import wang.julis.jproject.example.media.codec.MediaCodecMainActivity;
 import wang.julis.jproject.example.media.drawimage.DrawImageActivity;
 import wang.julis.jproject.example.media.frames.ExtractMpegFramesActivity;
-import wang.julis.jproject.example.media.glrender.GlRenderActivity;
 import wang.julis.jproject.example.media.screenrecord.MediaProjectionDemoActivity;
 import wang.julis.jproject.example.media.screenrecord.ScreenRecordActivity;
 import wang.julis.jwbase.basecompact.baseList.BaseListActivity;
@@ -36,7 +35,6 @@ public class MediaMainActivity extends BaseListActivity {
         addActivity("手机录屏", ScreenRecordActivity.class);
         addActivity("提取帧", ExtractMpegFramesActivity.class);
         addActivity("MediaProjectionDemo", MediaProjectionDemoActivity.class);
-        addActivity("ViewToGL", GlRenderActivity.class);
         check();
     }
 

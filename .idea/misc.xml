@@ -19,10 +19,16 @@
         <entry key="../JWBase/jwbase/src/main/res/drawable/shape_bg_red.xml" value="0.225" />
         <entry key="../JWBase/jwbase/src/main/res/layout/layout_list_item.xml" value="0.43697916666666664" />
         <entry key="app/src/main/res/drawable/shape_bg_red.xml" value="0.225" />
+        <entry key="app/src/main/res/layout/activity_gl_render.xml" value="0.30520833333333336" />
+        <entry key="app/src/main/res/layout/activity_gl_render2.xml" value="0.38958333333333334" />
+        <entry key="app/src/main/res/layout/activity_recycler_view_test.xml" value="0.30520833333333336" />
         <entry key="app/src/main/res/layout/activity_test.xml" value="0.4708333333333333" />
         <entry key="kotlinLearn/src/main/res/layout/activity_main.xml" value="0.43697916666666664" />
+        <entry key="kotlinLearn/src/main/res/layout/activity_recycler_view_test.xml" value="0.15520833333333334" />
         <entry key="kotlinLearn/src/main/res/layout/activity_test.xml" value="0.4234375" />
         <entry key="kotlinLearn/src/main/res/layout/activity_view_model.xml" value="0.2546875" />
+        <entry key="kotlinLearn/src/main/res/layout/layout_item_music.xml" value="0.15833333333333333" />
+        <entry key="kotlinLearn/src/main/res/layout/layout_item_music_placeholder.xml" value="0.30625" />
         <entry key="kotlinLearn/src/main/res/layout/layout_list_item.xml" value="0.43697916666666664" />
         <entry key="learnCpp/src/main/res/layout/acitivity_jni_callback.xml" value="0.30625" />
         <entry key="learnCpp/src/main/res/layout/activity_bitmap_operation.xml" value="0.21813031161473087" />
@@ -30,6 +36,9 @@
         <entry key="learnCpp/src/main/res/layout/activity_method.xml" value="0.30625" />
         <entry key="learnCpp/src/main/res/layout/activity_native_mediacodec.xml" value="0.4546875" />
         <entry key="learnCpp/src/main/res/menu/menu_egl.xml" value="0.4708333333333333" />
+        <entry key="learnopengl/src/main/res/layout/activity_egl.xml" value="0.30625" />
+        <entry key="learnopengl/src/main/res/layout/activity_gl_render.xml" value="0.30625" />
+        <entry key="learnopengl/src/main/res/layout/activity_gl_render2.xml" value="0.30625" />
         <entry key="learnopengl/src/main/res/layout/activity_main.xml" value="0.23177083333333334" />
         <entry key="learnopengl/src/main/res/layout/activity_opengl_list.xml" value="0.23177083333333334" />
       </map>

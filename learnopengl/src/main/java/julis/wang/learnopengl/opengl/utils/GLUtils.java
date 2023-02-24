@@ -1,4 +1,4 @@
-package wang.julis.jproject.utils;
+package julis.wang.learnopengl.opengl.utils;
 
 import android.graphics.Bitmap;
 import android.opengl.GLES20;
