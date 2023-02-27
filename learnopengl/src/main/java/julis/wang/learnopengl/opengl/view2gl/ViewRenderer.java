@@ -3,14 +3,12 @@ package julis.wang.learnopengl.opengl.view2gl;
 import android.graphics.SurfaceTexture;
 import android.opengl.GLES11Ext;
 import android.opengl.GLES20;
-import android.opengl.GLSurfaceView;
 import android.view.Display;
 import android.view.Surface;
 
-import javax.microedition.khronos.egl.EGLConfig;
-import javax.microedition.khronos.opengles.GL10;
+import julis.wang.learnopengl.opengl.view2gl.gl.GLViewRenderer;
 
-public class ViewRenderer implements GLSurfaceView.Renderer {
+public class ViewRenderer implements GLViewRenderer {
     private int glSurfaceTex;
     private DirectDrawer mDirectDrawer;
     private OnRenderListener renderListener;
@@ -26,7 +24,7 @@ public class ViewRenderer implements GLSurfaceView.Renderer {
     }
 
     @Override
-    public void onDrawFrame(GL10 gl) {
+    public void onDrawFrame() {
         synchronized (this) {
             surfaceTexture.updateTexImage();
         }
@@ -39,7 +37,7 @@ public class ViewRenderer implements GLSurfaceView.Renderer {
 
 
     @Override
-    public void onSurfaceCreated(GL10 gl, EGLConfig config) {
+    public void onSurfaceCreated() {
         surfaceTexture = null;
         glSurfaceTex = createSurfaceTexture(TEXTURE_WIDTH, TEXTURE_HEIGHT);
         if (glSurfaceTex > 0) {
@@ -51,9 +49,8 @@ public class ViewRenderer implements GLSurfaceView.Renderer {
         }
     }
 
-
     @Override
-    public void onSurfaceChanged(GL10 gl, int width, int height) {
+    public void onSurfaceChanged(int width, int height) {
         mDirectDrawer.initFrameBuffer(width, height);
     }
 

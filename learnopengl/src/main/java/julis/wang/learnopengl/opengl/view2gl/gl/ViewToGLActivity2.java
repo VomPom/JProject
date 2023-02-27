@@ -1,18 +1,21 @@
-package julis.wang.learnopengl.opengl.view2gl;
+package julis.wang.learnopengl.opengl.view2gl.gl;
 
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.view.Display;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import julis.wang.learnopengl.R;
 import julis.wang.learnopengl.opengl.utils.GLUtils;
+import julis.wang.learnopengl.opengl.view2gl.GLProgressBar;
+import julis.wang.learnopengl.opengl.view2gl.ViewRenderer;
 
 
-public class ViewToGLActivity extends Activity {
+public class ViewToGLActivity2 extends Activity {
     private FrameLayout root;
     private ImageView ivContrast;
 
@@ -27,26 +30,24 @@ public class ViewToGLActivity extends Activity {
     }
 
     private void addView() {
-//        Display mDisplay = getWindowManager().getDefaultDisplay();
-//        GLProgressBar glProgressBar = new GLProgressBar(this);
-//        ViewRenderer renderer = new ViewRenderer(glProgressBar);
-//        GLSurfaceView glSurfaceView = new GLSurfaceView(getApplicationContext());
-//
-//        glSurfaceView.setEGLContextClientVersion(2);
-//        glSurfaceView.setEGLConfigChooser(8, 8, 8, 8, 16, 0);
-//        glSurfaceView.setRenderer(renderer);
-//        glSurfaceView.setLayoutParams(
-//            new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,
-//                FrameLayout.LayoutParams.MATCH_PARENT));
-//        root.addView(glSurfaceView);
-//        root.addView(glProgressBar);
-//
-//        renderer.setRenderListener(this::addContrast);
+        Display mDisplay = getWindowManager().getDefaultDisplay();
+        GLProgressBar glProgressBar = new GLProgressBar(this);
+        ViewRenderer renderer = new ViewRenderer(glProgressBar, mDisplay);
+        renderer.setRenderListener(this::addContrast);
+
+        AnimationView glSurfaceView = new AnimationView(getApplicationContext());
+        glSurfaceView.setRenderer(renderer);
+        glSurfaceView.setLayoutParams(
+            new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,
+                FrameLayout.LayoutParams.MATCH_PARENT));
+        root.addView(glSurfaceView);
+        root.addView(glProgressBar);
+
     }
 
     private void addContrast(int frameBufferTexture) {
 
-        Bitmap b = GLUtils.saveBitmap(frameBufferTexture, 1080, 1920);
+        Bitmap b = GLUtils.saveBitmap(frameBufferTexture, 1080, 2340);
         new Handler(Looper.getMainLooper()).post(new Runnable() {
             @Override
             public void run() {

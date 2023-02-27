@@ -6,8 +6,6 @@ import android.graphics.Canvas;
 import android.graphics.SurfaceTexture;
 import android.view.Surface;
 import android.view.Surface.OutOfResourcesException;
-import android.view.ViewGroup.LayoutParams;
-import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 
 public class GLProgressBar extends ProgressBar implements IRenderedView {
@@ -26,7 +24,6 @@ public class GLProgressBar extends ProgressBar implements IRenderedView {
 
     public GLProgressBar(Context context) {
         super(context);
-        setLayoutParams(new LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, 400));
     }
 
     @Override
