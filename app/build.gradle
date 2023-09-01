@@ -1,6 +1,8 @@
 apply plugin: 'com.android.application'
-
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
 apply from: '../deps.gradle'
+
 
 android {
     compileSdkVersion Ver.compile_sdk
@@ -50,6 +52,8 @@ dependencies {
     implementation Deps.android.lifecycle.viewmodel
     implementation Deps.android.lifecycle.livedata_ktx
     implementation Deps.square.okhttp
+
+    implementation Deps.third.pag
 
     implementation project(':kotlinLearn')
     implementation project(':learnopengl')

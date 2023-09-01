@@ -66,6 +66,9 @@
         <activity
             android:name="julis.wang.learnopengl.opengl.egl.EGLActivity"
             android:theme="@style/AppTheme" />
+        <activity android:name="wang.julis.jproject.example.media.pag.PAGMainActivity" />
+        <activity android:name="wang.julis.jproject.example.media.pag.SimplePagActivity" />
+        <activity android:name="wang.julis.jproject.example.media.pag.PAGSurfaceTextureIdActivity" />
 
         <service
             android:name="wang.julis.jproject.example.binder.server.AIDLService"

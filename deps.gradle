@@ -92,6 +92,10 @@ def test_deps = [
         espresso : "androidx.test.espresso:espresso-core:3.4.0"
 ]
 
+def third_deps = [
+        pag: "com.tencent.tav:libpag:4.0.5.10"
+]
+
 
 ext.Deps = [
         kotlin  : kotlin_deps,
@@ -101,4 +105,5 @@ ext.Deps = [
         glide   : glide_deps,
         square  : square_deps,
         test    : test_deps,
+        third   : third_deps,
 ]

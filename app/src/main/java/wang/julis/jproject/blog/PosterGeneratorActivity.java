@@ -5,12 +5,10 @@ import android.annotation.SuppressLint;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.Spanned;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.webkit.JavascriptInterface;
@@ -29,8 +27,8 @@ import androidx.core.content.ContextCompat;
 
 import com.julis.distance.R;
 
-import java.io.InputStream;
-import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 
 import wang.julis.jwbase.Utils.CommonUtils;
 import wang.julis.jwbase.Utils.ImageUtils;
@@ -48,17 +46,17 @@ import wang.julis.jwbase.basecompact.BaseActivity;
  *******************************************************/
 
 public class PosterGeneratorActivity extends BaseActivity implements View.OnClickListener {
+    private static final String BLOG_URL = "http://julis.wang";
     private static final int WRITE_EXTERNAL_STORAGE_REQUEST_CODE = 100;
     private EditText etExt;
     private ImageView ivPoster;
     private WebView mWebView;
-    private String mUrl, title, content, readTime, writeTime, type, visitor;
+    private String mUrl, title, content, writeInfo;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
-
 
     @Override
     protected void initView() {
@@ -67,12 +65,11 @@ public class PosterGeneratorActivity extends BaseActivity implements View.OnClic
         findViewById(R.id.btn_generator).setOnClickListener(this);
         findViewById(R.id.btn_jump).setOnClickListener(this);
         init();
-
     }
 
     @Override
     protected void initData() {
-        mUrl = "http://julis.wang";
+        mUrl = BLOG_URL;
     }
 
     @Override
@@ -117,8 +114,6 @@ public class PosterGeneratorActivity extends BaseActivity implements View.OnClic
         mWebView.getSettings().setLoadWithOverviewMode(true);
 
         // 加载链接
-
-
         mWebView.setWebViewClient(new WebViewClient() {
             @Override
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
@@ -139,46 +134,18 @@ public class PosterGeneratorActivity extends BaseActivity implements View.OnClic
             @Override
             public void onPageFinished(WebView view, String url) {
                 stopLoadingDialog();
-                // 在结束加载网页时会回调
-                String jsShowTitle = "javascript:window.java_obj.showTitle("
-                        + "document.querySelector('body > section > div > div > " +
-                        "div.column.is-8-tablet.is-8-desktop.is-6-widescreen.has-order-2.column-main > " +
-                        "div:nth-child(1) > div.card-content.article > h1').innerText);";
-
-                String jsContent = "javascript:window.java_obj.showContent("
-                        + "document.querySelector('body > section > div > div > " +
-                        "div.column.is-8-tablet.is-8-desktop.is-6-widescreen.has-order-2.column-main > " +
-                        "div:nth-child(1) > div.card-content.article > div.content').innerText);";
-
-                String jsReadTime = "javascript:window.java_obj.showReadTime("
-                        + "document.querySelector('body > section > div > div > " +
-                        "div.column.is-8-tablet.is-8-desktop.is-6-widescreen.has-order-2.column-main > " +
-                        "div:nth-child(1) > div.card-content.article > " +
-                        "div.level.article-meta.is-size-7.is-uppercase.is-mobile.is-overflow-x-auto > " +
-                        "div > span:nth-child(3)').innerText);";
-                String jsTime = "javascript:window.java_obj.showTime("
-                        + "document.querySelector('body > section > div > div > " +
-                        "div.column.is-8-tablet.is-8-desktop.is-6-widescreen.has-order-2.column-main > " +
-                        "div:nth-child(1) > div.card-content.article > " +
-                        "div.level.article-meta.is-size-7.is-uppercase.is-mobile.is-overflow-x-auto > div >" +
-                        " time').getAttribute(\"datetime\"));";
-
-                String jsType = "javascript:window.java_obj.showType("
-                        + "document.querySelector('body > section > div > div > " +
-                        "div.column.is-8-tablet.is-8-desktop.is-6-widescreen.has-order-2.column-main > " +
-                        "div:nth-child(1) > div.card-content.article > " +
-                        "div.level.article-meta.is-size-7.is-uppercase.is-mobile.is-overflow-x-auto > " +
-                        "div > div > a').innerText);";
-                String jsVisitor = "javascript:window.java_obj.showVisitor("
-                        + "document.querySelector(\"#busuanzi_value_site_uv\").innerText);";
-
-                view.loadUrl(jsVisitor);
-                view.loadUrl(jsType);
-                view.loadUrl(jsShowTitle);
-                view.loadUrl(jsContent);
-                view.loadUrl(jsTime);
-                view.loadUrl(jsReadTime);
-
+                Map<String, String> loadMap = new HashMap<String, String>() {{
+                    put("title", "#layout > div:nth-child(1) > div > div > h1");
+                    put("readCostTime", "#layout > div:nth-child(1) > div > div > div.post-meta > span:nth-child(6) > span > span.post-count");
+                    put("writeInfo", "#layout > div:nth-child(1) > div > div > div.post-meta");
+                    put("content", "#layout > div:nth-child(1) > div > div > div.post-content");
+                    put("type", "#layout > div:nth-child(1) > div > div > div.post-meta > span.category > a");
+                    put("wordCount", "#layout > div:nth-child(1) > div > div > div.post-meta > span:nth-child(5) > span.post-meta-item-icon > span.post-count");
+                }};
+                for (String key : loadMap.keySet()) {
+                    String runStr = createLoadStr(key, loadMap.get(key));
+                    view.loadUrl(runStr);
+                }
                 super.onPageFinished(view, url);
             }
 
@@ -200,44 +167,33 @@ public class PosterGeneratorActivity extends BaseActivity implements View.OnClic
         jumpTarget();
     }
 
+    private String createLoadStr(String functionName, String selector) {
+        return "javascript:window.java_obj." + functionName + "("
+                + "String(document.querySelector('" + selector + "').innerHTML));";
+    }
+
     public final class InJavaScriptLocalObj {
         @JavascriptInterface
-        public void showTitle(String str) {
+        public void title(String str) {
             title = str;
         }
 
         @JavascriptInterface
-        public void showVisitor(String str) {
-            visitor = str;
-        }
-
-        @JavascriptInterface
-        public void showContent(String str) {
+        public void content(String str) {
             content = str.replaceAll("\n\n", "\n");
         }
 
         @JavascriptInterface
-        public void showReadTime(String str) {
-            readTime = str.replaceAll(" ", "");
+        public void writeInfo(String str) {
+            writeInfo = str;
         }
-
-        @JavascriptInterface
-        public void showTime(String str) {
-            writeTime = str;
-        }
-
-        @JavascriptInterface
-        public void showType(String str) {
-            type = str;
-        }
-
     }
 
 
     private void jumpTarget() {
         String url = etExt.getText().toString();
         if (TextUtils.isEmpty(url)) {
-            url = "http://julis.wang";
+            url = BLOG_URL;
         }
         mWebView.loadUrl(url);
     }
@@ -251,11 +207,9 @@ public class PosterGeneratorActivity extends BaseActivity implements View.OnClic
      */
     @SuppressLint("SetTextI18n")
     private void initPosterView() {
-
         View view = LayoutInflater.from(this).inflate(R.layout.layout_poster, null);
 
         int screenWidth = 1080; // CommonUtils.getWidth(this);
-        int screenHeight = 1920; //CommonUtils.getHeight(this);
         int widthSpec = View.MeasureSpec.makeMeasureSpec(screenWidth, View.MeasureSpec.EXACTLY);
         int heightSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
 
@@ -264,10 +218,12 @@ public class PosterGeneratorActivity extends BaseActivity implements View.OnClic
         ImageView qrCode = view.findViewById(R.id.qr_code);
         TextView tvTime = view.findViewById(R.id.tv_time);
         TextView tvDesc = view.findViewById(R.id.tv_desc);
-        tvSummary.setText(content);
+
         tvTitle.setText(title);
-        tvTime.setText(writeTime + view.getMeasuredWidth() + "\n NO:" + visitor + " By julis.wang");
-        tvDesc.setText(type + " | " + readTime);
+        setContentWithStyle(tvTime, writeInfo.split(" | ")[0] + "\n" + " by juliswang", true);
+        setContentWithStyle(tvDesc, writeInfo + "读完", true);
+        setContentWithStyle(tvSummary, content, false);
+
         Bitmap qrBitmap = QRUtils.createQRImage(mUrl, (int) CommonUtils.dip2px(60.0f), 0);
         qrCode.setImageBitmap(qrBitmap);
 
@@ -276,36 +232,17 @@ public class PosterGeneratorActivity extends BaseActivity implements View.OnClic
         realGenerator(view);
     }
 
-    private void setContentWithImages(TextView tvSummary, String content) {
-        String html = "<h1>AAAthis is h1</h1>"
-                + "<p>This text is normal</p>"
-                + "<img src='http://h0.hucdn.com/images202002/8f97ac11a4c14bf1_750x280.png' />";
-
-
-        Spanned sp = Html.fromHtml(html, new Html.ImageGetter() {
-            @Override
-            public Drawable getDrawable(String source) {
-                InputStream is = null;
-                try {
-                    is = (InputStream) new URL(source).getContent();
-                    Drawable d = Drawable.createFromStream(is, "src");
-                    d.setBounds(0, 0, d.getIntrinsicWidth(),
-                            d.getIntrinsicHeight());
-                    is.close();
-                    return d;
-                } catch (Exception e) {
-                    return null;
-                }
-            }
-        }, null);
-        tvSummary.setText(sp);
-
+    private void setContentWithStyle(TextView tvSummary, String content, boolean isOriginalFormat) {
+        Spanned sp = Html.fromHtml(content, Html.FROM_HTML_MODE_LEGACY, new URLImageParser(tvSummary, this), null);
+        if (isOriginalFormat) {
+            tvSummary.setText(sp.toString());
+        } else {
+            tvSummary.setText(sp);
+        }
     }
 
     /**
-     * 真正生成海报
-     *
-     * @param view
+     * 真正生成海报Bitmap
      */
     private void realGenerator(View view) {
         Bitmap posterBitmap = Bitmap.createBitmap(

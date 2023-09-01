@@ -27,18 +27,14 @@ public class DrawImageActivity extends BaseActivity {
     private ImageView ivNormal;
     private CustomImageView customImageView;
     private SurfaceImageView imageSurfaceView;
+    private Bitmap bitmap, bitmap2;
 
     @Override
     protected void initView() {
         ivNormal = findViewById(R.id.iv_normal);
         customImageView = findViewById(R.id.cus_iv);
         imageSurfaceView = findViewById(R.id.surface_iv);
-    }
 
-    @Override
-    protected void initData() {
-        Bitmap bitmap = ImageUtils.getBitmapFromAssets(this, "julis.png");
-        Bitmap bitmap2 = ImageUtils.getBitmapFromAssets(this, "sign.png");
         ivNormal.setImageBitmap(bitmap);
         customImageView.setBitmap(bitmap);
         Timer timer = new Timer();
@@ -49,6 +45,12 @@ public class DrawImageActivity extends BaseActivity {
                 flag = !flag;
             }
         }, PERIOD_TIME, PERIOD_TIME);
+    }
+
+    @Override
+    protected void initData() {
+        bitmap = ImageUtils.getBitmapFromAssets(this, "julis.png");
+        bitmap2 = ImageUtils.getBitmapFromAssets(this, "sign.png");
     }
 
     @Override
