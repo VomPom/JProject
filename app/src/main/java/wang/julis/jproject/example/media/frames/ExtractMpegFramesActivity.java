@@ -5,7 +5,7 @@ import android.os.Looper;
 import android.util.Log;
 import android.widget.TextView;
 
-import com.julis.distance.R;
+import com.julis.wang.R;
 
 import wang.julis.jwbase.basecompact.BaseActivity;
 

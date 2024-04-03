@@ -7,7 +7,7 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 
-import com.julis.distance.R;
+import com.julis.wang.R;
 
 import java.io.IOException;
 

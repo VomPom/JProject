@@ -8,7 +8,7 @@ import androidx.annotation.Nullable;
 import android.view.View;
 import android.widget.Button;
 
-import com.julis.distance.R;
+import com.julis.wang.R;
 
 import wang.julis.jwbase.basecompact.BaseActivity;
 

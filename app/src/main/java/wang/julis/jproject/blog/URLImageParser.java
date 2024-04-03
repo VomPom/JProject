@@ -16,7 +16,6 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 /**
- * Copyright (C) @2023 THL A29 Limited, a Tencent company. All rights reserved.
  * <p>
  * Created by @juliswang on 2023/09/01 10:32
  *

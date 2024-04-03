@@ -34,7 +34,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
-import com.julis.distance.R;
+import com.julis.wang.R;
 
 import java.util.ArrayList;
 import java.util.List;

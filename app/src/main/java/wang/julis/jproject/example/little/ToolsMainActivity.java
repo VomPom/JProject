@@ -1,4 +1,4 @@
-package wang.julis.jproject.example.media.little;
+package wang.julis.jproject.example.little;
 
 import wang.julis.jproject.blog.ArticlePosterGeneratorActivity;
 import wang.julis.jproject.blog.PosterGeneratorActivity;

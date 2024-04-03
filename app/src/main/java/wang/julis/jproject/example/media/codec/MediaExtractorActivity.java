@@ -7,7 +7,7 @@ import android.view.SurfaceView;
 
 import androidx.annotation.Nullable;
 
-import com.julis.distance.R;
+import com.julis.wang.R;
 
 import wang.julis.jproject.example.media.codec.decode.sync.SyncVideoDecode;
 import wang.julis.jwbase.basecompact.BaseActivity;

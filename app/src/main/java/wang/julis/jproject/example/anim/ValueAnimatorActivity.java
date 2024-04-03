@@ -10,7 +10,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.julis.distance.R;
+import com.julis.wang.R;
 
 import wang.julis.jwbase.basecompact.BaseActivity;
 

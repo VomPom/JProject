@@ -1,30 +1,5 @@
 package julis.wang.learnopengl.opengl;
 
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.Bundle;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
-
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.ByteBuffer;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-import julis.wang.learnopengl.R;
-import julis.wang.learnopengl.opengl.egl.EGLActivity;
-import julis.wang.learnopengl.opengl.glitem.GLItemListAdapter;
-import julis.wang.learnopengl.opengl.glitem.GLItemListModel;
-import wang.julis.jwbase.basecompact.BaseActivity;
-
 import static android.opengl.GLSurfaceView.RENDERMODE_CONTINUOUSLY;
 import static android.opengl.GLSurfaceView.RENDERMODE_WHEN_DIRTY;
 import static julis.wang.learnopengl.opengl.MyGLSurfaceView.IMAGE_FORMAT_NV21;
@@ -52,6 +27,31 @@ import static julis.wang.learnopengl.opengl.MyNativeRender.SAMPLE_TYPE_TRANS_FEE
 import static julis.wang.learnopengl.opengl.MyNativeRender.SAMPLE_TYPE_TRIANGLE;
 import static julis.wang.learnopengl.opengl.MyNativeRender.SAMPLE_TYPE_VAO;
 import static julis.wang.learnopengl.opengl.MyNativeRender.SAMPLE_TYPE_YUV_TEXTURE_MAP;
+
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.Bundle;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.ByteBuffer;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import julis.wang.learnopengl.R;
+import julis.wang.learnopengl.opengl.egl.EGLActivity;
+import julis.wang.learnopengl.opengl.glitem.GLItemListAdapter;
+import julis.wang.learnopengl.opengl.glitem.GLItemListModel;
+import wang.julis.jwbase.basecompact.BaseActivity;
 
 
 /*******************************************************
@@ -81,6 +81,7 @@ public class OpenGLNDKListActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mGLRender.init();
+        mAdapter.updateData(mDataList);
     }
 
 
@@ -191,17 +192,11 @@ public class OpenGLNDKListActivity extends BaseActivity {
     @Override
     protected void initData() {
         Arrays.stream(SAMPLE_TITLES).forEach(this::addItem);
-        submitActivityList();
     }
 
     protected void addItem(String activityName) {
         mDataList.add(new GLItemListModel(activityName, index++));
     }
-
-    protected void submitActivityList() {
-        mAdapter.updateData(mDataList);
-    }
-
 
     @Override
     protected int getContentView() {

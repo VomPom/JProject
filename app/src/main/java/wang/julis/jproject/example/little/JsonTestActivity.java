@@ -1,9 +1,9 @@
-package wang.julis.jproject.example.media.little;
+package wang.julis.jproject.example.little;
 
 import android.util.Log;
 
 import com.google.gson.Gson;
-import com.julis.distance.R;
+import com.julis.wang.R;
 
 import org.json.JSONObject;
 

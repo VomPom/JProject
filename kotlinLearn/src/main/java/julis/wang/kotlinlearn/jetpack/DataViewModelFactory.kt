@@ -14,8 +14,7 @@ import androidx.lifecycle.ViewModelProvider
 
 class DataViewModelFactory(private val initData: Int) : ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        return DataViewModel(initData) as T
+        return modelClass.getConstructor(Int::class.java).newInstance(initData) as T
+
     }
-
-
 }

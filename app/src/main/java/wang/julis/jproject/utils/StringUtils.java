@@ -5,7 +5,7 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.text.TextUtils;
 
-import com.julis.distance.R;
+import com.julis.wang.R;
 
 import java.lang.reflect.Field;
 import java.util.HashMap;

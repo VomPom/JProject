@@ -12,7 +12,7 @@ import android.view.animation.ScaleAnimation;
 import android.view.animation.TranslateAnimation;
 import android.widget.TextView;
 
-import com.julis.distance.R;
+import com.julis.wang.R;
 
 import wang.julis.jwbase.basecompact.BaseActivity;
 

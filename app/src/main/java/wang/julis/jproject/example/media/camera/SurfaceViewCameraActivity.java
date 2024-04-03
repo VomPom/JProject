@@ -2,7 +2,7 @@ package wang.julis.jproject.example.media.camera;
 
 import android.view.SurfaceView;
 
-import com.julis.distance.R;
+import com.julis.wang.R;
 
 import wang.julis.jwbase.basecompact.BaseActivity;
 

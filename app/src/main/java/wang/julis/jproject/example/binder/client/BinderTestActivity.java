@@ -9,7 +9,7 @@ import android.os.IBinder;
 import android.os.RemoteException;
 import android.view.View;
 
-import com.julis.distance.R;
+import com.julis.wang.R;
 
 import java.util.ArrayList;
 import java.util.List;

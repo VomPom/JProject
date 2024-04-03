@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.julis.distance">
+    package="com.julis.wang">
 
     <uses-feature
         android:glEsVersion="0x00020000"
@@ -54,12 +54,12 @@
         <activity android:name="wang.julis.jproject.example.media.codec.H264Activity" />
         <activity android:name="wang.julis.jproject.example.media.codec.MediaExtractorActivity" />
         <activity android:name="wang.julis.jproject.example.media.MediaMainActivity" />
-        <activity android:name="wang.julis.jproject.example.media.little.JsonTestActivity" />
+        <activity android:name="wang.julis.jproject.example.little.JsonTestActivity" />
         <activity android:name="wang.julis.jproject.example.media.frames.ExtractMpegFramesActivity" />
-        <activity android:name="wang.julis.jproject.example.media.little.LittleMainActivity" />
-        <activity android:name="wang.julis.jproject.example.media.little.ToolsMainActivity" />
+        <activity android:name="wang.julis.jproject.example.little.LittleMainActivity" />
+        <activity android:name="wang.julis.jproject.example.little.ToolsMainActivity" />
 
-<!--        <activity android:name="julis.wang.learnopengl.opengl.OpenGLNDKListActivity" />-->
+        <activity android:name="julis.wang.learnopengl.opengl.OpenGLNDKListActivity" />
         <activity android:name="julis.wang.learnopengl.opengl.basefunc.OpenGLTriangleActivity" />
         <activity android:name="julis.wang.learnopengl.opengl.basefunc.OpenGLImageActivity" />
 
@@ -69,6 +69,7 @@
         <activity android:name="wang.julis.jproject.example.media.pag.PAGMainActivity" />
         <activity android:name="wang.julis.jproject.example.media.pag.SimplePagActivity" />
         <activity android:name="wang.julis.jproject.example.media.pag.PAGSurfaceTextureIdActivity" />
+        <activity android:name="wang.julis.jproject.example.little.ViewTrackActivity" />
 
         <service
             android:name="wang.julis.jproject.example.binder.server.AIDLService"

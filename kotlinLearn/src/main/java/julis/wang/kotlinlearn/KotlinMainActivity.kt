@@ -1,5 +1,6 @@
 package julis.wang.kotlinlearn
 
+import julis.wang.kotlinlearn.feature.CoroutinesActivity
 import julis.wang.kotlinlearn.feature.KeywordActivity
 import julis.wang.kotlinlearn.jetpack.ViewModelTestActivity
 import wang.julis.jwbase.basecompact.baseList.BaseListActivity
@@ -17,7 +18,7 @@ class KotlinMainActivity : BaseListActivity() {
     override fun initData() {
         addActivity("ViewModel", ViewModelTestActivity::class.java)
         addActivity("关键词", KeywordActivity::class.java)
-        addActivity("协程", KeywordActivity::class.java)
+        addActivity("协程", CoroutinesActivity::class.java)
     }
 
 }

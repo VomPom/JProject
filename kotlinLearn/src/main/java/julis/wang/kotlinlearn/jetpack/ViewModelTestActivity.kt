@@ -1,7 +1,6 @@
 package julis.wang.kotlinlearn.jetpack
 
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import julis.wang.kotlinlearn.databinding.ActivityViewModelBinding
@@ -31,7 +30,6 @@ class ViewModelTestActivity : AppCompatActivity() {
         setContentView(binding.root)
         model = ViewModelProvider(this, DataViewModelFactory(1)).get(DataViewModel::class.java)
         initView()
-        test()
     }
 
 
@@ -43,33 +41,5 @@ class ViewModelTestActivity : AppCompatActivity() {
             binding.tvData.text = it.toString()
         }
     }
-
-    private fun test() {
-        val user = User(1, "juliswang")
-        with(user) {
-            Log.e(TAG, this.name)
-            printUserInfo()
-        }.also {
-            Log.e(TAG, "With also:$it")
-            // it.printUserInfo() wrong
-        }
-        user.let {
-            Log.e(TAG, "Use let:" + it.name)
-            it.printUserInfo()
-        }
-        user.apply {
-            Log.e(TAG, "Use apply:" + name)
-            printUserInfo()
-        }
-        user.also {
-            Log.e(TAG, "Use also:" + it.name)
-            it.printUserInfo()
-        }
-        user.run {
-            Log.e(TAG, "Use run:" + name)
-            printUserInfo()
-        }
-    }
-
 
 }

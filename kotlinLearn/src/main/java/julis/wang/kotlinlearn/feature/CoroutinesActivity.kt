@@ -1,7 +1,11 @@
 package julis.wang.kotlinlearn.feature
 
+import android.util.Log
 import android.widget.Button
 import julis.wang.kotlinlearn.R
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import wang.julis.jwbase.basecompact.BaseActivity
 
 /**
@@ -18,11 +22,18 @@ class CoroutinesActivity : BaseActivity() {
     private val TAG = "--julis"
     override fun initView() {
         findViewById<Button>(R.id.btn_start).setOnClickListener {
+            testCoroutines()
         }
     }
 
     private fun testCoroutines() {
-
+        runBlocking { // this: CoroutineScope
+            launch { // launch a new coroutine and continue
+                delay(1000L) // non-blocking delay for 1 second (default time unit is ms)
+                Log.e(TAG, "World!") // print after delay
+            }
+            Log.e(TAG, "Hello") // main coroutine continues while a previous one is delayed
+        }
     }
 
     override fun initData() {

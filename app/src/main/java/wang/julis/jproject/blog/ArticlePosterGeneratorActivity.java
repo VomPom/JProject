@@ -20,7 +20,7 @@ import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import com.julis.distance.R;
+import com.julis.wang.R;
 
 import java.io.Serializable;
 import java.util.List;

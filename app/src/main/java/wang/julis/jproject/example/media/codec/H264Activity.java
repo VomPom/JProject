@@ -16,7 +16,7 @@ import android.view.SurfaceView;
 
 import androidx.annotation.RequiresApi;
 
-import com.julis.distance.R;
+import com.julis.wang.R;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;

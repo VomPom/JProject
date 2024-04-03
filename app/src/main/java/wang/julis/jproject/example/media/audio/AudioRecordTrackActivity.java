@@ -13,7 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
-import com.julis.distance.R;
+import com.julis.wang.R;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;

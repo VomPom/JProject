@@ -3,7 +3,7 @@ package wang.julis.jproject.example.media.drawimage;
 import android.graphics.Bitmap;
 import android.widget.ImageView;
 
-import com.julis.distance.R;
+import com.julis.wang.R;
 
 import java.util.Timer;
 import java.util.TimerTask;
