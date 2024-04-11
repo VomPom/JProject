@@ -1,11 +1,17 @@
 package wang.julis.jproject;
 
+import android.content.Intent;
+import android.os.Bundle;
+
+import androidx.annotation.Nullable;
+
 import julis.wang.kotlinlearn.KotlinMainActivity;
+import julis.wang.kotlinlearn.feature.FuncActivity;
 import julis.wang.learnopengl.opengl.OpenGLNDKListActivity;
 import wang.julis.jproject.example.anim.AnimationMainActivity;
+import wang.julis.jproject.example.little.LittleMainActivity;
+import wang.julis.jproject.example.little.ToolsMainActivity;
 import wang.julis.jproject.example.media.MediaMainActivity;
-import wang.julis.jproject.example.media.little.LittleMainActivity;
-import wang.julis.jproject.example.media.little.ToolsMainActivity;
 import wang.julis.jproject.example.media.pag.PAGMainActivity;
 import wang.julis.jwbase.basecompact.baseList.BaseListActivity;
 import wang.julis.learncpp.CppMainActivity;
@@ -20,6 +26,14 @@ import wang.julis.learncpp.CppMainActivity;
  *******************************************************/
 
 public class MainActivity extends BaseListActivity {
+    private final Class<?> debugClass = FuncActivity.class;
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        quickOpenActivity();
+    }
+
     @Override
     protected void initData() {
         addActivity("动画相关", AnimationMainActivity.class);
@@ -30,8 +44,13 @@ public class MainActivity extends BaseListActivity {
         addActivity("OpenGL ES", OpenGLNDKListActivity.class);
         addActivity("小测试", LittleMainActivity.class);
         addActivity("小工具", ToolsMainActivity.class);
-        addActivity("AccessibilityService", ToolsMainActivity.class);
+    }
 
+    private void quickOpenActivity() {
+        if (debugClass == this.getClass()) {
+            return;
+        }
+        startActivity(new Intent(this, debugClass));
     }
 
 

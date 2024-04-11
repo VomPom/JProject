@@ -19,7 +19,7 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.julis.distance.R;
+import com.julis.wang.R;
 
 import org.jetbrains.annotations.NotNull;
 

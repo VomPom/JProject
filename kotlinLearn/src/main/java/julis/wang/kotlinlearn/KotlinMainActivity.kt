@@ -19,6 +19,7 @@ class KotlinMainActivity : BaseListActivity() {
         addActivity("ViewModel", ViewModelTestActivity::class.java)
         addActivity("关键词", KeywordActivity::class.java)
         addActivity("协程", CoroutinesActivity::class.java)
+        addActivity("高阶函数", CoroutinesActivity::class.java)
     }
 
 }

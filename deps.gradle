@@ -14,8 +14,8 @@ ext {
 }
 
 
-def kotlin_version = '1.4.31'
-def kotlin_coroutines_version = '1.4.2'
+def kotlin_version = '1.6.10'
+def kotlin_coroutines_version = '1.6.10'
 def kotlin_deps = [
         gradle_plugin     : "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version",
         stdlib            : "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version",
