@@ -1,6 +1,7 @@
 package julis.wang.kotlinlearn
 
 import julis.wang.kotlinlearn.feature.CoroutinesActivity
+import julis.wang.kotlinlearn.feature.FuncActivity
 import julis.wang.kotlinlearn.feature.KeywordActivity
 import julis.wang.kotlinlearn.jetpack.ViewModelTestActivity
 import wang.julis.jwbase.basecompact.baseList.BaseListActivity
@@ -19,7 +20,7 @@ class KotlinMainActivity : BaseListActivity() {
         addActivity("ViewModel", ViewModelTestActivity::class.java)
         addActivity("关键词", KeywordActivity::class.java)
         addActivity("协程", CoroutinesActivity::class.java)
-        addActivity("高阶函数", CoroutinesActivity::class.java)
+        addActivity("高阶函数", FuncActivity::class.java)
     }
 
 }

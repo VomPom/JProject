@@ -70,6 +70,9 @@
         <activity android:name="wang.julis.jproject.example.media.pag.SimplePagActivity" />
         <activity android:name="wang.julis.jproject.example.media.pag.PAGSurfaceTextureIdActivity" />
         <activity android:name="wang.julis.jproject.example.little.ViewTrackActivity" />
+        <activity
+            android:name="wang.julis.jproject.example.little.ActivityDecodingActivity"
+            android:exported="true" />
 
         <service
             android:name="wang.julis.jproject.example.binder.server.AIDLService"
