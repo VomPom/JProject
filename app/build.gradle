@@ -59,6 +59,9 @@ dependencies {
     implementation project(':learnopengl')
     implementation project(':JWBase')
     implementation project(':learnCpp')
+    implementation project(':lib_router')
+
+    kapt project(':compiler')
 
 }
 //apply from: '../script/get_hybrid_class.gradle'

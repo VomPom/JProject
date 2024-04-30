@@ -17,6 +17,7 @@ public class LittleMainActivity extends BaseListActivity {
     protected void initData() {
         addActivity("JsonTest", JsonTestActivity.class);
         addActivity("BinderExample", BinderTestActivity.class);
-        addActivity("ViewTrack", ViewTrackActivity.class);
+        addActivity("文字编码", CharacterDecodingActivity.class);
+        addActivity("Router", RouterActivity.class);
     }
 }

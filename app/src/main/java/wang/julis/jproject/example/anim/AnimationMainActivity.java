@@ -1,6 +1,8 @@
 package wang.julis.jproject.example.anim;
 
 
+import com.julis.annotation.Page;
+
 import wang.julis.jwbase.basecompact.baseList.BaseListActivity;
 
 /*******************************************************
@@ -12,7 +14,7 @@ import wang.julis.jwbase.basecompact.baseList.BaseListActivity;
  * History   :
  *
  *******************************************************/
-
+@Page("animation")
 public class AnimationMainActivity extends BaseListActivity {
     @Override
     protected void initData() {

@@ -25,7 +25,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         android:usesCleartextTraffic="true">
-        <activity android:name="wang.julis.jproject.MainActivity">
+        <activity
+            android:name="wang.julis.jproject.MainActivity"
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -69,10 +71,10 @@
         <activity android:name="wang.julis.jproject.example.media.pag.PAGMainActivity" />
         <activity android:name="wang.julis.jproject.example.media.pag.SimplePagActivity" />
         <activity android:name="wang.julis.jproject.example.media.pag.PAGSurfaceTextureIdActivity" />
-        <activity android:name="wang.julis.jproject.example.little.ViewTrackActivity" />
         <activity
-            android:name="wang.julis.jproject.example.little.ActivityDecodingActivity"
+            android:name="wang.julis.jproject.example.little.CharacterDecodingActivity"
             android:exported="true" />
+        <activity android:name="wang.julis.jproject.example.little.RouterActivity" />
 
         <service
             android:name="wang.julis.jproject.example.binder.server.AIDLService"

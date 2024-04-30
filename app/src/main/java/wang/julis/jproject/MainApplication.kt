@@ -1,6 +1,7 @@
 package wang.julis.jproject
 
 import android.util.Log
+import com.julis.router.Router
 import dalvik.system.PathClassLoader
 import wang.julis.jwbase.basecompact.NaApplication
 
@@ -13,7 +14,7 @@ import wang.julis.jwbase.basecompact.NaApplication
 class MainApplication : NaApplication() {
     override fun onCreate() {
         super.onCreate()
-        testClassLoader()
+        Router.init(this)
     }
 
     private fun testClassLoader() {

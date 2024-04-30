@@ -4,3 +4,11 @@ project(':JWBase').projectDir = new File(rootDir, 'JWBase/jwbase')
 include ':kotlinLearn'
 include ':learnopengl'
 include ':learnCpp'
+include ':lib_router'
+project(':lib_router').projectDir = new File(rootDir, 'router/lib_router')
+include ':annotation'
+project(':annotation').projectDir = new File(rootDir, 'router/annotation')
+include ':compiler'
+project(':compiler').projectDir = new File(rootDir, 'router/compiler')
+
+

@@ -15,7 +15,7 @@ import java.nio.charset.Charset
  *
  * @Description
  */
-class ActivityDecodingActivity : BaseActivity() {
+class CharacterDecodingActivity : BaseActivity() {
     private val TAG = "--julis"
     private var tvDecoding: TextView? = null
 

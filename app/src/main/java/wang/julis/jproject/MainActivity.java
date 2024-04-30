@@ -5,6 +5,8 @@ import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 
+import com.julis.annotation.Page;
+
 import julis.wang.kotlinlearn.KotlinMainActivity;
 import julis.wang.kotlinlearn.feature.FuncActivity;
 import julis.wang.learnopengl.opengl.OpenGLNDKListActivity;
@@ -24,14 +26,19 @@ import wang.julis.learncpp.CppMainActivity;
  * History   :
  *
  *******************************************************/
-
+@Page("main")
 public class MainActivity extends BaseListActivity {
+    public static final String HOST = "main";
+    private final boolean quickJump = false;
+
     private final Class<?> debugClass = FuncActivity.class;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        quickOpenActivity();
+        if (quickJump) {
+            quickOpenActivity();
+        }
     }
 
     @Override

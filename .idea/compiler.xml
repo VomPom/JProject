@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="CompilerConfiguration">
-    <bytecodeTargetLevel target="11" />
+    <bytecodeTargetLevel target="1.8">
+      <module name="JProject.app" target="11" />
+      <module name="JProject.kotlinLearn" target="11" />
+      <module name="JProject.learnCpp" target="11" />
+      <module name="JProject.learnopengl" target="11" />
+      <module name="JProject.lib_router" target="11" />
+      <module name="jwbase.JProject.JWBase" target="11" />
+    </bytecodeTargetLevel>
   </component>
 </project>
