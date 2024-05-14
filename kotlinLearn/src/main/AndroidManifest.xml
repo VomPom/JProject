@@ -11,5 +11,7 @@
         <activity android:name=".feature.KeywordActivity" />
         <activity android:name=".feature.CoroutinesActivity" />
         <activity android:name=".feature.FuncActivity" />
+        <activity android:name=".feature.ViewBindingActivity" />
+        <activity android:name=".feature.IntentExtActivity" />
     </application>
 </manifest>
