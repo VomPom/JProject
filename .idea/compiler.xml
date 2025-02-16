@@ -3,6 +3,7 @@
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel target="1.8">
       <module name="JProject.app" target="11" />
+      <module name="JProject.jwbase" target="11" />
       <module name="JProject.kotlinLearn" target="11" />
       <module name="JProject.learnCpp" target="11" />
       <module name="JProject.learnopengl" target="11" />

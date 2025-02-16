@@ -30,6 +30,9 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    kotlinOptions {
+        jvmTarget = Ver.kotlin_target
+    }
 }
 
 dependencies {
@@ -39,7 +42,7 @@ dependencies {
     testImplementation Deps.test.junit
     androidTestImplementation Deps.test.junit_ext
     androidTestImplementation Deps.test.espresso
-
+    implementation Deps.kotlin.stdlib
     implementation Deps.androidx.appcompat
     implementation Deps.androidx.material
     implementation Deps.androidx.constraintlayout
@@ -47,7 +50,6 @@ dependencies {
     implementation Deps.androidx.multidex
 
     implementation Deps.android.lifecycle.extensions
-    implementation Deps.kotlin.stdlib
     implementation Deps.android.lifecycle.livedata
     implementation Deps.android.lifecycle.viewmodel
     implementation Deps.android.lifecycle.livedata_ktx
@@ -57,7 +59,7 @@ dependencies {
 
     implementation project(':kotlinLearn')
     implementation project(':learnopengl')
-    implementation project(':JWBase')
+    implementation project(':jwbase')
     implementation project(':learnCpp')
     implementation project(':lib_router')
 

@@ -9,7 +9,7 @@ import wang.julis.jwbase.basecompact.baseList.BaseListActivity
  */
 class PAGMainActivity : BaseListActivity() {
     override fun initData() {
-        addActivity("Simple PAG", SimplePagActivity::class.java)
-        addActivity("Create PAGSurface through Texture id", PAGSurfaceTextureIdActivity::class.java)
+        addItem("Simple PAG", SimplePagActivity::class.java)
+        addItem("Create PAGSurface through Texture id", PAGSurfaceTextureIdActivity::class.java)
     }
 }

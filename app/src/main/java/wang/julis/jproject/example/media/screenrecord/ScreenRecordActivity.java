@@ -26,7 +26,7 @@ import org.jetbrains.annotations.NotNull;
 import java.io.File;
 import java.io.IOException;
 
-import wang.julis.jwbase.Utils.ToastUtils;
+import wang.julis.jwbase.utils.ToastUtils;
 import wang.julis.jwbase.basecompact.BaseActivity;
 
 /*******************************************************

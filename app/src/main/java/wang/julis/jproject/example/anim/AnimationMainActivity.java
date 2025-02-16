@@ -18,10 +18,10 @@ import wang.julis.jwbase.basecompact.baseList.BaseListActivity;
 public class AnimationMainActivity extends BaseListActivity {
     @Override
     protected void initData() {
-        addActivity("补间动画", AnimationActivity.class);
-        addActivity("ValueAnimator", ValueAnimatorActivity.class);
-        addActivity("ObjectAnimator", ObjectAnimatorActivity.class);
-        addActivity("AnimatorSet", AnimatorSetActivity.class);
+        addItem("补间动画", AnimationActivity.class);
+        addItem("ValueAnimator", ValueAnimatorActivity.class);
+        addItem("ObjectAnimator", ObjectAnimatorActivity.class);
+        addItem("AnimatorSet", AnimatorSetActivity.class);
     }
 
 }

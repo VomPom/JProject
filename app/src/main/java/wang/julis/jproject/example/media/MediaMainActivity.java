@@ -27,14 +27,14 @@ public class MediaMainActivity extends BaseListActivity {
 
     @Override
     protected void initData() {
-        addActivity("MediaPlayer播放视频", MediaPlayerActivity.class);
-        addActivity("MediaCodec", MediaCodecMainActivity.class);
-        addActivity("多种方式绘制图片", DrawImageActivity.class);
-        addActivity("Audio", AudioMainActivity.class);
-        addActivity("摄像头捕获数据", CameraMainActivity.class);
-        addActivity("手机录屏", ScreenRecordActivity.class);
-        addActivity("提取帧", ExtractMpegFramesActivity.class);
-        addActivity("MediaProjectionDemo", MediaProjectionDemoActivity.class);
+        addItem("MediaPlayer播放视频", MediaPlayerActivity.class);
+        addItem("MediaCodec", MediaCodecMainActivity.class);
+        addItem("多种方式绘制图片", DrawImageActivity.class);
+        addItem("Audio", AudioMainActivity.class);
+        addItem("摄像头捕获数据", CameraMainActivity.class);
+        addItem("手机录屏", ScreenRecordActivity.class);
+        addItem("提取帧", ExtractMpegFramesActivity.class);
+        addItem("MediaProjectionDemo", MediaProjectionDemoActivity.class);
         check();
     }
 

@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import julis.wang.kotlinlearn.databinding.ActivityKotlinTestBinding
 import julis.wang.kotlinlearn.extension.viewBinding
-import wang.julis.jwbase.Utils.ToastUtils
+import wang.julis.jwbase.utils.ToastUtils
 
 /**
  *

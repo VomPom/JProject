@@ -2,12 +2,8 @@
 
 buildscript {
     apply from: 'deps.gradle'
-    ext {
-        kotlin_version = '1.5.10'
-    }
     repositories {
         google()
-
         mavenCentral()
     }
     dependencies {
@@ -22,8 +18,6 @@ allprojects {
     repositories {
         mavenCentral()
         google()
-        jcenter()
-
     }
 }
 

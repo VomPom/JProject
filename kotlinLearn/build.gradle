@@ -56,6 +56,6 @@ dependencies {
     implementation Deps.android.lifecycle.extensions
     implementation Deps.android.lifecycle.livedata_ktx
 
-    implementation project(':JWBase')
+    implementation project(':jwbase')
 
 }

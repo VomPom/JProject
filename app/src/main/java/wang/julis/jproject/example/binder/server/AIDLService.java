@@ -13,7 +13,7 @@ import java.util.List;
 
 import wang.julis.jproject.example.binder.Book;
 import wang.julis.jproject.example.binder.BookController;
-import wang.julis.jwbase.Utils.ToastUtils;
+import wang.julis.jwbase.utils.ToastUtils;
 
 /*******************************************************
  *

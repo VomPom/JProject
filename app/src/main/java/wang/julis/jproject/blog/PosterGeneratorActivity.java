@@ -30,9 +30,9 @@ import com.julis.wang.R;
 import java.util.HashMap;
 import java.util.Map;
 
-import wang.julis.jwbase.Utils.CommonUtils;
-import wang.julis.jwbase.Utils.ImageUtils;
-import wang.julis.jwbase.Utils.QRUtils;
+import wang.julis.jwbase.utils.CommonUtils;
+import wang.julis.jwbase.utils.ImageUtils;
+import wang.julis.jwbase.utils.QRUtils;
 import wang.julis.jwbase.basecompact.BaseActivity;
 
 
@@ -117,7 +117,6 @@ public class PosterGeneratorActivity extends BaseActivity implements View.OnClic
         mWebView.setWebViewClient(new WebViewClient() {
             @Override
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
-                showLoadingDialog();
                 // 在开始加载网页时会回调
                 super.onPageStarted(view, url, favicon);
             }
@@ -133,7 +132,6 @@ public class PosterGeneratorActivity extends BaseActivity implements View.OnClic
 
             @Override
             public void onPageFinished(WebView view, String url) {
-                stopLoadingDialog();
                 Map<String, String> loadMap = new HashMap<String, String>() {{
                     put("title", "#layout > div:nth-child(1) > div > div > h1");
                     put("readCostTime", "#layout > div:nth-child(1) > div > div > div.post-meta > span:nth-child(6) > span > span.post-count");

@@ -4,7 +4,7 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.widget.ImageView
 import android.widget.TextView
-import wang.julis.jwbase.Utils.ToastUtils
+import wang.julis.jwbase.utils.ToastUtils
 import wang.julis.jwbase.basecompact.BaseActivity
 import wang.julis.learncpp.R
 

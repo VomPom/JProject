@@ -43,14 +43,14 @@ public class MainActivity extends BaseListActivity {
 
     @Override
     protected void initData() {
-        addActivity("动画相关", AnimationMainActivity.class);
-        addActivity("音视频", MediaMainActivity.class);
-        addActivity("PAG", PAGMainActivity.class);
-        addActivity("Kotlin", KotlinMainActivity.class);
-        addActivity("Cpp", CppMainActivity.class);
-        addActivity("OpenGL ES", OpenGLNDKListActivity.class);
-        addActivity("小测试", LittleMainActivity.class);
-        addActivity("小工具", ToolsMainActivity.class);
+        addItem("动画相关", AnimationMainActivity.class);
+        addItem("音视频", MediaMainActivity.class);
+        addItem("PAG", PAGMainActivity.class);
+        addItem("Kotlin", KotlinMainActivity.class);
+        addItem("Cpp", CppMainActivity.class);
+        addItem("OpenGL ES", OpenGLNDKListActivity.class);
+        addItem("小测试", LittleMainActivity.class);
+        addItem("小工具", ToolsMainActivity.class);
     }
 
     private void quickOpenActivity() {

@@ -16,6 +16,6 @@ public class AudioMainActivity extends BaseListActivity {
 
     @Override
     protected void initData() {
-        addActivity("AudioRecord/Track", AudioRecordTrackActivity.class);
+        addItem("AudioRecord/Track", AudioRecordTrackActivity.class);
     }
 }

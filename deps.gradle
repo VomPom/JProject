@@ -1,10 +1,10 @@
 ext.Ver = [
         build_tools          : '29.0.3',
-        compile_sdk          : 28,
+        compile_sdk          : 33,
         min_sdk              : 26,
         target_sdk           : 28,
         java                 : JavaVersion.VERSION_1_8,
-        android_gradle_plugin: '4.2.1',
+        android_gradle_plugin: '4.2.2',
         kotlin_target        : '1.8',
 ]
 

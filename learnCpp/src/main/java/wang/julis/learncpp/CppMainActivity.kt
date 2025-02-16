@@ -16,17 +16,17 @@ import wang.julis.learncpp.page.*
 
 class CppMainActivity : BaseListActivity() {
     override fun initData() {
-        addActivity("基础操作", LittleJniActivity::class.java)
+        addItem("基础操作", LittleJniActivity::class.java)
 
-        addActivity("JniCallback", JniCallbackActivity::class.java)
-        addActivity("NativeActivity", NativeActivity::class.java)
-        addActivity("NativeWebP", WebPNativeActivity::class.java)
-        addActivity("NativeMediaCodec", NativeCodecActivity::class.java)
+        addItem("JniCallback", JniCallbackActivity::class.java)
+        addItem("NativeActivity", NativeActivity::class.java)
+        addItem("NativeWebP", WebPNativeActivity::class.java)
+        addItem("NativeMediaCodec", NativeCodecActivity::class.java)
 
-        addActivity("Bitmap操作", BitmapOperationActivity::class.java)
-        addActivity("方法属性", MethodActivity::class.java)
-        addActivity("多线程", ThreadActivity::class.java)
-        addActivity("设计模式", DesignActivity::class.java)
+        addItem("Bitmap操作", BitmapOperationActivity::class.java)
+        addItem("方法属性", MethodActivity::class.java)
+        addItem("多线程", ThreadActivity::class.java)
+        addItem("设计模式", DesignActivity::class.java)
     }
 
 }

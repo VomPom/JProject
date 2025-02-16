@@ -17,7 +17,7 @@ public class ToolsMainActivity extends BaseListActivity {
     @Override
     protected void initData() {
         //TODO:换了blog主题之后这里两个会崩溃，有空再修
-        addActivity("文章海报生成", ArticlePosterGeneratorActivity.class);
-        addActivity("博客海报生成", PosterGeneratorActivity.class);
+        addItem("文章海报生成", ArticlePosterGeneratorActivity.class);
+        addItem("博客海报生成", PosterGeneratorActivity.class);
     }
 }

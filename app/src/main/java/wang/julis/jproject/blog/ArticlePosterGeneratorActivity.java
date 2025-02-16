@@ -5,7 +5,6 @@ import android.annotation.SuppressLint;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -16,7 +15,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
@@ -27,10 +25,10 @@ import java.util.List;
 import java.util.Locale;
 
 import wang.julis.jwbase.Cache.DiskLruCacheUtil;
-import wang.julis.jwbase.Utils.CommonUtils;
-import wang.julis.jwbase.Utils.ImageUtils;
-import wang.julis.jwbase.Utils.QRUtils;
-import wang.julis.jwbase.Utils.TimeUtils;
+import wang.julis.jwbase.utils.CommonUtils;
+import wang.julis.jwbase.utils.ImageUtils;
+import wang.julis.jwbase.utils.QRUtils;
+import wang.julis.jwbase.utils.TimeUtils;
 import wang.julis.jwbase.basecompact.BaseActivity;
 
 
