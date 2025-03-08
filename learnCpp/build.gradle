@@ -66,7 +66,6 @@ dependencies {
     implementation Deps.kotlin.stdlib
     implementation Deps.android.lifecycle.livedata
     implementation Deps.android.lifecycle.viewmodel
-    implementation Deps.android.lifecycle.extensions
     implementation Deps.android.lifecycle.livedata_ktx
 
     implementation project(':jwbase')

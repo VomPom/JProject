@@ -72,6 +72,7 @@
         <activity android:name="wang.julis.jproject.example.media.pag.PAGMainActivity" />
         <activity android:name="wang.julis.jproject.example.media.pag.SimplePagActivity" />
         <activity android:name="wang.julis.jproject.example.media.pag.PAGSurfaceTextureIdActivity" />
+        <activity android:name="wang.julis.jproject.example.little.ViewStubActivity" />
         <activity
             android:name="wang.julis.jproject.example.little.CharacterDecodingActivity"
             android:exported="true" />
@@ -79,6 +80,7 @@
         <activity
             android:name="julis.wang.learnopengl.opengl.egl.EGLActivity"
             android:theme="@style/AppTheme" />
+
 
         <service
             android:name="wang.julis.jproject.example.binder.server.AIDLService"

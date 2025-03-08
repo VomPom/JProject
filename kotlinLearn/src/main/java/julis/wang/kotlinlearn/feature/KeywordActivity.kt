@@ -4,8 +4,6 @@ import android.app.Application
 import android.util.Log
 import android.widget.Button
 import julis.wang.kotlinlearn.R
-import julis.wang.kotlinlearn.jetpack.Address
-import julis.wang.kotlinlearn.jetpack.User
 import wang.julis.jwbase.basecompact.BaseActivity
 
 /**
@@ -218,14 +216,14 @@ class KeywordActivity : BaseActivity() {
         return "new method value:$value"
     }
 
-    class TestValue {
-
-        private val lazyValue: String by lazy {
-            "getString()"
+    open class BaseData(val data: Int)
+    data class User(val sex: Int, var name: String, val address: Address? = null) : BaseData(sex) {
+        fun printUserInfo(): String {
+            return "sex:$sex name:$name"
         }
     }
 
-
+    data class Address(val id: String, val detail: String?)
 }
 
 

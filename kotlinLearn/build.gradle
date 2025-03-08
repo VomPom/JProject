@@ -2,6 +2,7 @@ plugins {
     id 'com.android.library'
     id 'kotlin-android'
     id 'kotlin-kapt'
+    id 'kotlin-parcelize'
 }
 apply from: '../deps.gradle'
 android {
@@ -53,8 +54,10 @@ dependencies {
     implementation Deps.kotlin.stdlib
     implementation Deps.android.lifecycle.livedata
     implementation Deps.android.lifecycle.viewmodel
-    implementation Deps.android.lifecycle.extensions
     implementation Deps.android.lifecycle.livedata_ktx
+    implementation Deps.android.room
+    implementation Deps.android.room_ktx
+    kapt Deps.android.room_compiler
 
     implementation project(':jwbase')
 

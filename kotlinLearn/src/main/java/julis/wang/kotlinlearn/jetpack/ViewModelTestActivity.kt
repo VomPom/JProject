@@ -2,6 +2,7 @@ package julis.wang.kotlinlearn.jetpack
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import julis.wang.kotlinlearn.databinding.ActivityViewModelBinding
 
@@ -42,4 +43,9 @@ class ViewModelTestActivity : AppCompatActivity() {
         }
     }
 
+    class DataViewModelFactory(private val initData: Int) : ViewModelProvider.Factory {
+        override fun <T : ViewModel> create(modelClass: Class<T>): T {
+            return modelClass.getConstructor(Int::class.java).newInstance(initData) as T
+        }
+    }
 }

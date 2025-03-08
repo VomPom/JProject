@@ -13,5 +13,6 @@
         <activity android:name=".feature.FuncActivity" />
         <activity android:name=".feature.ViewBindingActivity" />
         <activity android:name=".feature.IntentExtActivity" />
+        <activity android:name=".feature.FlowVideoModelActivity" />
     </application>
 </manifest>
