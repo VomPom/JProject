@@ -15,6 +15,7 @@ import wang.julis.jproject.example.little.LittleMainActivity;
 import wang.julis.jproject.example.little.ToolsMainActivity;
 import wang.julis.jproject.example.media.MediaMainActivity;
 import wang.julis.jproject.example.media.pag.PAGMainActivity;
+import wang.julis.jproject.example.source.SourceMainActivity;
 import wang.julis.jwbase.basecompact.baseList.BaseListActivity;
 import wang.julis.learncpp.CppMainActivity;
 
@@ -51,6 +52,7 @@ public class MainActivity extends BaseListActivity {
         addItem("OpenGL ES", OpenGLNDKListActivity.class);
         addItem("小测试", LittleMainActivity.class);
         addItem("小工具", ToolsMainActivity.class);
+        addItem("源码解析", SourceMainActivity.class);
     }
 
     private void quickOpenActivity() {

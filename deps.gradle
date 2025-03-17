@@ -1,7 +1,7 @@
 ext.Ver = [
         build_tools          : '29.0.3',
         compile_sdk          : 33,
-        min_sdk              : 26,
+        min_sdk              : 28,
         target_sdk           : 28,
         java                 : JavaVersion.VERSION_1_8,
         android_gradle_plugin: '4.2.2',
@@ -34,6 +34,7 @@ def android_deps = [
                 livedata    : "androidx.lifecycle:lifecycle-livedata:$lifecycle_version",
                 livedata_ktx: "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version",
                 extensions  : "androidx.lifecycle:lifecycle-extensions:$lifecycle_version",
+                viewModelKtx: "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version",
                 viewmodel   : "androidx.lifecycle:lifecycle-viewmodel:$lifecycle_version",
                 common      : "androidx.lifecycle:lifecycle-common-java8:$lifecycle_version",
                 core_test   : "androidx.arch.core:core-testing:$arch_version",
@@ -61,10 +62,15 @@ def androidx_deps = [
 ]
 
 def leak_canary_version = '2.7'
+def retrofitVersion = '2.9.0'
 def square_deps = [
         okhttp             : 'com.squareup.okhttp3:okhttp:3.12.12',
         wire_plugin        : 'com.squareup.wire:wire-gradle-plugin:3.7.0',
         wire_runtime       : 'com.squareup.wire:wire-runtime:3.7.0',
+        retrofit2          : "com.squareup.retrofit2:retrofit:$retrofitVersion",
+        retrofit2Gson      : "com.squareup.retrofit2:converter-gson:$retrofitVersion",
+        loggingInterceptor : "com.squareup.okhttp3:logging-interceptor:3.11.0",
+
         javapoet           : 'com.squareup:javapoet:1.9.0',
         okhttp3            : 'com.squareup.okhttp3:okhttp:4.8.0',
         okio               : 'com.squareup.okio:okio:2.2.2',

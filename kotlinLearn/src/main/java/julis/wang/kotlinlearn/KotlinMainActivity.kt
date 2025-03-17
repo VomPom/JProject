@@ -1,5 +1,6 @@
 package julis.wang.kotlinlearn
 
+import julis.wang.kotlinlearn.feature.CoroutineDialogActivity
 import julis.wang.kotlinlearn.feature.CoroutinesBaseTest
 import julis.wang.kotlinlearn.feature.CoroutinesFlowTest
 import julis.wang.kotlinlearn.feature.FlowVideoModelActivity
@@ -31,6 +32,8 @@ class KotlinMainActivity : BaseListActivity() {
         addItem("FlowViewModel", FlowVideoModelActivity::class.java)
         addItem("协程基础") { CoroutinesBaseTest.run(this) }
         addItem("协程Flow") { CoroutinesFlowTest.run(this) }
+        addItem("协程消灭对称式Dialog", CoroutineDialogActivity::class.java)
+
     }
 
 }

@@ -43,7 +43,7 @@ class ViewStubActivity : BaseActivity() {
             viewStub.visibility = View.VISIBLE
         }
         check()
-        stubImageView?.setImageResource(R.mipmap.sign)
+        stubImageView?.setImageResource(R.mipmap.ic_launcher)
     }
 
     private fun changeViewStub() {

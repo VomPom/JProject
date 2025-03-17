@@ -16,6 +16,7 @@ import wang.julis.jwbase.basecompact.baseList.BaseListActivity;
 public class ToolsMainActivity extends BaseListActivity {
     @Override
     protected void initData() {
+        addItem("ActivityUtils", ArticlePosterGeneratorActivity.class);
         //TODO:换了blog主题之后这里两个会崩溃，有空再修
         addItem("文章海报生成", ArticlePosterGeneratorActivity.class);
         addItem("博客海报生成", PosterGeneratorActivity.class);
