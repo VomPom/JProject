@@ -5,6 +5,7 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import wang.julis.jproject.example.source.retrofit2.interceptor.CookiesInterceptor
 import wang.julis.jproject.example.source.retrofit2.interceptor.HeaderInterceptor
 import java.util.concurrent.TimeUnit
 
@@ -39,7 +40,7 @@ object HttpManager {
             .writeTimeout(12, TimeUnit.SECONDS)
             .readTimeout(12, TimeUnit.SECONDS)
 
-        build.addInterceptor(wang.julis.jproject.example.source.retrofit2.interceptor.CookiesInterceptor())
+        build.addInterceptor(CookiesInterceptor())
         build.addInterceptor(HeaderInterceptor())
 
         //日志拦截器

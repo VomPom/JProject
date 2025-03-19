@@ -36,7 +36,19 @@ interface ApiInterface {
     fun getHomeListNoSuspend(
         @Path("page") page: Int,
         @Query("page_size") pageSize: Int
-    ): Call<ArticleList>?
+    ): Call<BaseResponse<ArticleList>>?
+
+    /**
+     * 非协程的实现 for VMNetwork Fit
+     *
+     * @param page    页码
+     * @param pageSize 每页数量
+     */
+    @GET("/article/list/{page}/json")
+    fun getHomeListNoSuspend2(
+        @Path("page") page: Int,
+        @Query("page_size") pageSize: Int
+    ): okhttp3.Call?
 
     /**
      * 搜索结果

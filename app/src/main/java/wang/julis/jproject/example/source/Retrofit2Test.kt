@@ -4,8 +4,13 @@ import android.content.Context
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import wang.julis.jproject.example.source.retrofit2.learn.my.VMHomeRepository
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import wang.julis.jproject.example.source.retrofit2.learn.VMNetworkFitTest
 import wang.julis.jproject.example.source.retrofit2.repository.HomeRepository
+import wang.julis.jproject.example.source.retrofit2.response.BaseResponse
+import wang.julis.jproject.example.source.retrofit2.viewmodel.ArticleList
 import wang.julis.jwbase.basecompact.IBaseTest
 import wang.julis.jwbase.ext.toJson
 import wang.julis.jwbase.utils.Logger
@@ -34,6 +39,22 @@ object Retrofit2Test : IBaseTest() {
             }
         }
 
+        private fun getHomeInfoListNoSuspend() {
+            homeRepository.getHomeInfoListNoSuspend(1)?.enqueue(object : Callback<BaseResponse<ArticleList>> {
+                override fun onResponse(
+                    call: Call<BaseResponse<ArticleList>>,
+                    response: Response<BaseResponse<ArticleList>>
+                ) {
+                    Logger.d("response:${response.body()}")
+                }
+
+                override fun onFailure(call: Call<BaseResponse<ArticleList>>, t: Throwable) {
+                    Logger.d("response:${t.message}")
+                }
+            })
+        }
+
+
         @OptIn(DelicateCoroutinesApi::class)
         private fun searchResult() {
             GlobalScope.launch {
@@ -44,18 +65,8 @@ object Retrofit2Test : IBaseTest() {
 
         override fun run(context: Context) {
             getHomeInfoList()
+            getHomeInfoListNoSuspend()
             searchResult()
         }
-    }
-
-    object VMNetworkFitTest : IBaseTest() {
-        private val homeRepository by lazy { VMHomeRepository() }
-
-        override fun run(context: Context) {
-            GlobalScope.launch {
-                homeRepository.getHomeList(1)
-            }
-        }
-
     }
 }

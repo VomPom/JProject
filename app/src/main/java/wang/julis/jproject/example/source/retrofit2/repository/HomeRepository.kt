@@ -1,7 +1,9 @@
 package wang.julis.jproject.example.source.retrofit2.repository
 
 
+import retrofit2.Call
 import wang.julis.jproject.example.source.retrofit2.manager.ApiManager
+import wang.julis.jproject.example.source.retrofit2.response.BaseResponse
 import wang.julis.jproject.example.source.retrofit2.viewmodel.ArticleList
 
 /**
@@ -18,6 +20,11 @@ class HomeRepository : BaseRepository() {
             ApiManager.api.getHomeList(page, 20)
         }
     }
+
+    fun getHomeInfoListNoSuspend(page: Int): Call<BaseResponse<ArticleList>>? {
+        return ApiManager.api.getHomeListNoSuspend(page, 20)
+    }
+
 
     /**
      * 搜索结果
