@@ -16,6 +16,7 @@ import wang.julis.jproject.example.little.ToolsMainActivity;
 import wang.julis.jproject.example.media.MediaMainActivity;
 import wang.julis.jproject.example.media.pag.PAGMainActivity;
 import wang.julis.jproject.example.source.SourceMainActivity;
+import wang.julis.jproject.example.thread.ThreadMainActivity;
 import wang.julis.jwbase.basecompact.baseList.BaseListActivity;
 import wang.julis.learncpp.CppMainActivity;
 
@@ -46,6 +47,7 @@ public class MainActivity extends BaseListActivity {
     protected void initData() {
         addItem("动画相关", AnimationMainActivity.class);
         addItem("音视频", MediaMainActivity.class);
+        addItem("多线程", ThreadMainActivity.class);
         addItem("PAG", PAGMainActivity.class);
         addItem("Kotlin", KotlinMainActivity.class);
         addItem("Cpp", CppMainActivity.class);

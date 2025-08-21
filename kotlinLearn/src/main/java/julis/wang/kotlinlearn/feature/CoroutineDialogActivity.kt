@@ -37,7 +37,7 @@ class CoroutineDialogActivity : BaseActivity() {
     /**
      * [suspendCancellableCoroutine] 将回调转换为挂起函数
      *
-     * 通过 suspendCancellableCoroutine，你可以将基于回调的异步操作封装成一个挂起函数，使其能够以同步的方式编写异步代码。
+     * 通过 suspendCancellableCoroutine，可以将基于回调的异步操作封装成一个挂起函数，使其能够以同步的方式编写异步代码。
      * 支持协程取消：suspendCancellableCoroutine 生成的挂起函数是可取消的，这意味着如果协程被取消，相关的回调也会被正确处理，避免资源泄漏。
      * @return Boolean
      */

@@ -21,4 +21,12 @@
         android:layout_gravity="center"
         android:text="Btn2" />
 
+    <ImageView
+        android:id="@+id/iv_pic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minWidth="200dp"
+        android:minHeight="200dp" />
+
+
 </LinearLayout>

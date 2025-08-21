@@ -4,7 +4,7 @@ ext.Ver = [
         min_sdk              : 28,
         target_sdk           : 28,
         java                 : JavaVersion.VERSION_1_8,
-        android_gradle_plugin: '4.2.2',
+        android_gradle_plugin: '7.3.1',
         kotlin_target        : '1.8',
 ]
 
@@ -14,8 +14,8 @@ ext {
 }
 
 
-def kotlin_version = '1.9.0'
-def kotlin_coroutines_version = '1.9.0'
+def kotlin_version = '2.1.20'
+def kotlin_coroutines_version = '2.1.20'
 def kotlin_deps = [
         gradle_plugin     : "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version",
         stdlib            : "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version",
@@ -100,7 +100,8 @@ def test_deps = [
 ]
 
 def third_deps = [
-        pag: "com.tencent.tav:libpag:4.0.5.10"
+        pag : "com.tencent.tav:libpag:4.0.5.10",
+        mmkv: "com.tencent:mmkv:2.0.2"
 ]
 
 

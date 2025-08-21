@@ -7,6 +7,7 @@ import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import wang.julis.jproject.example.source.retrofit2.learn.DynamicDelegate
 import wang.julis.jproject.example.source.retrofit2.learn.VMNetworkFitTest
 import wang.julis.jproject.example.source.retrofit2.repository.HomeRepository
 import wang.julis.jproject.example.source.retrofit2.response.BaseResponse
@@ -25,8 +26,8 @@ object Retrofit2Test : IBaseTest() {
     private val homeRepository by lazy { HomeRepository() }
 
     override fun run(context: Context) {
-//        RetroFitTest.run(context)      // 一个GET 和一个POST 请求的用法
-//        DynamicDelegate.run(context)   // 学习关于“动态代理”的实现
+        RetroFitTest.run(context)      // 一个GET 和一个POST 请求的用法
+        DynamicDelegate.run(context)   // 学习关于“动态代理”的实现
         VMNetworkFitTest.run(context)  // 手写“Retrofit”的核心实现
     }
 

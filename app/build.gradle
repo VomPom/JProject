@@ -33,15 +33,15 @@ android {
     kotlinOptions {
         jvmTarget = Ver.kotlin_target
     }
+    packagingOptions {
+        exclude 'META-INF/annotation.kotlin_module'
+    }
 }
 
 dependencies {
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    testImplementation Deps.test.junit
-    androidTestImplementation Deps.test.junit_ext
-    androidTestImplementation Deps.test.espresso
     implementation Deps.kotlin.stdlib
     implementation Deps.androidx.appcompat
     implementation Deps.androidx.material
@@ -54,11 +54,18 @@ dependencies {
     implementation Deps.android.lifecycle.livedata_ktx
     implementation Deps.android.lifecycle.viewModelKtx
 
+    // retrofit2 + okhttp
     implementation Deps.square.okhttp
     implementation Deps.square.retrofit2
     implementation Deps.square.retrofit2Gson
     implementation Deps.square.loggingInterceptor
 
+    // glide
+    implementation Deps.glide.core
+    implementation Deps.glide.compiler
+    implementation Deps.glide.okhttp3_integration
+
+    implementation Deps.third.mmkv
     implementation Deps.third.pag
 
     implementation project(':kotlinLearn')
@@ -69,5 +76,8 @@ dependencies {
 
     kapt project(':compiler')
 
+    testImplementation Deps.test.junit
+    androidTestImplementation Deps.test.junit_ext
+    androidTestImplementation Deps.test.espresso
 }
 //apply from: '../script/get_hybrid_class.gradle'

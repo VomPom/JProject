@@ -5,6 +5,7 @@ import android.util.Log
 import android.widget.Button
 import julis.wang.kotlinlearn.R
 import wang.julis.jwbase.basecompact.BaseActivity
+import java.io.File
 
 /**
  * Created by juliswang on 2022/8/1 14:10
@@ -40,11 +41,13 @@ class KeywordActivity : BaseActivity() {
         testRun(user)
         testWith(user)
         testApply(user)
+        testUse()
         testAlso(user)
         testTakeIf(user)
         takeUnless(user)
         testRunCatching(user)
         testInline(user)
+
 
         testFun()
     }
@@ -137,6 +140,20 @@ class KeywordActivity : BaseActivity() {
             //返回对象本身
         }
         Log.e(TAG, "user:${newUser?.name}")
+    }
+
+    /**
+     * use 函数主要用于自动管理和释放资源，特别是那些实现了 Closeable 接口的对象，例如文件、流、数据库连接等。它
+     * 简化了资源管理，避免了手动调用 close() 方法的繁琐，并且确保了资源在不再使用时被正确关闭，即使在操作过程中发生异常也是如此
+     */
+    private fun testUse() {
+        File("/sdcard/xxxxx").bufferedReader().use { reader ->
+            // 在这里使用 reader 读取文件内容
+            var line: String?
+            while (reader.readLine().also { line = it } != null) {
+                println(line)
+            }
+        }
     }
 
     /**

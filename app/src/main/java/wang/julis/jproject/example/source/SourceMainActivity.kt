@@ -1,5 +1,6 @@
 package wang.julis.jproject.example.source
 
+import wang.julis.jproject.example.source.koin.noScope.KoinTest
 import wang.julis.jwbase.basecompact.baseList.BaseListActivity
 
 /**
@@ -11,5 +12,8 @@ import wang.julis.jwbase.basecompact.baseList.BaseListActivity
 class SourceMainActivity : BaseListActivity() {
     override fun initData() {
         addItem("Retrofit2") { Retrofit2Test.run(this) }
+        addItem("Glide", GlideActivity::class.java)
+        addItem("MMKV") { MMKVTest.run(this) }
+        addItem("Koin") { KoinTest.run(this) }
     }
 }

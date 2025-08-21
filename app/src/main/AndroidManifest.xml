@@ -81,6 +81,8 @@
             android:name="julis.wang.learnopengl.opengl.egl.EGLActivity"
             android:theme="@style/AppTheme" />
         <activity android:name="wang.julis.jproject.example.source.SourceMainActivity" />
+        <activity android:name="wang.julis.jproject.example.source.GlideActivity" />
+        <activity android:name="wang.julis.jproject.example.thread.ThreadMainActivity" />
 
 
         <service
