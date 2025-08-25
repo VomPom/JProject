@@ -6,6 +6,9 @@ package wang.julis.jproject.example
  *
  * @Description
  */
+class ComponentInt(val data: Int)
+class ComponentIntFloat(val data1: Int, val data2: Float)
 class ComponentA
 class ComponentB(val a: ComponentA)
 class ComponentC(val b: ComponentB)
+

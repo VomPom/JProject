@@ -1,6 +1,9 @@
 package wang.julis.jproject.example.source
 
-import wang.julis.jproject.example.source.koin.noScope.KoinTest
+import wang.julis.jproject.example.source.koin.noScope1.withoutScope1
+import wang.julis.jproject.example.source.koin.noScope1.withoutScope2
+import wang.julis.jproject.example.source.koin.parameter3.withParameter
+import wang.julis.jproject.example.source.koin.scope2.withScope
 import wang.julis.jwbase.basecompact.baseList.BaseListActivity
 
 /**
@@ -14,6 +17,11 @@ class SourceMainActivity : BaseListActivity() {
         addItem("Retrofit2") { Retrofit2Test.run(this) }
         addItem("Glide", GlideActivity::class.java)
         addItem("MMKV") { MMKVTest.run(this) }
-        addItem("Koin") { KoinTest.run(this) }
+        addItem("Koin") {
+            withoutScope1()
+            withoutScope2()
+            withScope()
+            withParameter()
+        }
     }
 }

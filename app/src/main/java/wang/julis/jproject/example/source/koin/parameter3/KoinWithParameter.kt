@@ -1,4 +1,4 @@
-package wang.julis.jproject.example.source.koin.scope
+package wang.julis.jproject.example.source.koin.parameter3
 
 
 import java.util.concurrent.ConcurrentHashMap
@@ -6,25 +6,20 @@ import kotlin.reflect.KClass
 
 /**
  *
- * Created by @juliswang on 2025/08/20 11:26
+ * Created by @juliswang on 2025/08/25 15:26
  *
  * @Description 基于 Koin 的设计，实现其核心模块(不包含 Scope)：
  *
- *   - 注册实例
- *   - 获取数据
+ *     能够实现实例动态传递参数
  *
- *     实现下面的注册并能成功获取到单例的值
  *     startKoin {
- *      modules(
- *          module {
- *              single { ComponentA() }
- *              factory { ComponentB(get()) }
- *          }
- *      )
- *     }
- *
- *     val koin = GlobalContext.get()
- *     val componentA1 = koin.get<ComponentA>()
+ *          modules(
+ *             module {
+ *                 single { (data: Int) -> ComponentInt(data) }
+ *                 factory { (data1: Int, data2: Float) -> ComponentIntFloat(data1, data2) }
+ *             }
+ *         )
+ *      }
  */
 @DslMarker
 annotation class KoinApplicationDslMarker
@@ -94,7 +89,8 @@ class Koin() {
 
     inline fun <reified T> get(
         qualifier: String? = null,
-    ): T = scopeRegistry.rootScope.get(qualifier)
+        noinline parameters: ParametersDefinition? = null,
+    ): T = scopeRegistry.rootScope.get(qualifier, parameters)
 
     fun createScope(
         scopeId: String,
@@ -149,7 +145,6 @@ class InstanceRegistry(val _koin: Koin) {
         val indexKey = indexKey(clazz, qualifier, scopeQualifier)
         return _instances[indexKey]
     }
-    // wang.julis.jproject.example.ComponentB::scope
 }
 ////////////////////////////////// Registry END //////////////////////////////////
 
@@ -171,8 +166,8 @@ class Module() {
 
     inline fun <reified T> factory(
         qualifier: String? = null,
-        noinline definition: Definition<T>,
         scopeQualifier: String = rootScopeQualifier,
+        noinline definition: Definition<T>,
     ): KoinDefinition<T> {
         val factory = _factoryInstanceFactory<T>(qualifier, definition, scopeQualifier)
         indexPrimaryType(factory)
@@ -229,7 +224,7 @@ inline fun indexKey(clazz: KClass<*>, typeQualifier: String?, scopeQualifier: St
 }
 
 
-typealias Definition<T> = Scope.() -> T
+typealias Definition<T> = Scope.(ParametersHolder) -> T
 
 class BeanDefinition<T>(
     val primaryType: KClass<*>,
@@ -244,7 +239,10 @@ class BeanDefinition<T>(
 abstract class InstanceFactory<T>(val beanDefinition: BeanDefinition<T>) {
     abstract fun get(context: ResolutionContext): T
 
-    open fun create(context: ResolutionContext): T = beanDefinition.definition.invoke(context.scope)
+    open fun create(context: ResolutionContext): T {
+        val parameters: ParametersHolder = context.parameters ?: ParametersHolder()
+        return beanDefinition.definition.invoke(context.scope, parameters)
+    }
 }
 
 class SingleFactory<T>(beanDefinition: BeanDefinition<T>) : InstanceFactory<T>(beanDefinition) {
@@ -269,7 +267,7 @@ class ScopeFactory<T>(beanDefinition: BeanDefinition<T>) : InstanceFactory<T>(be
         if (context.scope.scopeQualifier != beanDefinition.scopeQualifier && context.scope.scopeQualifier != beanDefinition.scopeQualifier) {
             error("Wrong Scope qualifier: trying to open instance for ${context.scope.id} in $beanDefinition")
         }
-        values[context.scope.id] = super.create(context)
+        values[context.scope.id] = create(context)
         return values[context.scope.id]
             ?: error("Factory.get -Scoped instance not found for ${context.scope.id} in $beanDefinition")
     }
@@ -282,7 +280,7 @@ class ScopeFactory<T>(beanDefinition: BeanDefinition<T>) : InstanceFactory<T>(be
         }
     }
 }
-//////////////////////////////////   Factory Start //////////////////////////////////
+//////////////////////////////////   Factory END //////////////////////////////////
 
 @KoinDslMarker
 class Scope(
@@ -294,14 +292,16 @@ class Scope(
 ) {
     inline fun <reified T> get(
         qualifier: String? = null,
+        noinline parameters: ParametersDefinition? = null,
     ): T {
-        return resolve(qualifier)
+        return resolve(qualifier, parameters?.invoke())
     }
 
     inline fun <reified T> resolve(
         qualifier: String?,
+        parameters: ParametersHolder? = null,
     ): T {
-        val instanceContext = ResolutionContext(this, T::class, qualifier)
+        val instanceContext = ResolutionContext(this, T::class, qualifier, parameters)
         return _koin.resolver.resolveFromContext(instanceContext)
     }
 }
@@ -322,20 +322,28 @@ class ScopeDSL(val scopeQualifier: String, val module: Module) {
         qualifier: String? = null,
         noinline definition: Definition<T>,
     ): KoinDefinition<T> {
-        return module.factory(qualifier, definition, scopeQualifier)
+        return module.factory(qualifier, scopeQualifier, definition)
     }
-
 }
 
 
-class CoreResolver(
-    private val _koin: Koin
-) {
-    fun <T> resolveFromContext(
-        ctx: ResolutionContext
-    ): T {
+class CoreResolver(private val _koin: Koin) {
+    fun <T> resolveFromContext(ctx: ResolutionContext): T {
         return _koin.instanceRegistry.resolveInstance(ctx)
+            ?: resolveFromParentScopes(ctx.scope, ctx)
             ?: throw RuntimeException("No definition found for type '${ctx.clazz.java.name}'${ctx.qualifier}.")
+    }
+
+    private fun <T> resolveFromParentScopes(scope: Scope, ctx: ResolutionContext): T? {
+        if (scope.isRoot) return null
+        return findInOtherScope(scope, ctx)
+    }
+
+    private fun <T> findInOtherScope(scope: Scope, ctx: ResolutionContext): T? {
+        return if (!scope.isRoot) {
+            val newContext = ResolutionContext(_koin.scopeRegistry.rootScope, ctx.clazz, ctx.qualifier)
+            resolveFromContext(newContext)
+        } else null
     }
 }
 
@@ -343,8 +351,11 @@ class ResolutionContext(
     val scope: Scope,
     val clazz: KClass<*>,
     val qualifier: String? = null,
+    val parameters: ParametersHolder? = null,
 )
 
+
+//////////////////////////////////  Create Factory Start //////////////////////////////////
 const val rootScopeQualifier = "_root_"
 
 inline fun <reified T> _singleInstanceFactory(
@@ -359,9 +370,45 @@ inline fun <reified T> _factoryInstanceFactory(
     scopeQualifier: String = rootScopeQualifier,
 ): InstanceFactory<T> = FactoryFactory(_createDefinition(qualifier, scopeQualifier, definition))
 
-
 inline fun <reified T> _scopedInstanceFactory(
     qualifier: String? = null,
     noinline definition: Definition<T>,
     scopeQualifier: String = rootScopeQualifier,
 ): InstanceFactory<T> = ScopeFactory(_createDefinition(qualifier, scopeQualifier, definition))
+////////////////////////////////// Create Factory END //////////////////////////////////
+
+
+////////////////////////////////// Parameter  Start //////////////////////////////////
+@KoinDslMarker
+class ParametersHolder(val _values: MutableList<Any?> = mutableListOf()) {
+
+    fun <T> elementAt(i: Int, clazz: KClass<*>): T =
+        if (i < _values.size) {
+            _values[i] as T
+        } else {
+            throw Exception(
+                "Can't get injected parameter #$i from $this for type '${clazz.java.name}'",
+            )
+        }
+
+    inline operator fun <reified T> component1(): T = elementAt(0, T::class)
+    inline operator fun <reified T> component2(): T = elementAt(1, T::class)
+    inline operator fun <reified T> component3(): T = elementAt(2, T::class)
+    inline operator fun <reified T> component4(): T = elementAt(3, T::class)
+    inline operator fun <reified T> component5(): T = elementAt(4, T::class)
+
+    /**
+     * get element at given index
+     * return T
+     */
+    operator fun <T> get(i: Int) = _values[i] as T
+
+    fun <T> set(i: Int, t: T) {
+        _values[i] = t as Any
+    }
+}
+
+fun parametersOf(vararg parameters: Any?) = ParametersHolder(parameters.toMutableList())
+
+typealias ParametersDefinition = () -> ParametersHolder
+//////////////////////////////////  Parameter END //////////////////////////////////

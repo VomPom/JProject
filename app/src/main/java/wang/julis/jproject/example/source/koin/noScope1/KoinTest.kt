@@ -1,9 +1,7 @@
-package wang.julis.jproject.example.source.koin.noScope
+package wang.julis.jproject.example.source.koin.noScope1
 
-import android.content.Context
 import wang.julis.jproject.example.ComponentA
 import wang.julis.jproject.example.ComponentB
-import wang.julis.jwbase.basecompact.IBaseTest
 
 /**
  *
@@ -13,13 +11,6 @@ import wang.julis.jwbase.basecompact.IBaseTest
  */
 fun main() {
     withoutScope1()
-}
-
-object KoinTest : IBaseTest() {
-    override fun run(context: Context) {
-        withoutScope1()
-        withoutScope2()
-    }
 }
 
 fun withoutScope1() {

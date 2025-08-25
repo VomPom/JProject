@@ -1,4 +1,4 @@
-package wang.julis.jproject.example.source.koin.noScope
+package wang.julis.jproject.example.source.koin.noScope1
 
 import java.util.concurrent.ConcurrentHashMap
 import kotlin.reflect.KClass
