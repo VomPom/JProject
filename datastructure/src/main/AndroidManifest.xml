@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="julis.wang.datastructure">
+
+    <activity android:name="wang.julis.jproject.media.pag.PAGMainActivity" />
+    <activity android:name="wang.julis.jproject.example.media.pag.SimplePagActivity" />
+    <activity android:name="wang.julis.jproject.example.media.pag.PAGSurfaceTextureIdActivity" />
+    <activity android:name="wang.julis.jproject.example.media.MediaPlayerActivity" />
+    <activity android:name="wang.julis.jproject.example.media.codec.MuxerActivity" />
+    <activity android:name="wang.julis.jproject.example.media.audio.AudioMainActivity" />
+    <activity android:name="wang.julis.jproject.example.media.audio.AudioRecordTrackActivity" />
+    <activity android:name="wang.julis.jproject.example.media.camera.SurfaceViewCameraActivity" />
+    <activity android:name="wang.julis.jproject.example.media.camera.TextureViewCameraActivity" />
+    <activity android:name="wang.julis.jproject.example.media.camera.CameraMainActivity" />
+    <activity android:name="wang.julis.jproject.example.media.codec.MediaCodecMainActivity" />
+    <activity android:name="wang.julis.jproject.example.media.screenrecord.ScreenRecordActivity" />
+    <activity android:name="wang.julis.jproject.example.media.screenrecord.MediaProjectionDemoActivity" />
+    <activity android:name="wang.julis.jproject.example.media.codec.H264Activity" />
+    <activity android:name="wang.julis.jproject.example.media.codec.MediaExtractorActivity" />
+    <activity android:name="wang.julis.jproject.example.media.MediaMainActivity" />
+    <activity android:name="wang.julis.jproject.example.media.frames.ExtractMpegFramesActivity" />
+</manifest>

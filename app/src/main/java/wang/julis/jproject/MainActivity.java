@@ -6,6 +6,8 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 
 import com.julis.annotation.Page;
+import com.vompom.media.MediaMainActivity;
+import com.vompom.media.pag.PAGMainActivity;
 
 import julis.wang.kotlinlearn.KotlinMainActivity;
 import julis.wang.kotlinlearn.feature.FuncActivity;
@@ -13,8 +15,6 @@ import julis.wang.learnopengl.opengl.OpenGLNDKListActivity;
 import wang.julis.jproject.example.anim.AnimationMainActivity;
 import wang.julis.jproject.example.little.LittleMainActivity;
 import wang.julis.jproject.example.little.ToolsMainActivity;
-import wang.julis.jproject.example.media.MediaMainActivity;
-import wang.julis.jproject.example.media.pag.PAGMainActivity;
 import wang.julis.jproject.example.source.SourceMainActivity;
 import wang.julis.jproject.example.thread.ThreadMainActivity;
 import wang.julis.jwbase.basecompact.baseList.BaseListActivity;

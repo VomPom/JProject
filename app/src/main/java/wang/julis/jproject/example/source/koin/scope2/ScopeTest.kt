@@ -50,4 +50,9 @@ fun withScope() {
     println("componentB hashCode:${componentB.hashCode()}")
     println("componentC.B hashCode:${componentC.b.hashCode()}")
 
+
+    val scope2 = koin.createScope("scope2", scopeQualifier)
+    val componentAInScope2 = scope2.get<ComponentA>()
+
+    println("componentA in scope2 hashCode:${componentAInScope2.hashCode()}")
 }

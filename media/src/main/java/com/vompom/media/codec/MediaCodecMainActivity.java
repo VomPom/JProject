@@ -1,0 +1,30 @@
+package com.vompom.media.codec;
+
+import com.vompom.media.codec.v1.muxer.MuxerActivity;
+import com.vompom.media.codec.v1.player.PlayMediaActivity;
+import com.vompom.media.codec.v1.player.PlayWithoutAuioActivity;
+
+import wang.julis.jwbase.basecompact.baseList.BaseListActivity;
+
+/*******************************************************
+ *
+ * Created by julis.wang on 2021/07/13 10:49
+ *
+ * Description :
+ *
+ * History   :
+ *
+ *******************************************************/
+
+public class MediaCodecMainActivity extends BaseListActivity {
+
+    @Override
+    protected void initData() {
+        addItem("合成新视频", MuxerActivity.class);
+        addItem("H.264硬解码", H264Activity.class);
+        addItem("无音频播放视频", PlayWithoutAuioActivity.class);
+        addItem("播放音视频", PlayMediaActivity.class);
+    }
+
+
+}

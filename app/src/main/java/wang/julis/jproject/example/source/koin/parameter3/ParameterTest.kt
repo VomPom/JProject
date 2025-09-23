@@ -19,11 +19,6 @@ fun withParameter() {
         modules(
             module {
                 single { (data: Int) -> ComponentInt(data) }
-                //    same as
-//                single { parametersHolder ->
-//                    val i: Int = parametersHolder[0]
-//                    ComponentInt(i)
-//                }
                 factory { (data1: Int, data2: Float) -> ComponentIntFloat(data1, data2) }
 
                 scope(scopeQualifier) {

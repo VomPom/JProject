@@ -66,8 +66,8 @@ dependencies {
     implementation Deps.glide.okhttp3_integration
 
     implementation Deps.third.mmkv
-    implementation Deps.third.pag
 
+    implementation project(':media')
     implementation project(':kotlinLearn')
     implementation project(':learnopengl')
     implementation project(':jwbase')

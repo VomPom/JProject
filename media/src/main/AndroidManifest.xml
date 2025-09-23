@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.vompom.media">
+
+    <application>
+        <activity android:name="com.vompom.media.MediaPlayerActivity" />
+        <activity android:name=".codec.v1.muxer.MuxerActivity" />
+        <activity android:name="com.vompom.media.drawimage.DrawImageActivity" />
+        <activity android:name="com.vompom.media.audio.AudioMainActivity" />
+        <activity android:name="com.vompom.media.audio.AudioRecordTrackActivity" />
+        <activity android:name="com.vompom.media.camera.SurfaceViewCameraActivity" />
+        <activity android:name="com.vompom.media.camera.TextureViewCameraActivity" />
+        <activity android:name="com.vompom.media.camera.CameraMainActivity" />
+        <activity android:name="com.vompom.media.codec.MediaCodecMainActivity" />
+        <activity android:name="com.vompom.media.screenrecord.ScreenRecordActivity" />
+        <activity android:name="com.vompom.media.screenrecord.MediaProjectionDemoActivity" />
+        <activity android:name="com.vompom.media.codec.H264Activity" />
+        <activity android:name="com.vompom.media.codec.v1.player.PlayMediaActivity" />
+        <activity android:name="com.vompom.media.MediaMainActivity" />
+        <activity android:name="com.vompom.media.pag.PAGMainActivity" />
+        <activity android:name="com.vompom.media.pag.SimplePagActivity" />
+        <activity android:name="com.vompom.media.pag.PAGSurfaceTextureIdActivity" />
+        <activity android:name="com.vompom.media.codec.v1.player.PlayWithoutAuioActivity" />
+    </application>
+
+</manifest>
