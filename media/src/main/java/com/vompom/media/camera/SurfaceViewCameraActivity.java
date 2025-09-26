@@ -46,7 +46,7 @@ public class SurfaceViewCameraActivity extends BaseActivity {
     }
 
     @Override
-    protected int getContentView() {
+    protected int getContentViewId() {
         return R.layout.activity_camera_surface_view;
     }
 

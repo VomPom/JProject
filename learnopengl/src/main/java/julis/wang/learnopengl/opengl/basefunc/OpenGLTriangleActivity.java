@@ -52,7 +52,7 @@ public class OpenGLTriangleActivity extends BaseActivity {
     }
 
     @Override
-    protected int getContentView() {
+    protected int getContentViewId() {
         return R.layout.activity_main;
     }
 

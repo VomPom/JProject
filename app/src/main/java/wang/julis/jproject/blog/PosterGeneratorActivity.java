@@ -73,7 +73,7 @@ public class PosterGeneratorActivity extends BaseActivity implements View.OnClic
     }
 
     @Override
-    protected int getContentView() {
+    protected int getContentViewId() {
         return R.layout.activity_post_generator;
     }
 

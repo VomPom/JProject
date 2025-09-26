@@ -61,7 +61,7 @@ public class MuxerActivity extends BaseActivity implements View.OnClickListener 
     }
 
     @Override
-    protected int getContentView() {
+    protected int getContentViewId() {
         return R.layout.activity_media_muxer;
     }
 

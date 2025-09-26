@@ -62,7 +62,7 @@ class BitmapOperationActivity : BaseActivity() {
         mBitmap = bitmap!!
     }
 
-    override fun getContentView(): Int {
+    override fun getContentViewId(): Int {
         return R.layout.activity_bitmap_operation
     }
 

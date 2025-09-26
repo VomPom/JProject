@@ -44,7 +44,7 @@ public class JsonTestActivity extends BaseActivity {
     }
 
     @Override
-    protected int getContentView() {
+    protected int getContentViewId() {
         return R.layout.activity_kotlin_test;
     }
 }

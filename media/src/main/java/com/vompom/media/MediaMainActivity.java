@@ -9,8 +9,10 @@ import com.vompom.media.camera.CameraMainActivity;
 import com.vompom.media.codec.MediaCodecMainActivity;
 import com.vompom.media.drawimage.DrawImageActivity;
 import com.vompom.media.frames.ExtractMpegFramesActivity;
+import com.vompom.media.mediaplayer.MediaPlayerActivity;
 import com.vompom.media.screenrecord.MediaProjectionDemoActivity;
 import com.vompom.media.screenrecord.ScreenRecordActivity;
+import com.vompom.media.utils.ResUtils;
 
 import wang.julis.jwbase.basecompact.baseList.BaseListActivity;
 
@@ -37,6 +39,7 @@ public class MediaMainActivity extends BaseListActivity {
         addItem("提取帧", ExtractMpegFramesActivity.class);
         addItem("MediaProjectionDemo", MediaProjectionDemoActivity.class);
         check();
+        ResUtils.INSTANCE.init(this);
     }
 
     private void check() {

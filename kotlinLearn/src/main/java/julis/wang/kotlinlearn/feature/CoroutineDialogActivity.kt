@@ -32,7 +32,7 @@ class CoroutineDialogActivity : BaseActivity() {
         }
     }
 
-    override fun getContentView(): Int = R.layout.activity_kotlin_test
+    override fun getContentViewId(): Int = R.layout.activity_kotlin_test
 
     /**
      * [suspendCancellableCoroutine] 将回调转换为挂起函数

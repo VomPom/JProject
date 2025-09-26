@@ -54,7 +54,7 @@ public class ValueAnimatorActivity extends BaseActivity implements View.OnClickL
     }
 
     @Override
-    protected int getContentView() {
+    protected int getContentViewId() {
         return R.layout.activity_value_animator;
     }
 

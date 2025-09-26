@@ -2,12 +2,12 @@ package com.vompom.media.codec.v1.decode.sync;
 
 import android.graphics.SurfaceTexture;
 import android.media.MediaCodec;
-import android.util.Log;
 import android.view.Surface;
 
 import com.vompom.media.codec.v1.decode.BaseCodec;
 
 import java.nio.ByteBuffer;
+
 
 /**
  * 解码基类，用于解码音视频
@@ -27,42 +27,8 @@ public abstract class BaseSyncDecode extends BaseCodec implements Runnable {
         mediaCodec.start();
     }
 
-    public BaseSyncDecode(float startTimeSeconds) {
-        super(startTimeSeconds);
-        //由子类去配置
-        configure();
-        //开始工作，进入编解码状态
-        mediaCodec.start();
-    }
-
-    public BaseSyncDecode(float startTimeSeconds, boolean exactSeek) {
-        super(startTimeSeconds, exactSeek);
-        //由子类去配置
-        configure();
-        //开始工作，进入编解码状态
-        mediaCodec.start();
-    }
-
     public BaseSyncDecode(SurfaceTexture surfaceTexture) {
         super();
-        mSurface = new Surface(surfaceTexture);
-        //由子类去配置
-        configure();
-        //开始工作，进入编解码状态
-        mediaCodec.start();
-    }
-
-    public BaseSyncDecode(SurfaceTexture surfaceTexture, float startTimeSeconds) {
-        super(startTimeSeconds);
-        mSurface = new Surface(surfaceTexture);
-        //由子类去配置
-        configure();
-        //开始工作，进入编解码状态
-        mediaCodec.start();
-    }
-
-    public BaseSyncDecode(SurfaceTexture surfaceTexture, float startTimeSeconds, boolean exactSeek) {
-        super(startTimeSeconds, exactSeek);
         mSurface = new Surface(surfaceTexture);
         //由子类去配置
         configure();
@@ -79,28 +45,9 @@ public abstract class BaseSyncDecode extends BaseCodec implements Runnable {
         mediaCodec.start();
     }
 
-    public BaseSyncDecode(Surface surface, float startTimeSeconds) {
-        super(startTimeSeconds);
-        mSurface = surface;
-        //由子类去配置
-        configure();
-        //开始工作，进入编解码状态
-        mediaCodec.start();
-    }
-
-    public BaseSyncDecode(Surface surface, float startTimeSeconds, boolean exactSeek) {
-        super(startTimeSeconds, exactSeek);
-        mSurface = surface;
-        //由子类去配置
-        configure();
-        //开始工作，进入编解码状态
-        mediaCodec.start();
-    }
-
     @Override
     public void run() {
         try {
-            Log.d("BaseSyncDecode", "Starting decode thread, Surface valid: " + (mSurface != null && mSurface.isValid()));
             //编码
             while (!isDone) {
                 /**
@@ -109,8 +56,8 @@ public abstract class BaseSyncDecode extends BaseCodec implements Runnable {
                  */
                 int inputBufferId = mediaCodec.dequeueInputBuffer(TIME_US);
 
-                if (inputBufferId >= 0) {
-                    //拿到 可用的，空的 input buffer
+                if (inputBufferId > 0) {
+                    // 获取输入队列的一个空闲缓存区
                     ByteBuffer inputBuffer = mediaCodec.getInputBuffer(inputBufferId);
                     if (inputBuffer != null) {
                         /**
@@ -129,7 +76,6 @@ public abstract class BaseSyncDecode extends BaseCodec implements Runnable {
                             );
                         } else {
                             //结束,传递 end-of-stream 标志
-                            Log.d("BaseSyncDecode", "Reached end of stream, sending EOS");
                             mediaCodec.queueInputBuffer(
                                     inputBufferId,
                                     0,
@@ -138,24 +84,21 @@ public abstract class BaseSyncDecode extends BaseCodec implements Runnable {
                                     MediaCodec.BUFFER_FLAG_END_OF_STREAM
                             );
                             isDone = true;
+
                         }
                     }
-                } else if (inputBufferId == MediaCodec.INFO_TRY_AGAIN_LATER) {
-                    Log.d("BaseSyncDecode", "dequeueInputBuffer returned INFO_TRY_AGAIN_LATER");
                 }
-
                 //解码输出交给子类
                 boolean isFinish = handleOutputData(mInfo);
                 if (isFinish) {
-                    Log.d("BaseSyncDecode", "Decode finished");
                     break;
                 }
+
             }
 
             done();
 
         } catch (Exception e) {
-            Log.e("BaseSyncDecode", "Error in decode thread", e);
             e.printStackTrace();
         }
     }

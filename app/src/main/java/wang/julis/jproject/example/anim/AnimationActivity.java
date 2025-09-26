@@ -67,7 +67,7 @@ public class AnimationActivity extends BaseActivity implements View.OnClickListe
     }
 
     @Override
-    protected int getContentView() {
+    protected int getContentViewId() {
         return R.layout.activity_animation;
     }
 

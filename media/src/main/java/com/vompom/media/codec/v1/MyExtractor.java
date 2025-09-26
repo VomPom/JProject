@@ -4,7 +4,7 @@ import android.media.MediaExtractor;
 import android.media.MediaFormat;
 import android.util.Log;
 
-import com.vompom.media.Resources;
+import com.vompom.media.utils.ResUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -39,7 +39,7 @@ public class MyExtractor {
     private void init() {
         try {
             mediaExtractor = new MediaExtractor();
-            String videoPath = Resources.INSTANCE.getTestVideoPath();
+            String videoPath = ResUtils.INSTANCE.getTestVideo();
             Log.d("MyExtractor", "Trying to set data source: " + videoPath);
 
             // 检查文件是否存在

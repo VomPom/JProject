@@ -88,7 +88,7 @@ public class ArticlePosterGeneratorActivity extends BaseActivity implements View
     }
 
     @Override
-    protected int getContentView() {
+    protected int getContentViewId() {
         return R.layout.activity_article_generator;
     }
 

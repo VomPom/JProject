@@ -7,10 +7,10 @@ import androidx.annotation.Nullable;
 
 import com.julis.annotation.Page;
 import com.vompom.media.MediaMainActivity;
+import com.vompom.media.codec.MediaCodecMainActivity;
 import com.vompom.media.pag.PAGMainActivity;
 
 import julis.wang.kotlinlearn.KotlinMainActivity;
-import julis.wang.kotlinlearn.feature.FuncActivity;
 import julis.wang.learnopengl.opengl.OpenGLNDKListActivity;
 import wang.julis.jproject.example.anim.AnimationMainActivity;
 import wang.julis.jproject.example.little.LittleMainActivity;
@@ -31,9 +31,9 @@ import wang.julis.learncpp.CppMainActivity;
 @Page("main")
 public class MainActivity extends BaseListActivity {
     public static final String HOST = "main";
-    private final boolean quickJump = false;
+    private final boolean quickJump = true;
 
-    private final Class<?> debugClass = FuncActivity.class;
+    private final Class<?> debugClass = MediaCodecMainActivity.class;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

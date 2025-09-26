@@ -24,7 +24,7 @@ import wang.julis.jwbase.basecompact.BaseActivity;
  *
  *******************************************************/
 
-public class PlayMediaActivity extends BaseActivity {
+public class PlayerV1Activity extends BaseActivity {
     private SurfaceView surfaceView;
 
     @Override
@@ -64,7 +64,7 @@ public class PlayMediaActivity extends BaseActivity {
     }
 
     @Override
-    protected int getContentView() {
+    protected int getContentViewId() {
         return R.layout.activity_media;
     }
 }

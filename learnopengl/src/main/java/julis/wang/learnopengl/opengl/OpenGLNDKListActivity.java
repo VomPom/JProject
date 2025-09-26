@@ -199,7 +199,7 @@ public class OpenGLNDKListActivity extends BaseActivity {
     }
 
     @Override
-    protected int getContentView() {
+    protected int getContentViewId() {
         return R.layout.activity_opengl_list;
     }
 

@@ -30,7 +30,7 @@ public class TextureViewCameraActivity extends BaseActivity {
     }
 
     @Override
-    protected int getContentView() {
+    protected int getContentViewId() {
         return R.layout.activity_camera_texture_view;
     }
 

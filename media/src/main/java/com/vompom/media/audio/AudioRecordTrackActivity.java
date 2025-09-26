@@ -101,7 +101,7 @@ public class AudioRecordTrackActivity extends BaseActivity implements View.OnCli
     }
 
     @Override
-    protected int getContentView() {
+    protected int getContentViewId() {
         return R.layout.activity_audio_recorder;
     }
 

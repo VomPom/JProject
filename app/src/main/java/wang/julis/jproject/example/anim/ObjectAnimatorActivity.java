@@ -78,7 +78,7 @@ public class ObjectAnimatorActivity extends BaseActivity implements View.OnClick
     }
 
     @Override
-    protected int getContentView() {
+    protected int getContentViewId() {
         return R.layout.activity_object_animator;
     }
 

@@ -26,7 +26,7 @@ class GlideActivity : BaseActivity() {
 
     override fun initData() {}
 
-    override fun getContentView(): Int = R.layout.activity_test
+    override fun getContentViewId(): Int = R.layout.activity_test
 
     private fun load(url: String) {
         // glide深入理解它的三部分

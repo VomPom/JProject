@@ -1,4 +1,4 @@
-package com.vompom.media;
+package com.vompom.media.mediaplayer;
 
 import android.annotation.SuppressLint;
 import android.media.AudioManager;
@@ -6,6 +6,8 @@ import android.media.MediaPlayer;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
+
+import com.vompom.media.R;
 
 import java.io.IOException;
 
@@ -79,7 +81,7 @@ public class MediaPlayerActivity extends BaseActivity implements View.OnClickLis
     }
 
     @Override
-    protected int getContentView() {
+    protected int getContentViewId() {
         return R.layout.activity_media;
     }
 

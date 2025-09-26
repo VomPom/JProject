@@ -21,22 +21,6 @@ public class SyncVideoDecode extends BaseSyncDecode {
         super(surface);
     }
 
-    public SyncVideoDecode(Surface surface, float startTimeSeconds) {
-        super(surface, startTimeSeconds);
-    }
-
-    public SyncVideoDecode(Surface surface, float startTimeSeconds, boolean exactSeek) {
-        super(surface, startTimeSeconds, exactSeek);
-    }
-
-    public SyncVideoDecode(SurfaceTexture surfaceTexture, float startTimeSeconds) {
-        super(surfaceTexture, startTimeSeconds);
-    }
-
-    public SyncVideoDecode(SurfaceTexture surfaceTexture, float startTimeSeconds, boolean exactSeek) {
-        super(surfaceTexture, startTimeSeconds, exactSeek);
-    }
-
     @Override
     public int decodeType() {
         return VIDEO;
@@ -56,29 +40,20 @@ public class SyncVideoDecode extends BaseSyncDecode {
             mStartMs = System.currentTimeMillis();
         }
         while (outputId >= 0) {
-            Log.d(TAG, "zsr handleOutputData: outputId=" + outputId + ", size=" + info.size +
-                    ", presentationTimeUs=" + info.presentationTimeUs + ", flags=" + info.flags);
+            //矫正pts
+            sleepRender(info, mStartMs);
 
-            // 检查是否应该开始渲染（用于精确定位）
-            boolean shouldRender = info.presentationTimeUs >= mTargetPresentationTimeUs;
+            //释放buffer，并渲染到 Surface 中
+            mediaCodec.releaseOutputBuffer(outputId, true);
 
-            if (shouldRender) {
-                //矫正pts
-                sleepRender(info, mStartMs);
-                //释放buffer，并渲染到 Surface 中
-                mediaCodec.releaseOutputBuffer(outputId, true);
-            } else {
-                // 跳过这一帧，不渲染到Surface，但要释放buffer
-                Log.d(TAG, "Skipping frame at " + (info.presentationTimeUs / 1000000f) + "s (before target start time)");
-                mediaCodec.releaseOutputBuffer(outputId, false);
-            }
 
             // 在所有解码后的帧都被渲染后，就可以停止播放了
             if ((info.flags & MediaCodec.BUFFER_FLAG_END_OF_STREAM) != 0) {
                 Log.e(TAG, "zsr OutputBuffer BUFFER_FLAG_END_OF_STREAM");
+
                 return true;
             }
-
+            Log.d(TAG, "zsr handleOutputData: ");
             outputId = mediaCodec.dequeueOutputBuffer(info, TIME_US);
         }
 

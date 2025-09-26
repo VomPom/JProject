@@ -26,7 +26,7 @@ class FuncActivity : BaseActivity() {
 
     }
 
-    override fun getContentView(): Int {
+    override fun getContentViewId(): Int {
         return R.layout.activity_kotlin_test
     }
 

@@ -62,7 +62,7 @@ public class BinderTestActivity extends BaseActivity implements View.OnClickList
     }
 
     @Override
-    protected int getContentView() {
+    protected int getContentViewId() {
         return R.layout.activity_binder_test;
     }
 

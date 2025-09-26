@@ -72,7 +72,7 @@ public class ScreenRecordActivity extends BaseActivity implements View.OnClickLi
     }
 
     @Override
-    protected int getContentView() {
+    protected int getContentViewId() {
         return R.layout.activity_screen_record;
     }
 

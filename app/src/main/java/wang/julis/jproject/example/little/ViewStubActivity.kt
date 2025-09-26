@@ -58,5 +58,5 @@ class ViewStubActivity : BaseActivity() {
 
     override fun initData() {}
 
-    override fun getContentView(): Int = R.layout.activity_view_stub
+    override fun getContentViewId(): Int = R.layout.activity_view_stub
 }

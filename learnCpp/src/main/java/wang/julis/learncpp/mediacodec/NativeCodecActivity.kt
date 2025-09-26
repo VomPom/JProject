@@ -180,7 +180,7 @@ class NativeCodecActivity : BaseActivity() {
 
     }
 
-    override fun getContentView(): Int {
+    override fun getContentViewId(): Int {
         return R.layout.activity_native_mediacodec
     }
 

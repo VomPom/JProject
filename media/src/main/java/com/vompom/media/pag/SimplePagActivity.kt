@@ -29,7 +29,7 @@ class SimplePagActivity : BaseActivity(), View.OnClickListener {
         pagFile = PAGFile.Load(assets, "pag/PAG_LOGO.pag")
     }
 
-    override fun getContentView(): Int {
+    override fun getContentViewId(): Int {
         return R.layout.activity_simple_pag_activity
     }
 

@@ -47,7 +47,7 @@ class JniCallbackActivity : BaseActivity() {
         jnicallback.stopTicks()
     }
 
-    override fun getContentView(): Int {
+    override fun getContentViewId(): Int {
         return R.layout.acitivity_jni_callback
     }
 

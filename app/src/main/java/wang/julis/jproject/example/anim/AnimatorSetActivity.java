@@ -62,7 +62,7 @@ public class AnimatorSetActivity extends BaseActivity implements View.OnClickLis
     }
 
     @Override
-    protected int getContentView() {
+    protected int getContentViewId() {
         return R.layout.activity_animator_set;
     }
 

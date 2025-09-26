@@ -38,7 +38,7 @@ class PAGSurfaceTextureIdActivity : BaseActivity() {
         pagFile = PAGFile.Load(assets, "pag/PAG_LOGO.pag") // pag是 400x400 可能会变形
     }
 
-    override fun getContentView(): Int {
+    override fun getContentViewId(): Int {
         return R.layout.activity_glsurfaceview
     }
 

@@ -9,7 +9,6 @@ import android.media.Image;
 import android.media.MediaCodec;
 import android.media.MediaFormat;
 import android.os.Build;
-import android.os.Environment;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -17,6 +16,7 @@ import android.view.SurfaceView;
 import androidx.annotation.RequiresApi;
 
 import com.vompom.media.R;
+import com.vompom.media.utils.ResUtils;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -46,7 +46,7 @@ import wang.julis.jwbase.basecompact.BaseActivity;
 public class H264Activity extends BaseActivity {
 
     private DataInputStream mInputStream;
-    private static final String FILE_PATH = Environment.getExternalStorageDirectory().getPath() + "/h264.h264";
+    private static final String FILE_PATH = ResUtils.INSTANCE.getH264();
     private SurfaceView mSurfaceView;
     private SurfaceHolder mSurfaceHolder;
     private MediaCodec mCodec;
@@ -67,7 +67,7 @@ public class H264Activity extends BaseActivity {
     }
 
     @Override
-    protected int getContentView() {
+    protected int getContentViewId() {
         return R.layout.activity_h264;
     }
 

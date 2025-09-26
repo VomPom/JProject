@@ -6,7 +6,7 @@ import android.view.TextureView
 import android.view.TextureView.SurfaceTextureListener
 import android.widget.Button
 import com.vompom.media.R
-import com.vompom.media.Resources
+import com.vompom.media.utils.ResUtils
 import wang.julis.jwbase.basecompact.BaseActivity
 import wang.julis.jwbase.utils.Logger
 import java.io.File
@@ -18,7 +18,7 @@ import java.io.File
  * @Description 基于 MediaExtractor 提取视频数据并将其送到 MediaCodec 进行编码并展示在 TextureView 上
  */
 
-class PlayWithoutAuioActivity : BaseActivity(), SurfaceTextureListener {
+class PlayWithoutAudioActivity : BaseActivity(), SurfaceTextureListener {
     private lateinit var textureView: TextureView
     private var playTask: PlayerWithoutAudio.PlayTask? = null
 
@@ -32,14 +32,14 @@ class PlayWithoutAuioActivity : BaseActivity(), SurfaceTextureListener {
 
     override fun initData() {}
 
-    override fun getContentView(): Int = R.layout.activity_textureview_player
+    override fun getContentViewId(): Int = R.layout.activity_textureview_player
 
     override fun onSurfaceTextureAvailable(
         surface: SurfaceTexture,
         width: Int,
         height: Int
     ) {
-        val videoFile = File(Resources.testVideoPath)
+        val videoFile = File(ResUtils.testVideo)
         val moviePlayer = PlayerWithoutAudio(videoFile, Surface(surface), object : PlayerWithoutAudio.FrameCallback {
             override fun preRender(presentationTimeUsec: Long) {
                 Logger.d("play:${presentationTimeUsec / 1000 / 1000.0f}s")

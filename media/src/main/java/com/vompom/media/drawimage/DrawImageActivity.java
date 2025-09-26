@@ -54,7 +54,7 @@ public class DrawImageActivity extends BaseActivity {
     }
 
     @Override
-    protected int getContentView() {
+    protected int getContentViewId() {
         return R.layout.activity_draw_image;
     }
 

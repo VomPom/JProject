@@ -26,7 +26,7 @@ class UtilsShowActivity : BaseActivity() {
 
     override fun initData() {}
 
-    override fun getContentView(): Int {
+    override fun getContentViewId(): Int {
         return R.layout.activity_kotlin_test
     }
 
