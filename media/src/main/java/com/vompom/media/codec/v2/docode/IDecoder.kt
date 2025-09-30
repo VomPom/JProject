@@ -7,15 +7,18 @@ package com.vompom.media.codec.v2.docode
  * @Description
  */
 
-interface IDecoder {
+interface IDecoder : Runnable {
     enum class DecodeType {
         Video,
         Audio
     }
 
+    fun prepare()
     fun play()
     fun pause()
     fun stop()
     fun release()
     fun seek(timeUs: Long)
+    fun duration(): Long
+    fun setProgressListener(onProgress: (Long, Long) -> Unit)
 }

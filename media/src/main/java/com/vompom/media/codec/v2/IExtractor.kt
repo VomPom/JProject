@@ -20,4 +20,5 @@ interface IExtractor {
     fun selectTrack(index: Int)
     fun getMediaFormat(): MediaFormat
     fun findTrack(mimeType: String): Int
+    fun duration(): Long
 }

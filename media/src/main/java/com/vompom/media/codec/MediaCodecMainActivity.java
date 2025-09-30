@@ -3,6 +3,7 @@ package com.vompom.media.codec;
 import com.vompom.media.codec.v1.muxer.MuxerActivity;
 import com.vompom.media.codec.v1.player.PlayWithoutAudioActivity;
 import com.vompom.media.codec.v1.player.PlayerV1Activity;
+import com.vompom.media.codec.v2.PlayerRawActivity;
 import com.vompom.media.codec.v2.PlayerV2Activity;
 import com.vompom.media.utils.ResUtils;
 
@@ -25,9 +26,10 @@ public class MediaCodecMainActivity extends BaseListActivity {
         addItem("合成新视频", MuxerActivity.class);
         addItem("H.264硬解码", H264Activity.class);
         addItem("无音频播放视频", PlayWithoutAudioActivity.class);
-        addItem("播放音视频v1", PlayerV1Activity.class);
+        addItem("播放器v1", PlayerV1Activity.class);
 
-        addItem("播放音视频v2", PlayerV2Activity.class);
+        addItem("播放器v2-原始", PlayerRawActivity.class);
+        addItem("播放器v2-Player包装", PlayerV2Activity.class);
         ResUtils.INSTANCE.init(this);
     }
 

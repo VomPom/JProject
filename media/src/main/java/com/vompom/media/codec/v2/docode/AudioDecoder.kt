@@ -26,7 +26,7 @@ class AudioDecoder(path: String) : BaseDecoder(path) {
         codec.configure(extractor.getMediaFormat(), null, null, 0)
     }
 
-    override fun onInit() {
+    override fun onPrepare() {
         initRender()
     }
 

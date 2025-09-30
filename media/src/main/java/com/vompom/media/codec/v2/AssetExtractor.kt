@@ -2,6 +2,7 @@ package com.vompom.media.codec.v2
 
 import android.media.MediaExtractor
 import android.media.MediaFormat
+import com.vompom.media.codec.v2.utils.VLog
 import java.nio.ByteBuffer
 
 /**
@@ -17,6 +18,7 @@ class AssetExtractor : IExtractor {
     private var currentSampleTime = 0L
     private var currentSampleFlags = 0
     private var mediaFormat: MediaFormat? = null
+    private var durationUs = 0L
 
     override fun setDataSource(path: String) {
         extractor.setDataSource(path)
@@ -71,6 +73,15 @@ class AssetExtractor : IExtractor {
             }
         }
         return -1
+    }
+
+    override fun duration(): Long {
+        if (durationUs != 0L) return durationUs
+        val format = getMediaFormat()
+        if (format.containsKey(MediaFormat.KEY_DURATION)) {
+            durationUs = format.getLong(MediaFormat.KEY_DURATION)
+        }
+        return 0
     }
 
 }

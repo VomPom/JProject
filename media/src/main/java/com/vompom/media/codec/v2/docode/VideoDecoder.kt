@@ -2,7 +2,7 @@ package com.vompom.media.codec.v2.docode
 
 import android.media.MediaCodec
 import android.view.Surface
-import com.vompom.media.codec.v2.VLog
+import com.vompom.media.codec.v2.utils.VLog
 import java.nio.ByteBuffer
 
 /**
@@ -22,8 +22,8 @@ class VideoDecoder(path: String, val surface: Surface) : BaseDecoder(path) {
         codec.configure(extractor.getMediaFormat(), surface, null, 0)
     }
 
-    override fun onInit() {
-
+    override fun onPrepare() {
+        // no-op
     }
 
     override fun decodeType(): IDecoder.DecodeType = IDecoder.DecodeType.Video

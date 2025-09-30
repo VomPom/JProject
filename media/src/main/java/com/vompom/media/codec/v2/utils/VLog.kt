@@ -1,4 +1,4 @@
-package com.vompom.media.codec.v2
+package com.vompom.media.codec.v2.utils
 
 import wang.julis.jwbase.utils.Logger
 

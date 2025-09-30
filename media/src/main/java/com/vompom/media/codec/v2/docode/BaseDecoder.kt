@@ -3,7 +3,7 @@ package com.vompom.media.codec.v2.docode
 import android.media.MediaCodec
 import android.media.MediaFormat
 import com.vompom.media.codec.v2.AssetExtractor
-import com.vompom.media.codec.v2.VLog
+import com.vompom.media.codec.v2.utils.VLog
 import java.nio.ByteBuffer
 
 /**
@@ -24,7 +24,7 @@ import java.nio.ByteBuffer
  *         - 音画帧同步
  */
 
-abstract class BaseDecoder(val path: String) : IDecoder, Runnable {
+abstract class BaseDecoder(val path: String) : IDecoder {
     companion object {
         const val TIME_US: Int = 10000
     }
@@ -43,15 +43,19 @@ abstract class BaseDecoder(val path: String) : IDecoder, Runnable {
     val extractor: AssetExtractor = AssetExtractor()
     lateinit var mediaCodec: MediaCodec
 
+    private var onProgress: ((Long, Long) -> Unit)? = null
+
     var isDecodeDone = false
     var isRunning = true
     var isEOS = false
 
-
-    override fun run() {
+    override fun prepare() {
         initExtractor()
         initCodec()
-        onInit()
+        onPrepare()
+    }
+
+    override fun run() {
         setState(DecodeState.START)
         if (startTimeMs <= 0) {
             startTimeMs = System.currentTimeMillis()
@@ -60,8 +64,10 @@ abstract class BaseDecoder(val path: String) : IDecoder, Runnable {
             // 这两种状态需要等待操作完成之后才能进行
             when (state) {
                 DecodeState.PAUSE,
+                DecodeState.FINISH,
                 DecodeState.SEEKING -> onWaitDecode()
 
+                DecodeState.REPLAY -> onReplay()
                 else -> {
                     // no-op
                 }
@@ -120,36 +126,40 @@ abstract class BaseDecoder(val path: String) : IDecoder, Runnable {
      * @return Boolean 是否已经处理完所有的数据 (EOS)
      */
     private fun fillBufferToDecoder() {
-        // 获取一个 input buffer index, 延迟 TIME_US 等待拿到空的 input buffer下标，单位为 us
-        // -1 表示一直等待，直到拿到数据，0 表示立即返回
-        val inputBufferId = mediaCodec.dequeueInputBuffer(TIME_US.toLong())
-        if (inputBufferId > 0) {
-            val inputBuffer = mediaCodec.getInputBuffer(inputBufferId)
-            if (inputBuffer != null) {
-                val size = extractor.readSampleData(inputBuffer)
+        try {
+            // 获取一个 input buffer index, 延迟 TIME_US 等待拿到空的 input buffer下标，单位为 us
+            // -1 表示一直等待，直到拿到数据，0 表示立即返回
+            val inputBufferId = mediaCodec.dequeueInputBuffer(TIME_US.toLong())
+            if (inputBufferId > 0) {
+                val inputBuffer = mediaCodec.getInputBuffer(inputBufferId)
+                if (inputBuffer != null) {
+                    val size = extractor.readSampleData(inputBuffer)
 
-                // 将数据压入解码器输入缓冲
-                if (size >= 0) {
-                    mediaCodec.queueInputBuffer(
-                        inputBufferId,
-                        0,
-                        size,
-                        extractor.getSampleTime(),
-                        extractor.getSampleFlags()
-                    )
-                } else {
-                    // 结束,传递 end-of-stream 标志
-                    mediaCodec.queueInputBuffer(
-                        inputBufferId,
-                        0,
-                        0,
-                        0,
-                        MediaCodec.BUFFER_FLAG_END_OF_STREAM
-                    )
-                    VLog.d("No more buffer: $size")
-                    isEOS = true
+                    // 将数据压入解码器输入缓冲
+                    if (size >= 0) {
+                        mediaCodec.queueInputBuffer(
+                            inputBufferId,
+                            0,
+                            size,
+                            extractor.getSampleTime(),
+                            extractor.getSampleFlags()
+                        )
+                    } else {
+                        // 结束,传递 end-of-stream 标志
+                        mediaCodec.queueInputBuffer(
+                            inputBufferId,
+                            0,
+                            0,
+                            0,
+                            MediaCodec.BUFFER_FLAG_END_OF_STREAM
+                        )
+                        VLog.d("No more buffer: $size")
+                        isEOS = true
+                    }
                 }
             }
+        } catch (e: Exception) {
+            // no-op
         }
     }
 
@@ -163,30 +173,34 @@ abstract class BaseDecoder(val path: String) : IDecoder, Runnable {
      * 4. 检查 bufferInfo.flags 是否为 BUFFER_FLAG_END_OF_STREAM，标记解码完成
      */
     private fun fetchBufferFromDecoder() {
-        // 获取解码后的数据，数据将会输入到 bufferInfo 里面
-        var outputIndex = mediaCodec.dequeueOutputBuffer(bufferInfo, TIME_US.toLong())
-        val outputBuffer: ByteBuffer?
-        if (outputIndex >= 0) {
-            outputBuffer = mediaCodec.getOutputBuffer(outputIndex)
-            render(outputBuffer, bufferInfo)
-            try {
-                // Decoder 在任何一个时机都有可能会执行 release 操作，但这里的 release 还没有执行完成
-                // 当 MediaCodec 被回收之后，再执行到这里可能会报：java.lang.IllegalStateException，需加一个 try cache
+        // Decoder 在任何一个时机都有可能会执行 release 操作，但这里的 dequeueOutputBuffer,release 还没有执行完成
+        // 当 MediaCodec 被回收之后，再执行到这里可能会报：java.lang.IllegalStateException，需加一个 try cache
+        try {
+            // 获取解码后的数据，数据将会输入到 bufferInfo 里面
+            var outputIndex = mediaCodec.dequeueOutputBuffer(bufferInfo, TIME_US.toLong())
+            val outputBuffer: ByteBuffer?
+            if (outputIndex >= 0) {
+                outputBuffer = mediaCodec.getOutputBuffer(outputIndex)
+                render(outputBuffer, bufferInfo)
                 mediaCodec.releaseOutputBuffer(outputIndex, true)
-            } catch (_: Exception) {
-                // no-op
-            }
-        } else {
-            when (outputIndex) {
-                MediaCodec.INFO_OUTPUT_FORMAT_CHANGED -> {}
-                MediaCodec.INFO_TRY_AGAIN_LATER -> {}
-                else -> {
-                    // no-op
+            } else {
+                when (outputIndex) {
+                    MediaCodec.INFO_OUTPUT_FORMAT_CHANGED -> {}
+                    MediaCodec.INFO_TRY_AGAIN_LATER -> {}
+                    else -> {
+                        // no-op
+                    }
                 }
             }
+        } catch (_: Exception) {
+            // no-op
         }
         if (bufferInfo.flags == MediaCodec.BUFFER_FLAG_END_OF_STREAM) {
             state = DecodeState.FINISH
+            // todo:: set is loop...
+            if (true) {
+                state = DecodeState.REPLAY
+            }
             isDecodeDone = true
         }
 
@@ -215,10 +229,17 @@ abstract class BaseDecoder(val path: String) : IDecoder, Runnable {
     }
 
     override fun seek(timeUs: Long) {
-        // todo:: seek...
+        if (state == DecodeState.STOP || state == DecodeState.FINISH) return
         setState(DecodeState.SEEKING)
         extractor.seek(timeUs)
+        setState(DecodeState.DECODING)
         notifyDecode()
+    }
+
+    override fun duration(): Long = extractor.duration()
+
+    override fun setProgressListener(onProgress: (Long, Long) -> Unit) {
+        this.onProgress = onProgress
     }
 
     private fun setState(state: DecodeState) {
@@ -255,6 +276,15 @@ abstract class BaseDecoder(val path: String) : IDecoder, Runnable {
                 e.printStackTrace()
             }
         }
+        onProgress?.invoke(ptsUs, duration())
+    }
+
+    private fun onReplay() {
+        isEOS = false
+        isDecodeDone = false
+        // todo:: set video asset range start...
+        seek(0)
+        state = DecodeState.DECODING
     }
 
     private fun onWaitDecode() {
@@ -301,7 +331,7 @@ abstract class BaseDecoder(val path: String) : IDecoder, Runnable {
     /**
      * 在 MediaCodec、Extractor 配置完之后供子类 做一些初始化操作
      */
-    abstract fun onInit()
+    abstract fun onPrepare()
 
     abstract fun decodeType(): IDecoder.DecodeType
 }

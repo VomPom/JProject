@@ -18,5 +18,6 @@ enum class DecodeState {
 
     FINISH,
 
-    STOP
+    STOP,
+    REPLAY,
 }

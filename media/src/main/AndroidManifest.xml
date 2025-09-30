@@ -21,6 +21,7 @@
         <activity android:name=".pag.SimplePagActivity" />
         <activity android:name=".pag.PAGSurfaceTextureIdActivity" />
         <activity android:name=".codec.v1.player.PlayWithoutAudioActivity" />
+        <activity android:name=".codec.v2.PlayerRawActivity" />
         <activity android:name=".codec.v2.PlayerV2Activity" />
     </application>
 
