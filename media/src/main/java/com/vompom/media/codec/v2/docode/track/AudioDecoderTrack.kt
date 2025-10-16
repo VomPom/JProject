@@ -1,6 +1,7 @@
 package com.vompom.media.codec.v2.docode.track
 
 import com.vompom.media.codec.v2.docode.TrackSegment
+import com.vompom.media.codec.v2.docode.decorder.AudioDecoder
 import com.vompom.media.codec.v2.docode.decorder.IDecoder
 
 /**
@@ -11,28 +12,50 @@ import com.vompom.media.codec.v2.docode.decorder.IDecoder
  */
 
 class AudioDecoderTrack : IDecoderTrack {
+    private var currentDecoder: IDecoder? = null
+    private var segmentList = mutableListOf<TrackSegment>()
+    private var currentSegmentIndex = 0
+
     constructor(segmentList: List<TrackSegment>) {
         setTrackSegments(segmentList)
-        setDecodeType(IDecoder.DecodeType.Video)
+        setDecodeType(IDecoder.DecodeType.Audio)
     }
 
-    override fun start() {
-        TODO("Not yet implemented")
+    override fun prepare() {
+        createDecoder()
+    }
+
+    private fun createDecoder() {
+        val segment = getCurrentSegment()
+        currentDecoder = AudioDecoder(segment.path)
+        currentDecoder?.prepare()
     }
 
     override fun setTrackSegments(segmentList: List<TrackSegment>) {
-        TODO("Not yet implemented")
+        this.segmentList.apply {
+            clear()
+            addAll(segmentList)
+        }
     }
 
     override fun setDecodeType(decoderType: IDecoder.DecodeType) {
-        TODO("Not yet implemented")
     }
 
     override fun readSample(targetTime: Long) {
-        TODO("Not yet implemented")
+        currentDecoder?.readSample(targetTime)
+    }
+
+    override fun seek(targetUs: Long) {
+        currentDecoder?.seek(targetUs)
     }
 
     override fun release() {
-        TODO("Not yet implemented")
+        currentDecoder?.release()
     }
+
+    private fun getCurrentSegment(): TrackSegment {
+        return segmentList[currentSegmentIndex]
+    }
+
+    override fun getCurrentPlayUs(): Long = currentDecoder?.getCurrentPlayUs() ?: 0L
 }

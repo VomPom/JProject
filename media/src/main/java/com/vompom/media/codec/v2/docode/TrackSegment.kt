@@ -9,4 +9,7 @@ package com.vompom.media.codec.v2.docode
 
 class TrackSegment(val path: String) {
 
+    fun durationUs() {
+
+    }
 }

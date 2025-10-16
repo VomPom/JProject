@@ -2,7 +2,7 @@ package com.vompom.media.codec.v2.docode.decorder
 
 import android.media.MediaCodec
 import android.media.MediaFormat
-import com.vompom.media.codec.v2.AssetExtractor
+import com.vompom.media.codec.v2.extractor.AssetExtractor
 import com.vompom.media.codec.v2.utils.VLog
 import java.nio.ByteBuffer
 
@@ -29,16 +29,10 @@ abstract class BaseDecoder : IDecoder {
         const val TIME_US: Int = 10000
     }
 
-    private var state = DecodeState.STOP
-
-    // 线程等待锁
-    private val decodeLock = Object()
+    private var sourcePath = ""
 
     // 解码后的数据信息
     private var bufferInfo = MediaCodec.BufferInfo()
-
-    // 整体解码开始的时间，后续时间同步以这个时间为基准时间点
-    private var startTimeMs = -1L
 
     val extractor: AssetExtractor = AssetExtractor()
     lateinit var mediaCodec: MediaCodec
@@ -46,47 +40,17 @@ abstract class BaseDecoder : IDecoder {
     private var onProgress: ((Long, Long) -> Unit)? = null
 
     var isDecodeDone = false
-    var isRunning = true
     var isEOS = false
+    var readSampleDone = false
 
     constructor(path: String) {
-        initExtractor(path)
-        initCodec()
-        onPrepare()
+        this.sourcePath = path
     }
 
-    override fun run() {
-        setState(DecodeState.START)
-        if (startTimeMs <= 0) {
-            startTimeMs = System.currentTimeMillis()
-        }
-        while (isRunning) {
-            // 这两种状态需要等待操作完成之后才能进行
-            when (state) {
-                DecodeState.PAUSE,
-                DecodeState.FINISH,
-                DecodeState.SEEKING -> onWaitDecode()
-
-                DecodeState.REPLAY -> onReplay()
-                else -> {
-                    // no-op
-                }
-            }
-            // 任何一次中间流程执行 STOP 则停止整个任务
-            if (!isRunning || state == DecodeState.STOP) {
-                break
-            }
-
-            // 向 MediaCodec 添加解码的数据，在没有 EOS 之前一直添加
-            if (!isEOS) {
-                fillBufferToDecoder()
-            }
-
-            // 从 MediaCodec 队列中获取解码后的数据
-            if (!isDecodeDone) {
-                fetchBufferFromDecoder()
-            }
-        }
+    override fun prepare() {
+        initExtractor(sourcePath)
+        initCodec()
+        onPrepare()
     }
 
     private fun initExtractor(sourcePath: String) {
@@ -125,12 +89,12 @@ abstract class BaseDecoder : IDecoder {
      *
      * @return Boolean 是否已经处理完所有的数据 (EOS)
      */
-    private fun fillBufferToDecoder() {
+    fun fillBufferToDecoder(): Long {
         try {
             // 获取一个 input buffer index, 延迟 TIME_US 等待拿到空的 input buffer下标，单位为 us
             // -1 表示一直等待，直到拿到数据，0 表示立即返回
             val inputBufferId = mediaCodec.dequeueInputBuffer(TIME_US.toLong())
-            if (inputBufferId > 0) {
+            if (inputBufferId >= 0) {
                 val inputBuffer = mediaCodec.getInputBuffer(inputBufferId)
                 if (inputBuffer != null) {
                     val size = extractor.readSampleData(inputBuffer)
@@ -159,8 +123,9 @@ abstract class BaseDecoder : IDecoder {
                 }
             }
         } catch (e: Exception) {
-            // no-op
+            e.printStackTrace()
         }
+        return extractor.getSampleTime()
     }
 
     /**
@@ -172,7 +137,8 @@ abstract class BaseDecoder : IDecoder {
      * 3. 如果返回 MediaCodec 的 INFO_* 常量，说明输出格式变化或暂无数据可读，按需处理
      * 4. 检查 bufferInfo.flags 是否为 BUFFER_FLAG_END_OF_STREAM，标记解码完成
      */
-    private fun fetchBufferFromDecoder() {
+    fun fetchBufferFromDecoder(): Long {
+        var bufferTime = 0L
         // Decoder 在任何一个时机都有可能会执行 release 操作，但这里的 dequeueOutputBuffer,release 还没有执行完成
         // 当 MediaCodec 被回收之后，再执行到这里可能会报：java.lang.IllegalStateException，需加一个 try cache
         try {
@@ -181,6 +147,7 @@ abstract class BaseDecoder : IDecoder {
             val outputBuffer: ByteBuffer?
             if (outputIndex >= 0) {
                 outputBuffer = mediaCodec.getOutputBuffer(outputIndex)
+                bufferTime = bufferInfo.presentationTimeUs
                 render(outputBuffer, bufferInfo)
                 mediaCodec.releaseOutputBuffer(outputIndex, true)
             } else {
@@ -196,61 +163,26 @@ abstract class BaseDecoder : IDecoder {
             // no-op
         }
         if (bufferInfo.flags == MediaCodec.BUFFER_FLAG_END_OF_STREAM) {
-            state = DecodeState.FINISH
-            // todo:: set is loop...
-            if (true) {
-                state = DecodeState.REPLAY
-            }
             isDecodeDone = true
+            onLoop()
         }
-
-        syncAudioVideo(bufferInfo.presentationTimeUs, startTimeMs)
+        return bufferTime
     }
 
-    override fun play() {
-        setState(DecodeState.DECODING)
-        notifyDecode()
-    }
-
-    override fun pause() {
-        setState(DecodeState.PAUSE)
-    }
-
-    override fun stop() {
-        setState(DecodeState.STOP)
-        isRunning = false
-
-        // 这里也需要调用一次 notifyDecode，如果先调用 pause， 但没有 notifyDecode()，那么：
-        // state 被设置为 STOP
-        // isRunning 被设置为 false
-        // 但是线程仍然在 decodeLock.wait() 处等待，永远不会被唤醒
-        // 导致线程无法正常退出，造成线程泄漏
-        notifyDecode()
-    }
 
     override fun seek(timeUs: Long) {
-        if (state == DecodeState.STOP || state == DecodeState.FINISH) return
-        setState(DecodeState.SEEKING)
         // todo:: fix timestamp calculate after seek
         val sampleTimeUs = extractor.seek(timeUs)
-
-        setState(DecodeState.DECODING)
-        notifyDecode()
+        VLog.d("--julis seek sampleTimeUs $sampleTimeUs")
     }
 
-    override fun duration(): Long = extractor.duration()
 
     override fun setProgressListener(onProgress: (Long, Long) -> Unit) {
         this.onProgress = onProgress
     }
 
-    private fun setState(state: DecodeState) {
-        this.state = state
-        VLog.d("DecodeState: ${state.name}")
-    }
 
     override fun release() {
-        stop()
         try {
             extractor.stop()
             mediaCodec.stop()
@@ -260,34 +192,11 @@ abstract class BaseDecoder : IDecoder {
         }
     }
 
-    /**
-     * 进行音画同步处理
-     * @param ptsUs     解码帧的展示时间（也就是视频播放了多久的时间）
-     * @param startMs   播放开始的时间戳
-     */
-    private fun syncAudioVideo(ptsUs: Long, startMs: Long) {
-        val systemTimeDiff = System.currentTimeMillis() - startMs
-        val playTimeDiff: Long = ptsUs / 1000 - systemTimeDiff
-
-        // 如果当前帧比系统时间差快了，则延时以下
-        if (playTimeDiff > 0) {
-            try {
-                Thread.sleep(playTimeDiff)
-                VLog.d("sleep: $playTimeDiff")
-            } catch (e: InterruptedException) {
-                e.printStackTrace()
-            }
-        }
-        onProgress?.invoke(ptsUs, duration())
-    }
-
-    private fun onReplay() {
+    private fun onLoop() {
         isEOS = false
         isDecodeDone = false
         // todo:: set video asset range start...
         seek(0)
-        // 重制记录时间为当前的时间
-        startTimeMs = System.currentTimeMillis()
 
         // MediaCodec.flush() 作用
         // 清空缓冲区：丢弃所有当前在编解码器内部排队（已 queue 但尚未处理）的输入缓冲区数据和已解码但尚未取出的输出缓冲区数据
@@ -298,29 +207,7 @@ abstract class BaseDecoder : IDecoder {
         // 循环播放的话还需要将 bufferInfo 的 flag 重制为 0，避开对 MediaCodec.BUFFER_FLAG_END_OF_STREAM 的逻辑判断
         bufferInfo.flags = 0
 
-        state = DecodeState.DECODING
     }
-
-    private fun onWaitDecode() {
-        try {
-            synchronized(decodeLock) {
-                decodeLock.wait()
-            }
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-    }
-
-    private fun notifyDecode() {
-        try {
-            synchronized(decodeLock) {
-                decodeLock.notify()
-            }
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-    }
-
 
     private fun trackIndex(): Int {
         val tagPrefix = when (decodeType()) {

@@ -1,6 +1,7 @@
 package com.vompom.media.codec.v2
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.vompom.media.codec.v2.extractor.AssetExtractor
 import com.vompom.media.utils.ResUtils
 import org.junit.Test
 import org.junit.runner.RunWith

@@ -11,9 +11,11 @@ import com.vompom.media.codec.v2.docode.decorder.IDecoder
  */
 
 interface IDecoderTrack {
-    fun start()
+    fun prepare()
     fun setTrackSegments(segmentList: List<TrackSegment>)
     fun setDecodeType(decoderType: IDecoder.DecodeType)
     fun readSample(targetTime: Long)
+    fun seek(targetUs: Long)
     fun release()
+    fun getCurrentPlayUs(): Long
 }

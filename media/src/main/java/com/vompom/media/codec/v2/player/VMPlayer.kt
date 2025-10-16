@@ -9,6 +9,7 @@ import com.vompom.media.codec.v2.docode.decorder.AudioDecoder
 import com.vompom.media.codec.v2.docode.decorder.VideoDecoder
 import com.vompom.media.codec.v2.docode.track.AudioDecoderTrack
 import com.vompom.media.codec.v2.docode.track.VideoDecoderTrack
+import com.vompom.media.codec.v2.utils.sToUs
 
 /**
  *
@@ -20,13 +21,18 @@ import com.vompom.media.codec.v2.docode.track.VideoDecoderTrack
 
 class VMPlayer : IPlayer, Handler.Callback {
     private var playerThread: PlayerThread? = null
-    private var listener: IPlayer.PlayerListener? = null
-    private var mMainHandler: Handler? = null
-    private var loop = true
+    private var playListener: IPlayer.PlayerListener? = null
+    var mMainHandler: Handler = Handler(Looper.getMainLooper(), this)
 
-    constructor() {
-        mMainHandler = Handler(Looper.getMainLooper(), this)
+    private var loop = true
+    private var playUs: Long = 0L
+
+    companion object {
+        const val TYPE_STATES: Int = 1
+        const val TYPE_PROGRESS: Int = 2
+        const val TYPE_VIEWPORT_UPDATE: Int = 3
     }
+
 
     override fun bindPlayer(videoList: List<String>, surface: Surface) {
         val trackSegmentList = videoList.map { TrackSegment(it) }
@@ -63,8 +69,7 @@ class VMPlayer : IPlayer, Handler.Callback {
     }
 
     override fun duration(): Long {
-        // todo:: 音频跟视频长度不一致的情况
-        return 0L // videoDecoder?.duration() ?: 0L
+        return sToUs(6)
     }
 
     override fun setLoop(loop: Boolean) {
@@ -72,11 +77,19 @@ class VMPlayer : IPlayer, Handler.Callback {
     }
 
     override fun setPlayerListener(listener: IPlayer.PlayerListener) {
-        this.listener = listener
+        this.playListener = listener
     }
 
     override fun handleMessage(msg: Message): Boolean {
-        TODO("Not yet implemented")
+        when (msg.what) {
+            TYPE_PROGRESS -> {
+                playUs = msg.obj as Long
+                if (mMainHandler.hasMessages(TYPE_PROGRESS) == false) {
+                    playListener?.onPositionChanged(playUs, duration())
+                }
+            }
+        }
+        return false
     }
 
 }

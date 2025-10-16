@@ -3,6 +3,7 @@ package com.vompom.media.codec.v2.player
 import android.os.Handler
 import android.os.HandlerThread
 import android.os.Message
+import com.vompom.media.codec.v2.docode.model.PlayerMessage
 import com.vompom.media.codec.v2.docode.track.IDecoderTrack
 
 /**
@@ -12,7 +13,7 @@ import com.vompom.media.codec.v2.docode.track.IDecoderTrack
  * @Description 专门负责协调视频/音频解码器的线程
  */
 
-class PlayerThreadVideo {
+class PlayerThread {
 
     companion object {
         const val ACTION_PREPARE: Int = 1
@@ -31,7 +32,7 @@ class PlayerThreadVideo {
     }
 
     private var handlerThread: HandlerThread? = null
-    private var playHandler: Handler? = null
+     var playHandler: Handler? = null
 
     constructor(player: VMPlayer, videoDecoderTrack: IDecoderTrack, audioDecoderTrack: IDecoderTrack) {
         handlerThread = HandlerThread("PlayerThread")
@@ -51,20 +52,20 @@ class PlayerThreadVideo {
         playHandler?.let {
             val msg = Message()
             msg.what = what
-            msg.obj = obj
+            msg.obj = PlayerMessage(obj)
             it.sendMessage(msg)
         }
     }
 
     fun sendMessage(what: Int) {
-        sendMessageDelay(what, 0L)
+        sendMessageDelay(what)
     }
 
-    fun sendMessageDelay(what: Int, obj: Any, wait: Long = 0L) {
+    fun sendMessageDelay(what: Int, obj: Any? = null, wait: Long = 0L) {
         playHandler?.let {
             val msg = Message()
             msg.what = what
-            msg.obj = obj
+            msg.obj = PlayerMessage(obj)
             it.sendMessageDelayed(msg, wait)
         }
     }

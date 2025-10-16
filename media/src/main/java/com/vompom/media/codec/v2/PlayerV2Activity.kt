@@ -45,15 +45,17 @@ class PlayerV2Activity : BaseActivity() {
                 progress: Int,
                 fromUser: Boolean
             ) {
-
+                if (fromUser) {
+                    player.seekTo(seekBar?.progress?.toLong() ?: 0L)
+                }
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {
-
+                player.pause()
             }
 
             override fun onStopTrackingTouch(seekBar: SeekBar?) {
-                player.seekTo(seekBar?.progress?.toLong() ?: 0L)
+                player.play()
             }
 
         })
@@ -83,7 +85,8 @@ class PlayerV2Activity : BaseActivity() {
         surfaceView = findViewById<SurfaceView?>(R.id.sv_video)
         surfaceView!!.holder.addCallback(object : SurfaceHolder.Callback {
             override fun surfaceCreated(holder: SurfaceHolder) {
-                player.bindPlayer(ResUtils.testVideo, holder.surface)
+                player.bindPlayer(listOf(ResUtils.testHok), holder.surface)
+                player.play()
             }
 
             override fun surfaceChanged(holder: SurfaceHolder, format: Int, width: Int, height: Int) {

@@ -1,4 +1,4 @@
-package com.vompom.media.codec.v2
+package com.vompom.media.codec.v2.extractor
 
 import android.media.MediaExtractor
 import android.media.MediaFormat
@@ -28,7 +28,7 @@ class AssetExtractor : IExtractor {
         val size = extractor.readSampleData(byteBuffer, 0)
         currentSampleTime = extractor.sampleTime
         currentSampleFlags = extractor.sampleFlags
-        VLog.i("readSampleData size: $size")
+        VLog.i("readSampleData size: $size time: $currentSampleTime")
         extractor.advance()
         return size
     }
@@ -41,7 +41,9 @@ class AssetExtractor : IExtractor {
     override fun seek(timeUs: Long): Long {
         // todo:: seek with accurate position...
         extractor.seekTo(timeUs, MediaExtractor.SEEK_TO_PREVIOUS_SYNC)
-        return extractor.sampleTime
+        val seekUs = extractor.sampleTime
+        VLog.i("seek targetUs: $timeUs, seekUs: $seekUs")
+        return seekUs
     }
 
     override fun selectTrack(index: Int) {

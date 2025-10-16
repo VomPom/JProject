@@ -15,24 +15,26 @@ import com.vompom.media.codec.v2.docode.decorder.VideoDecoder
 class VideoDecoderTrack : IDecoderTrack {
     private var segmentList = mutableListOf<TrackSegment>()
     private var decodeType: IDecoder.DecodeType = IDecoder.DecodeType.Video
-    private lateinit var outputSurface: Surface
+    private var outputSurface: Surface
     private var currentSegmentIndex = 0
     private var lastSampleTime: Long = 0L
     private var currentDecoder: IDecoder? = null
 
     constructor(segmentList: List<TrackSegment>, outputSurface: Surface) {
+        this.outputSurface = outputSurface
         setTrackSegments(segmentList)
         setDecodeType(IDecoder.DecodeType.Video)
     }
 
 
-    override fun start() {
+    override fun prepare() {
         createDecoder()
     }
 
     private fun createDecoder() {
         val segment = getCurrentSegment()
         currentDecoder = VideoDecoder(segment.path, outputSurface)
+        currentDecoder?.prepare()
     }
 
     private fun getCurrentSegment(): TrackSegment {
@@ -51,9 +53,16 @@ class VideoDecoderTrack : IDecoderTrack {
     }
 
     override fun readSample(targetTime: Long) {
+        currentDecoder?.readSample(targetTime)
+    }
+
+    override fun seek(targetUs: Long) {
+        currentDecoder?.seek(targetUs)
     }
 
     override fun release() {
-
+        currentDecoder?.release()
     }
+
+    override fun getCurrentPlayUs(): Long = currentDecoder?.getCurrentPlayUs() ?: 0L
 }

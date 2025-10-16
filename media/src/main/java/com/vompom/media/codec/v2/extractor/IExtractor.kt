@@ -1,4 +1,4 @@
-package com.vompom.media.codec.v2
+package com.vompom.media.codec.v2.extractor
 
 import android.media.MediaFormat
 import java.nio.ByteBuffer

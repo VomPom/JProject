@@ -4,6 +4,8 @@ import android.media.AudioFormat
 import android.media.AudioTrack
 import android.media.MediaCodec
 import android.media.MediaFormat
+import com.vompom.media.codec.v2.utils.VLog
+import com.vompom.media.codec.v2.utils.usToS
 import java.nio.ByteBuffer
 
 /**
@@ -15,10 +17,14 @@ import java.nio.ByteBuffer
 
 class AudioDecoder(path: String) : BaseDecoder(path) {
     private lateinit var audioTrack: AudioTrack
-
+    private var currentPlayPositionUs = 0L
+    private var cnt = 0
     override fun render(buffer: ByteBuffer?, bufferInfo: MediaCodec.BufferInfo) {
         if (buffer != null) {
             audioTrack.write(buffer, bufferInfo.size, AudioTrack.WRITE_BLOCKING)
+            currentPlayPositionUs = bufferInfo.presentationTimeUs
+            cnt++
+            VLog.d("audio pts:${usToS(bufferInfo.presentationTimeUs)}s size:${bufferInfo.size} offset: ${bufferInfo.offset} cnt: $cnt")
         }
     }
 
@@ -43,7 +49,7 @@ class AudioDecoder(path: String) : BaseDecoder(path) {
         val channel = if (channelCount == 1) {
             AudioFormat.CHANNEL_OUT_MONO    // 单声道
         } else {
-            AudioFormat.CHANNEL_OUT_STEREO  // z双声道
+            AudioFormat.CHANNEL_OUT_STEREO  // 双声道
         }
 
         val minBufferSize = AudioTrack.getMinBufferSize(sampleRate, channel, encoding)
@@ -60,6 +66,28 @@ class AudioDecoder(path: String) : BaseDecoder(path) {
             .build()
         audioTrack.play()
     }
+
+    override fun readSample(targetTimeUs: Long) {
+        // 向 MediaCodec 添加解码的数据，在没有 EOS 之前一直添加
+        if (!isEOS) {
+            val bufferTime = fillBufferToDecoder()
+            VLog.d("--julis audio readSample targetTimeUs: $targetTimeUs got bufferTime:$bufferTime")
+        }
+
+        // 从 MediaCodec 队列中获取解码后的数据
+        if (!isDecodeDone) {
+            fetchBufferFromDecoder()
+        }
+    }
+
+    override fun seek(timeUs: Long) {
+        VLog.d("--julis start audio seek to $timeUs")
+        super.seek(timeUs)
+        currentPlayPositionUs = timeUs
+        VLog.d("--julis after audio seek to $timeUs")
+    }
+
+    override fun getCurrentPlayUs(): Long = currentPlayPositionUs
 
     override fun release() {
         super.release()
