@@ -1,4 +1,4 @@
-package com.vompom.media.codec.v2.docode
+package com.vompom.media.codec.v2.docode.decorder
 
 import android.media.MediaCodec
 import android.view.Surface
@@ -12,7 +12,12 @@ import java.nio.ByteBuffer
  * @Description
  */
 
-class VideoDecoder(path: String, val surface: Surface) : BaseDecoder(path) {
+class VideoDecoder : BaseDecoder {
+    private var surface: Surface? = null
+
+    constructor(path: String, surface: Surface) : super(path) {
+        this.surface = surface
+    }
 
     override fun render(buffer: ByteBuffer?, bufferInfo: MediaCodec.BufferInfo) {
         VLog.d("bufferInfo pts:${bufferInfo.presentationTimeUs / 1000 / 1000f}s size:${bufferInfo.size} offset: ${bufferInfo.offset}")

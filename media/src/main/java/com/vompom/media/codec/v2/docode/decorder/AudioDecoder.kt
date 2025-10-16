@@ -1,4 +1,4 @@
-package com.vompom.media.codec.v2.docode
+package com.vompom.media.codec.v2.docode.decorder
 
 import android.media.AudioFormat
 import android.media.AudioTrack

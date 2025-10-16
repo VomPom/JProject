@@ -16,7 +16,7 @@ interface IExtractor {
     fun getSampleTime(): Long
     fun getSampleFlags(): Int
     fun stop()
-    fun seek(pos: Long)
+    fun seek(pos: Long): Long
     fun selectTrack(index: Int)
     fun getMediaFormat(): MediaFormat
     fun findTrack(mimeType: String): Int

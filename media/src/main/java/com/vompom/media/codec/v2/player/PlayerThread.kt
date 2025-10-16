@@ -3,7 +3,7 @@ package com.vompom.media.codec.v2.player
 import android.os.Handler
 import android.os.HandlerThread
 import android.os.Message
-import com.vompom.media.codec.v2.docode.IDecoder
+import com.vompom.media.codec.v2.docode.track.IDecoderTrack
 
 /**
  *
@@ -12,7 +12,7 @@ import com.vompom.media.codec.v2.docode.IDecoder
  * @Description 专门负责协调视频/音频解码器的线程
  */
 
-class PlayerThread {
+class PlayerThreadVideo {
 
     companion object {
         const val ACTION_PREPARE: Int = 1
@@ -26,17 +26,20 @@ class PlayerThread {
         const val ACTION_SEEK: Int = 5
 
         const val ACTION_RELEASE: Int = 6
+
+        const val ACTION_READ_SAMPLE: Int = 9
     }
 
     private var handlerThread: HandlerThread? = null
-    private var handler: Handler? = null
+    private var playHandler: Handler? = null
 
-    constructor(audioDecoder: IDecoder, videoDecoder: IDecoder) {
+    constructor(player: VMPlayer, videoDecoderTrack: IDecoderTrack, audioDecoderTrack: IDecoderTrack) {
         handlerThread = HandlerThread("PlayerThread")
         handlerThread?.start()
 
-        val messageHandler = PlayerMessageHandler(audioDecoder, videoDecoder)
-        handler = Handler(handlerThread!!.looper, messageHandler)
+        val messageHandler = PlayerMessageVideoHandler(player, this, videoDecoderTrack)
+        playHandler = Handler(handlerThread!!.looper, messageHandler)
+        messageHandler.setAudioThread(PlayerThreadAudio(playHandler, audioDecoderTrack))
     }
 
     fun release() {
@@ -45,7 +48,7 @@ class PlayerThread {
     }
 
     fun sendMessage(what: Int, obj: Any) {
-        handler?.let {
+        playHandler?.let {
             val msg = Message()
             msg.what = what
             msg.obj = obj
@@ -54,10 +57,15 @@ class PlayerThread {
     }
 
     fun sendMessage(what: Int) {
-        handler?.let {
+        sendMessageDelay(what, 0L)
+    }
+
+    fun sendMessageDelay(what: Int, obj: Any, wait: Long = 0L) {
+        playHandler?.let {
             val msg = Message()
             msg.what = what
-            it.sendMessage(msg)
+            msg.obj = obj
+            it.sendMessageDelayed(msg, wait)
         }
     }
 }

@@ -1,4 +1,4 @@
-package com.vompom.media.codec.v2.docode
+package com.vompom.media.codec.v2.docode.decorder
 
 /**
  *
@@ -19,5 +19,6 @@ enum class DecodeState {
     FINISH,
 
     STOP,
+
     REPLAY,
 }

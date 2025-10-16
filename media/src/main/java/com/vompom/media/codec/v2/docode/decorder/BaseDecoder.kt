@@ -1,4 +1,4 @@
-package com.vompom.media.codec.v2.docode
+package com.vompom.media.codec.v2.docode.decorder
 
 import android.media.MediaCodec
 import android.media.MediaFormat
@@ -24,7 +24,7 @@ import java.nio.ByteBuffer
  *         - 音画帧同步
  */
 
-abstract class BaseDecoder(val path: String) : IDecoder {
+abstract class BaseDecoder : IDecoder {
     companion object {
         const val TIME_US: Int = 10000
     }
@@ -49,8 +49,8 @@ abstract class BaseDecoder(val path: String) : IDecoder {
     var isRunning = true
     var isEOS = false
 
-    override fun prepare() {
-        initExtractor()
+    constructor(path: String) {
+        initExtractor(path)
         initCodec()
         onPrepare()
     }
@@ -89,9 +89,9 @@ abstract class BaseDecoder(val path: String) : IDecoder {
         }
     }
 
-    private fun initExtractor() {
+    private fun initExtractor(sourcePath: String) {
         extractor.apply {
-            setDataSource(path)
+            setDataSource(sourcePath)
             selectTrack(trackIndex())
         }
     }
@@ -231,7 +231,9 @@ abstract class BaseDecoder(val path: String) : IDecoder {
     override fun seek(timeUs: Long) {
         if (state == DecodeState.STOP || state == DecodeState.FINISH) return
         setState(DecodeState.SEEKING)
-        extractor.seek(timeUs)
+        // todo:: fix timestamp calculate after seek
+        val sampleTimeUs = extractor.seek(timeUs)
+
         setState(DecodeState.DECODING)
         notifyDecode()
     }
@@ -284,6 +286,18 @@ abstract class BaseDecoder(val path: String) : IDecoder {
         isDecodeDone = false
         // todo:: set video asset range start...
         seek(0)
+        // 重制记录时间为当前的时间
+        startTimeMs = System.currentTimeMillis()
+
+        // MediaCodec.flush() 作用
+        // 清空缓冲区：丢弃所有当前在编解码器内部排队（已 queue 但尚未处理）的输入缓冲区数据和已解码但尚未取出的输出缓冲区数据
+        // 保持状态：编解码器保持在当前状态（如 Started 状态）
+        // 立即生效：调用后立即清空缓冲区
+        mediaCodec.flush()
+
+        // 循环播放的话还需要将 bufferInfo 的 flag 重制为 0，避开对 MediaCodec.BUFFER_FLAG_END_OF_STREAM 的逻辑判断
+        bufferInfo.flags = 0
+
         state = DecodeState.DECODING
     }
 

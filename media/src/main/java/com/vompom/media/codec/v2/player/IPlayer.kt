@@ -10,13 +10,14 @@ import android.view.Surface
  */
 
 interface IPlayer {
-    fun bindPlayer(videoPath: String, surface: Surface)
+    fun bindPlayer(videoList: List<String>, surface: Surface)
     fun play()
     fun pause()
     fun seekTo(positionUs: Long)
     fun stop()
     fun release()
     fun duration(): Long
+    fun setLoop(loop: Boolean)
     fun setPlayerListener(listener: PlayerListener)
     interface PlayerListener {
 

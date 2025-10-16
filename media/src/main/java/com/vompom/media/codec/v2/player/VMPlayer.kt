@@ -1,8 +1,14 @@
 package com.vompom.media.codec.v2.player
 
+import android.os.Handler
+import android.os.Looper
+import android.os.Message
 import android.view.Surface
-import com.vompom.media.codec.v2.docode.AudioDecoder
-import com.vompom.media.codec.v2.docode.VideoDecoder
+import com.vompom.media.codec.v2.docode.TrackSegment
+import com.vompom.media.codec.v2.docode.decorder.AudioDecoder
+import com.vompom.media.codec.v2.docode.decorder.VideoDecoder
+import com.vompom.media.codec.v2.docode.track.AudioDecoderTrack
+import com.vompom.media.codec.v2.docode.track.VideoDecoderTrack
 
 /**
  *
@@ -12,24 +18,26 @@ import com.vompom.media.codec.v2.docode.VideoDecoder
  *
  */
 
-class VMPlayer : IPlayer {
+class VMPlayer : IPlayer, Handler.Callback {
     private var playerThread: PlayerThread? = null
-    private var videoDecoder: VideoDecoder? = null
-    private var audioDecoder: AudioDecoder? = null
     private var listener: IPlayer.PlayerListener? = null
+    private var mMainHandler: Handler? = null
+    private var loop = true
 
-    override fun bindPlayer(videoPath: String, surface: Surface) {
-        videoDecoder = VideoDecoder(videoPath, surface)
-        audioDecoder = AudioDecoder(videoPath)
+    constructor() {
+        mMainHandler = Handler(Looper.getMainLooper(), this)
+    }
+
+    override fun bindPlayer(videoList: List<String>, surface: Surface) {
+        val trackSegmentList = videoList.map { TrackSegment(it) }
+        val videoDecoderTrack = VideoDecoderTrack(trackSegmentList, surface)
+        val audioDecoderTrack = AudioDecoderTrack(trackSegmentList)
+
         playerThread = PlayerThread(
-            audioDecoder!!,
-            videoDecoder!!
+            this,
+            videoDecoderTrack,
+            audioDecoderTrack
         )
-
-        videoDecoder?.setProgressListener { currentDurationUs: Long, playerDurationUs: Long ->
-            listener?.onPositionChanged(currentDurationUs, playerDurationUs)
-        }
-
         playerThread?.sendMessage(PlayerThread.ACTION_PREPARE)
     }
 
@@ -56,11 +64,19 @@ class VMPlayer : IPlayer {
 
     override fun duration(): Long {
         // todo:: 音频跟视频长度不一致的情况
-        return videoDecoder?.duration() ?: 0L
+        return 0L // videoDecoder?.duration() ?: 0L
+    }
+
+    override fun setLoop(loop: Boolean) {
+        this.loop = loop
     }
 
     override fun setPlayerListener(listener: IPlayer.PlayerListener) {
         this.listener = listener
+    }
+
+    override fun handleMessage(msg: Message): Boolean {
+        TODO("Not yet implemented")
     }
 
 }

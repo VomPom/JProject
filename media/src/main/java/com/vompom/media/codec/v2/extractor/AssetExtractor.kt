@@ -38,9 +38,10 @@ class AssetExtractor : IExtractor {
         extractor.release()
     }
 
-    override fun seek(timeUs: Long) {
+    override fun seek(timeUs: Long): Long {
         // todo:: seek with accurate position...
         extractor.seekTo(timeUs, MediaExtractor.SEEK_TO_PREVIOUS_SYNC)
+        return extractor.sampleTime
     }
 
     override fun selectTrack(index: Int) {

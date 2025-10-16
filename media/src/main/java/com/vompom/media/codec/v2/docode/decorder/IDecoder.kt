@@ -1,4 +1,4 @@
-package com.vompom.media.codec.v2.docode
+package com.vompom.media.codec.v2.docode.decorder
 
 /**
  *
@@ -13,7 +13,7 @@ interface IDecoder : Runnable {
         Audio
     }
 
-    fun prepare()
+//    fun prepare()
     fun play()
     fun pause()
     fun stop()

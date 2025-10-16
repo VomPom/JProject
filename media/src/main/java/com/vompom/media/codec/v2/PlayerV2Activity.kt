@@ -83,7 +83,7 @@ class PlayerV2Activity : BaseActivity() {
         surfaceView = findViewById<SurfaceView?>(R.id.sv_video)
         surfaceView!!.holder.addCallback(object : SurfaceHolder.Callback {
             override fun surfaceCreated(holder: SurfaceHolder) {
-                player.bindPlayer(ResUtils.video10s, holder.surface)
+                player.bindPlayer(ResUtils.testVideo, holder.surface)
             }
 
             override fun surfaceChanged(holder: SurfaceHolder, format: Int, width: Int, height: Int) {
@@ -92,6 +92,16 @@ class PlayerV2Activity : BaseActivity() {
             override fun surfaceDestroyed(holder: SurfaceHolder) {
             }
         })
+    }
+
+    override fun onPause() {
+        super.onPause()
+        player.pause()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        player.play()
     }
 
     override fun onDestroy() {

@@ -1,6 +1,7 @@
 package com.vompom.media.codec.v2.docode
 
 import com.vompom.media.codec.v2.BaseTest
+import com.vompom.media.codec.v2.docode.decorder.VideoDecoder
 import org.junit.Test
 
 /**
