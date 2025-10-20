@@ -93,7 +93,7 @@ class PlayerThreadAudio : Handler.Callback {
         }
     }
 
-    fun sendMessage(what: Int, obj: Any?) {
+    fun sendMessage(what: Int, obj: Any? = null) {
         sendMessageDelay(what, obj)
     }
 

@@ -67,6 +67,17 @@ class AssetExtractor : IExtractor {
         return mediaFormat!!
     }
 
+    override fun getMediaFormats(): List<MediaFormat> {
+        val formats = ArrayList<MediaFormat>()
+        try {
+            for (i in 0..<extractor.trackCount) {
+                formats.add(extractor.getTrackFormat(i))
+            }
+        } catch (ignore: Throwable) {
+        }
+        return formats
+    }
+
     override fun findTrack(target: String): Int {
         for (index in 0 until extractor.trackCount) {
             val format: MediaFormat = extractor.getTrackFormat(index)

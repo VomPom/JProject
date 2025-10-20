@@ -9,7 +9,6 @@ import com.vompom.media.codec.v2.utils.VLog
 import com.vompom.media.codec.v2.utils.msToS
 import com.vompom.media.codec.v2.utils.usToMs
 import com.vompom.media.codec.v2.utils.usToS
-import wang.julis.jwbase.utils.Logger
 
 /**
  *
@@ -74,13 +73,11 @@ class PlayerMessageVideoHandler(
         loop = true
         pause = false
         readSample(PlayerThread.ACTION_READ_SAMPLE, videoDecoderTrack.getCurrentPlayUs())
-        VLog.d("--julis play...")
     }
 
     private fun pause() {
         loop = false
         pause = true
-        VLog.d("--julis pause...")
     }
 
     private fun stop() {
@@ -92,12 +89,8 @@ class PlayerMessageVideoHandler(
 
     private fun seek(targetUs: Long) {
         val seekMessageList = MessageUtils.getMessageByWhat(PlayerThread.ACTION_READ_SAMPLE, player.mMainHandler)
-        Logger.d("--julis seek targetS=${usToS(targetUs.toFloat())} seekMessageList size:${seekMessageList.size}")
+        mAudioThread?.sendMessage(PlayerThread.ACTION_PAUSE)
         readSample(PlayerThread.ACTION_SEEK, targetUs)
-
-    }
-
-    private fun getLastSeekPosAndRemoveOther() {
 
     }
 
@@ -105,23 +98,17 @@ class PlayerMessageVideoHandler(
         if (msgId == PlayerThread.ACTION_SEEK) {
             // removePendingMessage(PlayerThread.ACTION_READ_SAMPLE)
             videoDecoderTrack.seek(targetTime)
-            videoDecoderTrack.readSample(targetTime)
-            scheduleReadSample(true)
-        } else {
-            videoDecoderTrack.readSample(targetTime)
-            scheduleReadSample(false)
         }
-
+        val sampleState = videoDecoderTrack.readSample(targetTime)
+        scheduleReadSample()
     }
 
-    private fun scheduleReadSample(isFromSeek: Boolean) {
+    private fun scheduleReadSample() {
         if (loop) {
             val audioPlayUs = mAudioThread?.getCurrentPlayUs() ?: 0L
             player.mMainHandler.obtainMessage(VMPlayer.TYPE_PROGRESS, audioPlayUs).sendToTarget()
-            val diffTimeUs = calDiffTime(audioPlayUs, isFromSeek)
+            val diffTimeUs = calDiffTime(audioPlayUs)
             playerThread.sendMessageDelay(PlayerThread.ACTION_READ_SAMPLE, 0L, diffTimeUs)
-        } else {
-            VLog.d("--julis loop is false, stop scheduleReadSample")
         }
     }
 
@@ -130,12 +117,12 @@ class PlayerMessageVideoHandler(
      *
      * @return 视频所需要等待的时间
      */
-    private fun calDiffTime(audioPlayUs: Long, isFromSeek: Boolean): Long {
+    private fun calDiffTime(audioPlayUs: Long): Long {
         // todo:: 没有音频轨道的情况
         val videoPlayUs = videoDecoderTrack.getCurrentPlayUs()
-        var waitTime = if (isFromSeek || pause) 0L else usToMs(videoPlayUs - audioPlayUs)
-        Logger.d(
-            "--julis videoPlayS=${usToS(videoPlayUs.toFloat())},audioPlayS=${usToS(audioPlayUs.toFloat())},waitTimeS=${
+        var waitTime = if (pause) 0L else usToMs(videoPlayUs - audioPlayUs)
+        VLog.d(
+            "videoPlayS=${usToS(videoPlayUs.toFloat())},audioPlayS=${usToS(audioPlayUs.toFloat())},waitTimeS=${
                 msToS(
                     waitTime.toFloat()
                 )

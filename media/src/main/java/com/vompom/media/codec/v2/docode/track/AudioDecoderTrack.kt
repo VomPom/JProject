@@ -1,8 +1,9 @@
 package com.vompom.media.codec.v2.docode.track
 
-import com.vompom.media.codec.v2.docode.TrackSegment
 import com.vompom.media.codec.v2.docode.decorder.AudioDecoder
 import com.vompom.media.codec.v2.docode.decorder.IDecoder
+import com.vompom.media.codec.v2.docode.model.SampleState
+import com.vompom.media.codec.v2.docode.model.TrackSegment
 
 /**
  *
@@ -11,51 +12,42 @@ import com.vompom.media.codec.v2.docode.decorder.IDecoder
  * @Description
  */
 
-class AudioDecoderTrack : IDecoderTrack {
-    private var currentDecoder: IDecoder? = null
-    private var segmentList = mutableListOf<TrackSegment>()
-    private var currentSegmentIndex = 0
-
-    constructor(segmentList: List<TrackSegment>) {
+class AudioDecoderTrack() : BaseDecoderTrack() {
+    constructor(segmentList: List<TrackSegment>) : this() {
         setTrackSegments(segmentList)
-        setDecodeType(IDecoder.DecodeType.Audio)
+        decodeType = IDecoder.DecodeType.Audio
     }
 
     override fun prepare() {
-        createDecoder()
+        nextSegment()
     }
 
-    private fun createDecoder() {
-        val segment = getCurrentSegment()
-        currentDecoder = AudioDecoder(segment.path)
-        currentDecoder?.prepare()
+    override fun createDecoder(segment: TrackSegment): IDecoder {
+        val decoder = AudioDecoder(segment.asset)
+        decoder.prepare()
+        return decoder
     }
 
-    override fun setTrackSegments(segmentList: List<TrackSegment>) {
-        this.segmentList.apply {
-            clear()
-            addAll(segmentList)
+    override fun readSample(targetTime: Long): SampleState {
+        val state = currentDecoder!!.readSample(targetTime)
+        // 准备下一个片段的 Codec
+        if (state.stateCode == IDecoder.SAMPLE_STATE_FINISH
+            || exceedTime(targetTime)
+        ) {
+            nextSegment()
         }
+        return state
     }
 
-    override fun setDecodeType(decoderType: IDecoder.DecodeType) {
+
+    /**
+     * 判断当前需要读取帧的时间大于当前资源的时间
+     */
+    private fun exceedTime(targetTimeUs: Long): Boolean {
+        val segment = getCurrentSegment()
+        val audioDurationUs = segment.startUs() + segment.durationUs()
+        return audioDurationUs <= targetTimeUs
     }
 
-    override fun readSample(targetTime: Long) {
-        currentDecoder?.readSample(targetTime)
-    }
-
-    override fun seek(targetUs: Long) {
-        currentDecoder?.seek(targetUs)
-    }
-
-    override fun release() {
-        currentDecoder?.release()
-    }
-
-    private fun getCurrentSegment(): TrackSegment {
-        return segmentList[currentSegmentIndex]
-    }
-
-    override fun getCurrentPlayUs(): Long = currentDecoder?.getCurrentPlayUs() ?: 0L
+    override fun getCurrentPlayUs(): Long = (currentDecoder?.getCurrentPlayUs() ?: 0L) + getCurrentSegment().startUs()
 }

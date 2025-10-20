@@ -4,12 +4,12 @@ import android.os.Handler
 import android.os.Looper
 import android.os.Message
 import android.view.Surface
-import com.vompom.media.codec.v2.docode.TrackSegment
 import com.vompom.media.codec.v2.docode.decorder.AudioDecoder
 import com.vompom.media.codec.v2.docode.decorder.VideoDecoder
+import com.vompom.media.codec.v2.docode.model.Asset
+import com.vompom.media.codec.v2.docode.model.TrackSegment
 import com.vompom.media.codec.v2.docode.track.AudioDecoderTrack
 import com.vompom.media.codec.v2.docode.track.VideoDecoderTrack
-import com.vompom.media.codec.v2.utils.sToUs
 
 /**
  *
@@ -22,6 +22,8 @@ import com.vompom.media.codec.v2.utils.sToUs
 class VMPlayer : IPlayer, Handler.Callback {
     private var playerThread: PlayerThread? = null
     private var playListener: IPlayer.PlayerListener? = null
+    private var segments: List<TrackSegment> = emptyList()
+    private var durationUs: Long = -1L
     var mMainHandler: Handler = Handler(Looper.getMainLooper(), this)
 
     private var loop = true
@@ -34,10 +36,11 @@ class VMPlayer : IPlayer, Handler.Callback {
     }
 
 
-    override fun bindPlayer(videoList: List<String>, surface: Surface) {
-        val trackSegmentList = videoList.map { TrackSegment(it) }
-        val videoDecoderTrack = VideoDecoderTrack(trackSegmentList, surface)
-        val audioDecoderTrack = AudioDecoderTrack(trackSegmentList)
+    override fun bindPlayer(assets: List<Asset>, surface: Surface) {
+        segments = createTrackSegments(assets)
+
+        val videoDecoderTrack = VideoDecoderTrack(segments, surface)
+        val audioDecoderTrack = AudioDecoderTrack(segments)
 
         playerThread = PlayerThread(
             this,
@@ -45,6 +48,17 @@ class VMPlayer : IPlayer, Handler.Callback {
             audioDecoderTrack
         )
         playerThread?.sendMessage(PlayerThread.ACTION_PREPARE)
+    }
+
+    private fun createTrackSegments(assets: List<Asset>): List<TrackSegment> {
+        var preDurationUs = 0L
+        val trackSegmentList = assets.map {
+            val segment = TrackSegment(it)
+            segment.starUs = preDurationUs
+            preDurationUs += segment.durationUs()
+            segment
+        }
+        return trackSegmentList
     }
 
     override fun play() {
@@ -69,7 +83,12 @@ class VMPlayer : IPlayer, Handler.Callback {
     }
 
     override fun duration(): Long {
-        return sToUs(6)
+        if (durationUs == -1L) {
+            durationUs = segments.sumOf {
+                it.durationUs()
+            }
+        }
+        return durationUs
     }
 
     override fun setLoop(loop: Boolean) {

@@ -1,9 +1,10 @@
 package com.vompom.media.codec.v2.docode.track
 
 import android.view.Surface
-import com.vompom.media.codec.v2.docode.TrackSegment
 import com.vompom.media.codec.v2.docode.decorder.IDecoder
 import com.vompom.media.codec.v2.docode.decorder.VideoDecoder
+import com.vompom.media.codec.v2.docode.model.SampleState
+import com.vompom.media.codec.v2.docode.model.TrackSegment
 
 /**
  *
@@ -12,57 +13,50 @@ import com.vompom.media.codec.v2.docode.decorder.VideoDecoder
  * @Description
  */
 
-class VideoDecoderTrack : IDecoderTrack {
-    private var segmentList = mutableListOf<TrackSegment>()
-    private var decodeType: IDecoder.DecodeType = IDecoder.DecodeType.Video
-    private var outputSurface: Surface
-    private var currentSegmentIndex = 0
-    private var lastSampleTime: Long = 0L
-    private var currentDecoder: IDecoder? = null
+class VideoDecoderTrack() : BaseDecoderTrack() {
+    private lateinit var outputSurface: Surface
 
-    constructor(segmentList: List<TrackSegment>, outputSurface: Surface) {
+    constructor(segmentList: List<TrackSegment>, outputSurface: Surface) : this() {
         this.outputSurface = outputSurface
         setTrackSegments(segmentList)
-        setDecodeType(IDecoder.DecodeType.Video)
+        decodeType = IDecoder.DecodeType.Video
     }
-
 
     override fun prepare() {
-        createDecoder()
+        nextSegment()
     }
 
-    private fun createDecoder() {
-        val segment = getCurrentSegment()
-        currentDecoder = VideoDecoder(segment.path, outputSurface)
-        currentDecoder?.prepare()
+    override fun createDecoder(segment: TrackSegment): IDecoder {
+        val decoder = VideoDecoder(segment.asset, outputSurface)
+        decoder.prepare()
+        return decoder
     }
 
-    private fun getCurrentSegment(): TrackSegment {
-        return segmentList[currentSegmentIndex]
-    }
-
-    override fun setTrackSegments(segmentList: List<TrackSegment>) {
-        this.segmentList.apply {
-            clear()
-            addAll(segmentList)
+    override fun readSample(targetTime: Long): SampleState {
+        val state = currentDecoder!!.readSample(targetTime)
+        // 准备下一个片段的 Codec
+        if (state.stateCode == IDecoder.SAMPLE_STATE_FINISH
+            || exceedTime(targetTime)
+        ) {
+            nextSegment()
         }
+        return state
     }
 
-    override fun setDecodeType(decoderType: IDecoder.DecodeType) {
-        this.decodeType = decoderType
+    override fun getCurrentPlayUs(): Long = (currentDecoder?.getCurrentPlayUs() ?: 0L) + getCurrentSegment().startUs()
+
+    /**
+     * 判断当前需要读取帧的时间大于当前资源的时间
+     */
+    private fun exceedTime(targetTimeUs: Long): Boolean {
+        val segment = getCurrentSegment()
+        return segment.startUs() + segment.durationUs() <= targetTimeUs
     }
 
-    override fun readSample(targetTime: Long) {
-        currentDecoder?.readSample(targetTime)
-    }
 
-    override fun seek(targetUs: Long) {
-        currentDecoder?.seek(targetUs)
+    class DecoderWrapper() {
+        var decoder: IDecoder? = null
+        var segment: TrackSegment? = null
+        var segmentIndex: Int = -1
     }
-
-    override fun release() {
-        currentDecoder?.release()
-    }
-
-    override fun getCurrentPlayUs(): Long = currentDecoder?.getCurrentPlayUs() ?: 0L
 }

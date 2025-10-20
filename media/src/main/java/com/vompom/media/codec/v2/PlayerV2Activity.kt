@@ -6,6 +6,7 @@ import android.view.SurfaceView
 import android.view.View
 import android.widget.SeekBar
 import com.vompom.media.R
+import com.vompom.media.codec.v2.docode.model.Asset
 import com.vompom.media.codec.v2.player.IPlayer
 import com.vompom.media.codec.v2.player.VMPlayer
 import com.vompom.media.codec.v2.utils.usToS
@@ -85,7 +86,12 @@ class PlayerV2Activity : BaseActivity() {
         surfaceView = findViewById<SurfaceView?>(R.id.sv_video)
         surfaceView!!.holder.addCallback(object : SurfaceHolder.Callback {
             override fun surfaceCreated(holder: SurfaceHolder) {
-                player.bindPlayer(listOf(ResUtils.testHok), holder.surface)
+                player.bindPlayer(
+                    listOf(
+                        Asset(ResUtils.testHok),
+                        Asset(ResUtils.video10s),
+                    ), holder.surface
+                )
                 player.play()
             }
 

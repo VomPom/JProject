@@ -1,7 +1,7 @@
 package com.vompom.media.codec.v2.docode.track
 
-import com.vompom.media.codec.v2.docode.TrackSegment
-import com.vompom.media.codec.v2.docode.decorder.IDecoder
+import com.vompom.media.codec.v2.docode.model.SampleState
+import com.vompom.media.codec.v2.docode.model.TrackSegment
 
 /**
  *
@@ -13,8 +13,7 @@ import com.vompom.media.codec.v2.docode.decorder.IDecoder
 interface IDecoderTrack {
     fun prepare()
     fun setTrackSegments(segmentList: List<TrackSegment>)
-    fun setDecodeType(decoderType: IDecoder.DecodeType)
-    fun readSample(targetTime: Long)
+    fun readSample(targetTime: Long): SampleState
     fun seek(targetUs: Long)
     fun release()
     fun getCurrentPlayUs(): Long

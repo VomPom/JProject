@@ -4,6 +4,8 @@ import android.media.AudioFormat
 import android.media.AudioTrack
 import android.media.MediaCodec
 import android.media.MediaFormat
+import com.vompom.media.codec.v2.docode.model.Asset
+import com.vompom.media.codec.v2.docode.model.SampleState
 import com.vompom.media.codec.v2.utils.VLog
 import com.vompom.media.codec.v2.utils.usToS
 import java.nio.ByteBuffer
@@ -15,7 +17,7 @@ import java.nio.ByteBuffer
  * @Description
  */
 
-class AudioDecoder(path: String) : BaseDecoder(path) {
+class AudioDecoder(asset: Asset) : BaseDecoder(asset) {
     private lateinit var audioTrack: AudioTrack
     private var currentPlayPositionUs = 0L
     private var cnt = 0
@@ -67,24 +69,22 @@ class AudioDecoder(path: String) : BaseDecoder(path) {
         audioTrack.play()
     }
 
-    override fun readSample(targetTimeUs: Long) {
+    override fun readSample(targetTimeUs: Long): SampleState {
         // 向 MediaCodec 添加解码的数据，在没有 EOS 之前一直添加
-        if (!isEOS) {
-            val bufferTime = fillBufferToDecoder()
-            VLog.d("--julis audio readSample targetTimeUs: $targetTimeUs got bufferTime:$bufferTime")
+        if (!readSampleDone) {
+            doReadSample()
         }
 
         // 从 MediaCodec 队列中获取解码后的数据
         if (!isDecodeDone) {
-            fetchBufferFromDecoder()
+            return renderBuffer(true)
         }
+        return SampleState()
     }
 
     override fun seek(timeUs: Long) {
-        VLog.d("--julis start audio seek to $timeUs")
         super.seek(timeUs)
         currentPlayPositionUs = timeUs
-        VLog.d("--julis after audio seek to $timeUs")
     }
 
     override fun getCurrentPlayUs(): Long = currentPlayPositionUs

@@ -2,6 +2,8 @@ package com.vompom.media.codec.v2.docode.decorder
 
 import android.media.MediaCodec
 import android.media.MediaFormat
+import com.vompom.media.codec.v2.docode.model.Asset
+import com.vompom.media.codec.v2.docode.model.SampleState
 import com.vompom.media.codec.v2.extractor.AssetExtractor
 import com.vompom.media.codec.v2.utils.VLog
 import java.nio.ByteBuffer
@@ -35,16 +37,17 @@ abstract class BaseDecoder : IDecoder {
     private var bufferInfo = MediaCodec.BufferInfo()
 
     val extractor: AssetExtractor = AssetExtractor()
+    var mirrorExtractor: AssetExtractor = AssetExtractor()
+
     lateinit var mediaCodec: MediaCodec
 
     private var onProgress: ((Long, Long) -> Unit)? = null
 
     var isDecodeDone = false
-    var isEOS = false
     var readSampleDone = false
 
-    constructor(path: String) {
-        this.sourcePath = path
+    constructor(asset: Asset) {
+        this.sourcePath = asset.path
     }
 
     override fun prepare() {
@@ -55,6 +58,10 @@ abstract class BaseDecoder : IDecoder {
 
     private fun initExtractor(sourcePath: String) {
         extractor.apply {
+            setDataSource(sourcePath)
+            selectTrack(trackIndex())
+        }
+        mirrorExtractor.apply {
             setDataSource(sourcePath)
             selectTrack(trackIndex())
         }
@@ -89,7 +96,7 @@ abstract class BaseDecoder : IDecoder {
      *
      * @return Boolean 是否已经处理完所有的数据 (EOS)
      */
-    fun fillBufferToDecoder(): Long {
+    fun doReadSample(): Long {
         try {
             // 获取一个 input buffer index, 延迟 TIME_US 等待拿到空的 input buffer下标，单位为 us
             // -1 表示一直等待，直到拿到数据，0 表示立即返回
@@ -118,7 +125,7 @@ abstract class BaseDecoder : IDecoder {
                             MediaCodec.BUFFER_FLAG_END_OF_STREAM
                         )
                         VLog.d("No more buffer: $size")
-                        isEOS = true
+                        readSampleDone = true
                     }
                 }
             }
@@ -136,9 +143,12 @@ abstract class BaseDecoder : IDecoder {
      * 2. 如果获得了有效的输出缓冲区，则调用 render() 方法处理解码数据，并释放该缓冲区
      * 3. 如果返回 MediaCodec 的 INFO_* 常量，说明输出格式变化或暂无数据可读，按需处理
      * 4. 检查 bufferInfo.flags 是否为 BUFFER_FLAG_END_OF_STREAM，标记解码完成
+     *
+     * @param render 是否渲染获取到的这一帧，在 seek 的时候可能会放弃掉一些帧
      */
-    fun fetchBufferFromDecoder(): Long {
+    fun renderBuffer(render: Boolean): SampleState {
         var bufferTime = 0L
+        var state = IDecoder.SAMPLE_STATE_NORMAL
         // Decoder 在任何一个时机都有可能会执行 release 操作，但这里的 dequeueOutputBuffer,release 还没有执行完成
         // 当 MediaCodec 被回收之后，再执行到这里可能会报：java.lang.IllegalStateException，需加一个 try cache
         try {
@@ -149,7 +159,7 @@ abstract class BaseDecoder : IDecoder {
                 outputBuffer = mediaCodec.getOutputBuffer(outputIndex)
                 bufferTime = bufferInfo.presentationTimeUs
                 render(outputBuffer, bufferInfo)
-                mediaCodec.releaseOutputBuffer(outputIndex, true)
+                mediaCodec.releaseOutputBuffer(outputIndex, render)
             } else {
                 when (outputIndex) {
                     MediaCodec.INFO_OUTPUT_FORMAT_CHANGED -> {}
@@ -158,24 +168,37 @@ abstract class BaseDecoder : IDecoder {
                         // no-op
                     }
                 }
+                state = IDecoder.SAMPLE_STATE_FAILED
             }
         } catch (_: Exception) {
-            // no-op
+            state = IDecoder.SAMPLE_STATE_ERROR
         }
         if (bufferInfo.flags == MediaCodec.BUFFER_FLAG_END_OF_STREAM) {
             isDecodeDone = true
+            state = IDecoder.SAMPLE_STATE_FINISH
             onLoop()
         }
-        return bufferTime
+        return SampleState(bufferTime, state)
     }
 
 
     override fun seek(timeUs: Long) {
-        // todo:: fix timestamp calculate after seek
+        // 这种情况直接 read 会比 seek 更好
+        if (isMoreCloseToKeyFrame(timeUs)) {
+            return
+        }
         val sampleTimeUs = extractor.seek(timeUs)
-        VLog.d("--julis seek sampleTimeUs $sampleTimeUs")
     }
 
+    /**
+     * 当前解码的位置比 seek 的关键帧位置更靠近目标点的话，并且当前解码点小于目标位置
+     * 适用于向后 seek 的场景
+     */
+    private fun isMoreCloseToKeyFrame(targetUs: Long): Boolean {
+        val keyFrame = mirrorExtractor.seek(targetUs)
+        val currentUs = getCurrentPlayUs()
+        return (keyFrame <= currentUs && currentUs <= targetUs) && targetUs > 0
+    }
 
     override fun setProgressListener(onProgress: (Long, Long) -> Unit) {
         this.onProgress = onProgress
@@ -193,7 +216,7 @@ abstract class BaseDecoder : IDecoder {
     }
 
     private fun onLoop() {
-        isEOS = false
+        readSampleDone = false
         isDecodeDone = false
         // todo:: set video asset range start...
         seek(0)
