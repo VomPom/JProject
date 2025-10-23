@@ -28,7 +28,7 @@ class AssetExtractor : IExtractor {
         val size = extractor.readSampleData(byteBuffer, 0)
         currentSampleTime = extractor.sampleTime
         currentSampleFlags = extractor.sampleFlags
-        VLog.i("readSampleData size: $size time: $currentSampleTime")
+        VLog.v("readSampleData size: $size time: $currentSampleTime")
         extractor.advance()
         return size
     }
@@ -42,7 +42,7 @@ class AssetExtractor : IExtractor {
         // todo:: seek with accurate position...
         extractor.seekTo(timeUs, MediaExtractor.SEEK_TO_PREVIOUS_SYNC)
         val seekUs = extractor.sampleTime
-        VLog.i("seek targetUs: $timeUs, seekUs: $seekUs")
+        VLog.v("seek targetUs: $timeUs, seekUs: $seekUs")
         return seekUs
     }
 

@@ -44,10 +44,10 @@ class AudioDecoderTrack() : BaseDecoderTrack() {
      * 判断当前需要读取帧的时间大于当前资源的时间
      */
     private fun exceedTime(targetTimeUs: Long): Boolean {
-        val segment = getCurrentSegment()
-        val audioDurationUs = segment.startUs() + segment.durationUs()
+        val segment = currentSegment()
+        val audioDurationUs = segment.startUs + segment.durationUs
         return audioDurationUs <= targetTimeUs
     }
 
-    override fun getCurrentPlayUs(): Long = (currentDecoder?.getCurrentPlayUs() ?: 0L) + getCurrentSegment().startUs()
+    override fun getCurrentPlayUs(): Long = (currentDecoder?.getCurrentPlayUs() ?: 0L) + currentSegment().startUs
 }

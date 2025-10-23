@@ -4,19 +4,11 @@ package com.vompom.media.codec.v2.docode.model
  *
  * Created by @juliswang on 2025/10/10 18:44
  *
- * @Description
+ * @Description 在 Asset 的区间中的数据对象
  */
 
 class TrackSegment(val asset: Asset) {
-    var starUs = 0L
+    var startUs: Long = 0L
 
-    fun startUs(): Long {
-        return starUs
-    }
-
-    fun setStartUs(timeUs: Long) {
-        this.starUs = timeUs
-    }
-
-    fun durationUs(): Long = asset.durationUs
+    val durationUs: Long = asset.durationUs
 }

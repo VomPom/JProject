@@ -18,7 +18,6 @@ import com.vompom.media.codec.v2.docode.track.VideoDecoderTrack
  * @Description 基于 [VideoDecoder] [AudioDecoder] 包装播放器，协调整个播放流程，管理播放状态
  *
  */
-
 class VMPlayer : IPlayer, Handler.Callback {
     private var playerThread: PlayerThread? = null
     private var playListener: IPlayer.PlayerListener? = null
@@ -30,11 +29,18 @@ class VMPlayer : IPlayer, Handler.Callback {
     private var playUs: Long = 0L
 
     companion object {
+        var currentPlayer: VMPlayer? = null
         const val TYPE_STATES: Int = 1
         const val TYPE_PROGRESS: Int = 2
         const val TYPE_VIEWPORT_UPDATE: Int = 3
+
+        fun create(): VMPlayer {
+            currentPlayer = VMPlayer()
+            return currentPlayer!!
+        }
     }
 
+    private constructor()
 
     override fun bindPlayer(assets: List<Asset>, surface: Surface) {
         segments = createTrackSegments(assets)
@@ -54,8 +60,8 @@ class VMPlayer : IPlayer, Handler.Callback {
         var preDurationUs = 0L
         val trackSegmentList = assets.map {
             val segment = TrackSegment(it)
-            segment.starUs = preDurationUs
-            preDurationUs += segment.durationUs()
+            segment.startUs = preDurationUs
+            preDurationUs += segment.durationUs
             segment
         }
         return trackSegmentList
@@ -78,14 +84,13 @@ class VMPlayer : IPlayer, Handler.Callback {
     }
 
     override fun release() {
-        playerThread?.sendMessage(PlayerThread.ACTION_RELEASE)
         playerThread?.release()
     }
 
     override fun duration(): Long {
         if (durationUs == -1L) {
             durationUs = segments.sumOf {
-                it.durationUs()
+                it.durationUs
             }
         }
         return durationUs

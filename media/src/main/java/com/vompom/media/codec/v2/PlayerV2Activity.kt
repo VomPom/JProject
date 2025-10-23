@@ -24,7 +24,7 @@ import wang.julis.jwbase.utils.ThreadUtil
 
 class PlayerV2Activity : BaseActivity() {
     private lateinit var binding: ActivityMediaBinding
-    private var player: IPlayer = VMPlayer()
+    private var player: IPlayer = VMPlayer.create()
 
     private var surfaceView: SurfaceView? = null
 

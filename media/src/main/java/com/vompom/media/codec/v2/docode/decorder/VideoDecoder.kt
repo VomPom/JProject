@@ -21,10 +21,13 @@ class VideoDecoder(val asset: Asset, val surface: Surface) : BaseDecoder(asset) 
     override fun render(buffer: ByteBuffer?, bufferInfo: MediaCodec.BufferInfo) {
         cnt++
         currentPlayPositionUs = bufferInfo.presentationTimeUs
-        VLog.d("video pts:${usToS(bufferInfo.presentationTimeUs)}s size:${bufferInfo.size} offset: ${bufferInfo.offset} cnt: $cnt")
+        VLog.v("video pts:${usToS(bufferInfo.presentationTimeUs)}s size:${bufferInfo.size} offset: ${bufferInfo.offset} cnt: $cnt")
     }
 
     override fun readSample(targetTimeUs: Long): SampleState {
+        if (isReleased) {
+            return SampleState()
+        }
         // 向 MediaCodec 添加解码的数据，在没有 EOS 之前一直添加
         var needRender = true
         var sampleState = SampleState()

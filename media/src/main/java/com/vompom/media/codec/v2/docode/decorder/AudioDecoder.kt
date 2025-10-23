@@ -26,7 +26,7 @@ class AudioDecoder(asset: Asset) : BaseDecoder(asset) {
             audioTrack.write(buffer, bufferInfo.size, AudioTrack.WRITE_BLOCKING)
             currentPlayPositionUs = bufferInfo.presentationTimeUs
             cnt++
-            VLog.d("audio pts:${usToS(bufferInfo.presentationTimeUs)}s size:${bufferInfo.size} offset: ${bufferInfo.offset} cnt: $cnt")
+            VLog.v("audio pts:${usToS(bufferInfo.presentationTimeUs)}s size:${bufferInfo.size} offset: ${bufferInfo.offset} cnt: $cnt")
         }
     }
 
@@ -70,6 +70,9 @@ class AudioDecoder(asset: Asset) : BaseDecoder(asset) {
     }
 
     override fun readSample(targetTimeUs: Long): SampleState {
+        if (isReleased) {
+            return SampleState()
+        }
         // 向 MediaCodec 添加解码的数据，在没有 EOS 之前一直添加
         if (!readSampleDone) {
             doReadSample()

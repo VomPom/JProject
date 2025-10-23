@@ -28,23 +28,25 @@ class PlayerThread {
 
         const val ACTION_RELEASE: Int = 6
 
+        const val ACTION_QUIT: Int = 7
         const val ACTION_READ_SAMPLE: Int = 9
     }
 
-    private var handlerThread: HandlerThread? = null
-     var playHandler: Handler? = null
+    var handlerThread: HandlerThread? = null
+    var playHandler: Handler? = null
 
     constructor(player: VMPlayer, videoDecoderTrack: IDecoderTrack, audioDecoderTrack: IDecoderTrack) {
         handlerThread = HandlerThread("PlayerThread")
         handlerThread?.start()
 
-        val messageHandler = PlayerMessageVideoHandler(player, this, videoDecoderTrack)
+        val messageHandler = PlayerMessageVideoCallback(player, this, videoDecoderTrack)
         playHandler = Handler(handlerThread!!.looper, messageHandler)
         messageHandler.setAudioThread(PlayerThreadAudio(playHandler, audioDecoderTrack))
     }
 
     fun release() {
-        handlerThread?.quitSafely()
+        playHandler?.removeCallbacksAndMessages(null)
+        playHandler?.sendEmptyMessage(ACTION_RELEASE)
         handlerThread = null
     }
 

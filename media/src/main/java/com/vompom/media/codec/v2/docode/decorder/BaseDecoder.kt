@@ -44,6 +44,7 @@ abstract class BaseDecoder : IDecoder {
     private var onProgress: ((Long, Long) -> Unit)? = null
 
     var isDecodeDone = false
+    var isReleased = false
     var readSampleDone = false
 
     constructor(asset: Asset) {
@@ -207,6 +208,7 @@ abstract class BaseDecoder : IDecoder {
 
     override fun release() {
         try {
+            isReleased = true
             extractor.stop()
             mediaCodec.stop()
             mediaCodec.release()

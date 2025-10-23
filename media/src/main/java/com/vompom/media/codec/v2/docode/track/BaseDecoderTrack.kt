@@ -24,7 +24,7 @@ abstract class BaseDecoderTrack : IDecoderTrack {
         }
     }
 
-    protected fun getCurrentSegment(): TrackSegment {
+    protected fun currentSegment(): TrackSegment {
         return segmentList[currentSegmentIndex]
     }
 
@@ -50,36 +50,45 @@ abstract class BaseDecoderTrack : IDecoderTrack {
 
     fun doCreateDecoder() {
         releaseCurrentDecoder()
-        val segment = getCurrentSegment()
+        val segment = currentSegment()
         synchronized(decoderLock) {
             currentDecoder = createDecoder(segment)
         }
     }
 
+    /**
+     * 进行 Seek 操作
+     * 如果当前的 segment 就是目标 segment，则直接调用 decoder 的 seek 方法，否则需要先切换 segment 再进行 seek
+     *
+     * @param targetUs 相对整个播放器时长的目标位置
+     */
     override fun seek(targetUs: Long) {
-        val result = findSegmentIndex(targetUs)
+        val result = findSegmentInfo(targetUs)
         if (result == null) return
         val (segment, segmentIndex) = result
+        // 获取在目标 seek 时间 在 segment 中的位置
+        val segmentSeekTimeUs = targetUs - segment.startUs
+
         if (segmentIndex == currentSegmentIndex) {
-            currentDecoder?.seek(targetUs)
+            currentDecoder?.seek(segmentSeekTimeUs)
         } else {
             currentSegmentIndex = segmentIndex
             doCreateDecoder()
-            currentDecoder?.seek(targetUs - segment.starUs)
+            currentDecoder?.seek(segmentSeekTimeUs)
         }
     }
 
-    override fun release() {
-        currentDecoder?.release()
-    }
-
-    private fun findSegmentIndex(targetUs: Long): Pair<TrackSegment, Int>? {
+    private fun findSegmentInfo(targetUs: Long): Pair<TrackSegment, Int>? {
         segmentList.forEachIndexed { index, segment ->
-            if (segment.starUs <= targetUs && targetUs < (segment.starUs + segment.durationUs())) {
+            if (segment.startUs <= targetUs && targetUs < (segment.startUs + segment.durationUs)) {
                 return Pair(segment, index)
             }
         }
         return null
+    }
+
+    override fun release() {
+        currentDecoder?.release()
     }
 
     abstract fun createDecoder(segment: TrackSegment): IDecoder

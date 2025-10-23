@@ -17,10 +17,10 @@ import com.vompom.media.codec.v2.docode.track.IDecoderTrack
 class PlayerThreadAudio : Handler.Callback {
     private val videoHandler: Handler?
     private val audioDecoderTrack: IDecoderTrack
-    private var audioHandlerThread: HandlerThread? = null
     private var audioHandler: Handler? = null
 
     private var loop = false
+    var handlerThread: HandlerThread? = null
 
     constructor(videoHandler: Handler?, audioDecoderTrack: IDecoderTrack) {
         this.videoHandler = videoHandler
@@ -29,9 +29,9 @@ class PlayerThreadAudio : Handler.Callback {
     }
 
     private fun initThread() {
-        audioHandlerThread = HandlerThread("PlayerAudioThread")
-        audioHandlerThread?.start()
-        audioHandler = Handler(audioHandlerThread!!.getLooper(), this)
+        handlerThread = HandlerThread("PlayerAudioThread")
+        handlerThread?.start()
+        audioHandler = Handler(handlerThread!!.getLooper(), this)
     }
 
     override fun handleMessage(msg: Message): Boolean {
@@ -73,8 +73,7 @@ class PlayerThreadAudio : Handler.Callback {
     }
 
     private fun release() {
-        audioHandlerThread?.quitSafely()
-        audioHandlerThread = null
+        handlerThread = null
         audioDecoderTrack.release()
     }
 

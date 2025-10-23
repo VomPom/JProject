@@ -33,7 +33,8 @@ class VideoDecoderTrack() : BaseDecoderTrack() {
     }
 
     override fun readSample(targetTime: Long): SampleState {
-        val state = currentDecoder!!.readSample(targetTime)
+        val readSampleTimeUs = adjustReadSampleTime(targetTime, currentSegment())
+        val state = currentDecoder!!.readSample(readSampleTimeUs)
         // 准备下一个片段的 Codec
         if (state.stateCode == IDecoder.SAMPLE_STATE_FINISH
             || exceedTime(targetTime)
@@ -43,14 +44,21 @@ class VideoDecoderTrack() : BaseDecoderTrack() {
         return state
     }
 
-    override fun getCurrentPlayUs(): Long = (currentDecoder?.getCurrentPlayUs() ?: 0L) + getCurrentSegment().startUs()
+    private fun adjustReadSampleTime(targetTime: Long, segment: TrackSegment): Long {
+        if (targetTime > segment.startUs) {
+            return targetTime - segment.startUs
+        }
+        return targetTime
+    }
+
+    override fun getCurrentPlayUs(): Long = (currentDecoder?.getCurrentPlayUs() ?: 0L) + currentSegment().startUs
 
     /**
      * 判断当前需要读取帧的时间大于当前资源的时间
      */
     private fun exceedTime(targetTimeUs: Long): Boolean {
-        val segment = getCurrentSegment()
-        return segment.startUs() + segment.durationUs() <= targetTimeUs
+        val segment = currentSegment()
+        return segment.startUs + segment.durationUs <= targetTimeUs
     }
 
 
