@@ -3,13 +3,8 @@ package com.vompom.media.codec.v2.player
 import android.os.Handler
 import android.os.Message
 import com.vompom.media.codec.v2.docode.model.PlayerMessage
-import com.vompom.media.codec.v2.docode.model.SampleState
 import com.vompom.media.codec.v2.docode.track.IDecoderTrack
 import com.vompom.media.codec.v2.utils.MessageUtils
-import com.vompom.media.codec.v2.utils.VLog
-import com.vompom.media.codec.v2.utils.msToS
-import com.vompom.media.codec.v2.utils.usToMs
-import com.vompom.media.codec.v2.utils.usToS
 
 /**
  *
@@ -21,12 +16,15 @@ import com.vompom.media.codec.v2.utils.usToS
 class PlayerMessageVideoCallback(
     val player: VMPlayer,
     val playerThread: PlayerThread,
+    val syncManager: AVSyncManager,
     val videoDecoderTrack: IDecoderTrack,
 ) : Handler.Callback {
     private var loop = false
     private var pause = false
-    private var frameDurationUs = 1_000_000L / 30                   // 一帧的时间
-    private var lastSampleState = SampleState()
+
+    // todo:: 按配置的帧率来，不写死
+    private var frameDurationUs = 1_000_000L / 30               // 一帧的时间
+    private var nexDecodePosition: Long = 0                     // 下一帧解码将会进行的时间戳
     private var mAudioThread: PlayerThreadAudio? = null
 
     override fun handleMessage(msg: Message): Boolean {
@@ -98,9 +96,8 @@ class PlayerMessageVideoCallback(
      * 直接从当前位置进行解码直到目标的时间戳，否则从关键帧开始解码，这在 GOP 比较间隔比较远的时候非常有用。
      */
     private fun seek(targetUs: Long) {
-        val lastSeekTimeUs = findLastSeekTime() ?: targetUs
+        nexDecodePosition = findLastSeekTime() ?: targetUs
         mAudioThread?.sendMessage(PlayerThread.ACTION_PAUSE)
-        lastSampleState = SampleState(lastSeekTimeUs)
         readSample(PlayerThread.ACTION_SEEK)
     }
 
@@ -114,53 +111,25 @@ class PlayerMessageVideoCallback(
     }
 
     private fun readSample(msgId: Int) {
-        val targetTime = lastSampleState.frameTimeUs
         if (msgId == PlayerThread.ACTION_SEEK) {
-            // removePendingMessage(PlayerThread.ACTION_READ_SAMPLE)
-            videoDecoderTrack.seek(targetTime)
+            videoDecoderTrack.seek(nexDecodePosition)
         }
-        lastSampleState = videoDecoderTrack.readSample(targetTime)
+        videoDecoderTrack.readSample(nexDecodePosition)
+        syncManager.updateVideoTime(videoDecoderTrack.playedUs())
+        nexDecodePosition = mAudioThread?.playedUs() ?: 0L
+        syncManager.updateAudioTime(nexDecodePosition)
         scheduleReadSample()
     }
 
     private fun scheduleReadSample() {
         if (loop) {
-            val audioPlayUs = mAudioThread?.getCurrentPlayUs() ?: 0L
+            val audioPlayUs = mAudioThread?.playedUs() ?: 0L
+            val videoPlayUs = videoDecoderTrack.playedUs()
             player.mMainHandler.obtainMessage(VMPlayer.TYPE_PROGRESS, audioPlayUs).sendToTarget()
-            val diffTimeUs = calDiffTime(audioPlayUs)
+
+            val diffTimeUs = syncManager.calculateWaitTime(audioPlayUs, videoPlayUs, pause)
             playerThread.sendMessageDelay(PlayerThread.ACTION_READ_SAMPLE, wait = diffTimeUs)
-            lastSampleState.frameTimeUs += frameDurationUs
+            nexDecodePosition += frameDurationUs
         }
     }
-
-    /**
-     * 针对音频和视频画面进行同步，以音频播放的时间为准，视频画面进行等待
-     *
-     * @return 视频所需要等待的时间
-     */
-    private fun calDiffTime(audioPlayUs: Long): Long {
-        // todo:: 没有音频轨道的情况
-        // todo:: 优化声音比视频画面快的情况
-        val videoPlayUs = videoDecoderTrack.getCurrentPlayUs()
-        var waitTime = if (pause) 0L else usToMs(videoPlayUs - audioPlayUs)
-        VLog.v(
-            "videoPlayS=${usToS(videoPlayUs.toFloat())},audioPlayS=${usToS(audioPlayUs.toFloat())},waitTimeS=${
-                msToS(
-                    waitTime.toFloat()
-                )
-            } pause=$pause"
-        )
-        if (waitTime > 1 || waitTime < -1) {
-            VLog.d(
-                "videoPlayS=${usToS(videoPlayUs.toFloat())},audioPlayS=${usToS(audioPlayUs.toFloat())},waitTimeS=${
-                    msToS(
-                        waitTime.toFloat()
-                    )
-                } pause=$pause"
-            )
-        }
-        return waitTime
-    }
-
-
 }

@@ -95,7 +95,7 @@ abstract class BaseDecoder : IDecoder {
      * 4. 将填充好数据的缓冲区提交给 MediaCodec 进行解码
      * 5. 如果没有更多数据，发送 EOS (End Of Stream) 标志
      *
-     * @return Boolean 是否已经处理完所有的数据 (EOS)
+     * @return 当前解码的帧的时间戳
      */
     fun doReadSample(): Long {
         try {
@@ -125,7 +125,7 @@ abstract class BaseDecoder : IDecoder {
                             0,
                             MediaCodec.BUFFER_FLAG_END_OF_STREAM
                         )
-                        VLog.d("No more buffer: $size")
+                        VLog.d("${this.javaClass.simpleName} has no more buffer: $size")
                         readSampleDone = true
                     }
                 }
@@ -147,7 +147,7 @@ abstract class BaseDecoder : IDecoder {
      *
      * @param render 是否渲染获取到的这一帧，在 seek 的时候可能会放弃掉一些帧
      */
-    fun renderBuffer(render: Boolean): SampleState {
+    fun renderBuffer(renderCheck: (Long) -> Boolean): SampleState {
         var bufferTime = 0L
         var state = IDecoder.SAMPLE_STATE_NORMAL
         // Decoder 在任何一个时机都有可能会执行 release 操作，但这里的 dequeueOutputBuffer,release 还没有执行完成
@@ -160,7 +160,7 @@ abstract class BaseDecoder : IDecoder {
                 outputBuffer = mediaCodec.getOutputBuffer(outputIndex)
                 bufferTime = bufferInfo.presentationTimeUs
                 render(outputBuffer, bufferInfo)
-                mediaCodec.releaseOutputBuffer(outputIndex, render)
+                mediaCodec.releaseOutputBuffer(outputIndex, renderCheck(bufferTime))
             } else {
                 when (outputIndex) {
                     MediaCodec.INFO_OUTPUT_FORMAT_CHANGED -> {}
@@ -183,12 +183,12 @@ abstract class BaseDecoder : IDecoder {
     }
 
 
-    override fun seek(timeUs: Long) {
+    override fun seek(timeUs: Long): Long {
         // 这种情况直接 read 会比 seek 更好
         if (isMoreCloseToKeyFrame(timeUs)) {
-            return
+            return timeUs
         }
-        val sampleTimeUs = extractor.seek(timeUs)
+        return extractor.seek(timeUs)
     }
 
     /**
@@ -197,7 +197,7 @@ abstract class BaseDecoder : IDecoder {
      */
     private fun isMoreCloseToKeyFrame(targetUs: Long): Boolean {
         val keyFrame = mirrorExtractor.seek(targetUs)
-        val currentUs = getCurrentPlayUs()
+        val currentUs = currentPts()
         return (keyFrame <= currentUs && currentUs <= targetUs) && targetUs > 0
     }
 

@@ -7,12 +7,12 @@ import com.vompom.media.codec.v2.extractor.AssetExtractor
  *
  * Created by @juliswang on 2025/10/20 18:40
  *
- * @Description
+ * @Description 仅用于代表某个资源数据
  */
 
-class Asset {
+abstract class Asset {
     var path: String = ""
-    var durationUs = 0L
+    var sourceDurationUs = 0L
     val extractor: AssetExtractor = AssetExtractor()
 
     constructor(path: String) {
@@ -22,7 +22,7 @@ class Asset {
     }
 
     private fun initInfo() {
-        durationUs = getDuration(extractor.getMediaFormats())
+        sourceDurationUs = getDuration(extractor.getMediaFormats())
     }
 
     fun getDuration(formats: List<MediaFormat>): Long {

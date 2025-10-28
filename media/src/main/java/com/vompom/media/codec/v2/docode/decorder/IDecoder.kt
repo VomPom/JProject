@@ -45,7 +45,7 @@ interface IDecoder {
     fun prepare()
     fun release()
     fun readSample(targetTime: Long): SampleState
-    fun seek(timeUs: Long)
-    fun getCurrentPlayUs(): Long
+    fun seek(timeUs: Long): Long
+    fun currentPts(): Long
     fun setProgressListener(onProgress: (Long, Long) -> Unit)
 }

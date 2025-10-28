@@ -19,12 +19,12 @@ import java.nio.ByteBuffer
 
 class AudioDecoder(asset: Asset) : BaseDecoder(asset) {
     private lateinit var audioTrack: AudioTrack
-    private var currentPlayPositionUs = 0L
+    private var currentPts = 0L
     private var cnt = 0
     override fun render(buffer: ByteBuffer?, bufferInfo: MediaCodec.BufferInfo) {
         if (buffer != null) {
             audioTrack.write(buffer, bufferInfo.size, AudioTrack.WRITE_BLOCKING)
-            currentPlayPositionUs = bufferInfo.presentationTimeUs
+            currentPts = bufferInfo.presentationTimeUs
             cnt++
             VLog.v("audio pts:${usToS(bufferInfo.presentationTimeUs)}s size:${bufferInfo.size} offset: ${bufferInfo.offset} cnt: $cnt")
         }
@@ -80,17 +80,18 @@ class AudioDecoder(asset: Asset) : BaseDecoder(asset) {
 
         // 从 MediaCodec 队列中获取解码后的数据
         if (!isDecodeDone) {
-            return renderBuffer(true)
+            return renderBuffer { true }
         }
         return SampleState()
     }
 
-    override fun seek(timeUs: Long) {
-        super.seek(timeUs)
-        currentPlayPositionUs = timeUs
+    override fun seek(timeUs: Long): Long {
+        val ptsAfterSeek = super.seek(timeUs)
+        currentPts = timeUs
+        return ptsAfterSeek
     }
 
-    override fun getCurrentPlayUs(): Long = currentPlayPositionUs
+    override fun currentPts(): Long = currentPts
 
     override fun release() {
         super.release()

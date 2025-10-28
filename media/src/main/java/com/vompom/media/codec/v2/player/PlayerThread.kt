@@ -38,8 +38,8 @@ class PlayerThread {
     constructor(player: VMPlayer, videoDecoderTrack: IDecoderTrack, audioDecoderTrack: IDecoderTrack) {
         handlerThread = HandlerThread("PlayerThread")
         handlerThread?.start()
-
-        val messageHandler = PlayerMessageVideoCallback(player, this, videoDecoderTrack)
+        val syncManager = AVSyncManager()
+        val messageHandler = PlayerMessageVideoCallback(player, this, syncManager, videoDecoderTrack)
         playHandler = Handler(handlerThread!!.looper, messageHandler)
         messageHandler.setAudioThread(PlayerThreadAudio(playHandler, audioDecoderTrack))
     }

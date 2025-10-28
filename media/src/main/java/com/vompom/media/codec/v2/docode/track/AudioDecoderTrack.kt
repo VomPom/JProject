@@ -9,7 +9,7 @@ import com.vompom.media.codec.v2.docode.model.TrackSegment
  *
  * Created by @juliswang on 2025/10/10 18:43
  *
- * @Description
+ * @Description 负责音频轨道的数据管理
  */
 
 class AudioDecoderTrack() : BaseDecoderTrack() {
@@ -28,26 +28,18 @@ class AudioDecoderTrack() : BaseDecoderTrack() {
         return decoder
     }
 
-    override fun readSample(targetTime: Long): SampleState {
-        val state = currentDecoder!!.readSample(targetTime)
+    override fun readSample(playTimeUs: Long): SampleState {
+        if (isNeedDecodeNext(playTimeUs)) {
+            nextSegment()
+        }
+        val readSampleTimeUs = calSegmentSampleTime(playTimeUs)
+        val state = currentDecoder!!.readSample(readSampleTimeUs)
+        updateCurrentPlayUs(state.frameTimeUs)
         // 准备下一个片段的 Codec
-        if (state.stateCode == IDecoder.SAMPLE_STATE_FINISH
-            || exceedTime(targetTime)
-        ) {
+        if (state.stateCode == IDecoder.SAMPLE_STATE_FINISH) {
             nextSegment()
         }
         return state
     }
 
-
-    /**
-     * 判断当前需要读取帧的时间大于当前资源的时间
-     */
-    private fun exceedTime(targetTimeUs: Long): Boolean {
-        val segment = currentSegment()
-        val audioDurationUs = segment.startUs + segment.durationUs
-        return audioDurationUs <= targetTimeUs
-    }
-
-    override fun getCurrentPlayUs(): Long = (currentDecoder?.getCurrentPlayUs() ?: 0L) + currentSegment().startUs
 }

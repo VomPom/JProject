@@ -16,7 +16,6 @@ class SampleState {
         this.stateCode = state
     }
 
-
     var frameTimeUs: Long = 0
     var stateCode = 0
     override fun toString(): String {

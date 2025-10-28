@@ -13,8 +13,8 @@ import com.vompom.media.codec.v2.docode.model.TrackSegment
 interface IDecoderTrack {
     fun prepare()
     fun setTrackSegments(segmentList: List<TrackSegment>)
-    fun readSample(targetTime: Long): SampleState
-    fun seek(targetUs: Long)
+    fun readSample(playTimeUs: Long): SampleState
+    fun seek(targetUs: Long): Long
     fun release()
-    fun getCurrentPlayUs(): Long
+    fun playedUs(): Long
 }

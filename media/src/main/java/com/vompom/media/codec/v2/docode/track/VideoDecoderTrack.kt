@@ -5,12 +5,13 @@ import com.vompom.media.codec.v2.docode.decorder.IDecoder
 import com.vompom.media.codec.v2.docode.decorder.VideoDecoder
 import com.vompom.media.codec.v2.docode.model.SampleState
 import com.vompom.media.codec.v2.docode.model.TrackSegment
+import com.vompom.media.codec.v2.utils.VLog
 
 /**
  *
  * Created by @juliswang on 2025/10/10 18:42
  *
- * @Description
+ * @Description 负责视频轨道的管理
  */
 
 class VideoDecoderTrack() : BaseDecoderTrack() {
@@ -32,39 +33,19 @@ class VideoDecoderTrack() : BaseDecoderTrack() {
         return decoder
     }
 
-    override fun readSample(targetTime: Long): SampleState {
-        val readSampleTimeUs = adjustReadSampleTime(targetTime, currentSegment())
+    override fun readSample(playTimeUs: Long): SampleState {
+        VLog.d("video readSample playTimeUs:$playTimeUs")
+        if (isNeedDecodeNext(playTimeUs)) {
+            nextSegment()
+        }
+        val readSampleTimeUs = calSegmentSampleTime(playTimeUs)
+        // todo:: 首帧播放的时候，可能需要一次 seek 操作
         val state = currentDecoder!!.readSample(readSampleTimeUs)
+        updateCurrentPlayUs(state.frameTimeUs)
         // 准备下一个片段的 Codec
-        if (state.stateCode == IDecoder.SAMPLE_STATE_FINISH
-            || exceedTime(targetTime)
-        ) {
+        if (state.stateCode == IDecoder.SAMPLE_STATE_FINISH) {
             nextSegment()
         }
         return state
-    }
-
-    private fun adjustReadSampleTime(targetTime: Long, segment: TrackSegment): Long {
-        if (targetTime > segment.startUs) {
-            return targetTime - segment.startUs
-        }
-        return targetTime
-    }
-
-    override fun getCurrentPlayUs(): Long = (currentDecoder?.getCurrentPlayUs() ?: 0L) + currentSegment().startUs
-
-    /**
-     * 判断当前需要读取帧的时间大于当前资源的时间
-     */
-    private fun exceedTime(targetTimeUs: Long): Boolean {
-        val segment = currentSegment()
-        return segment.startUs + segment.durationUs <= targetTimeUs
-    }
-
-
-    class DecoderWrapper() {
-        var decoder: IDecoder? = null
-        var segment: TrackSegment? = null
-        var segmentIndex: Int = -1
     }
 }

@@ -24,24 +24,34 @@ class VideoDecoder(val asset: Asset, val surface: Surface) : BaseDecoder(asset) 
         VLog.v("video pts:${usToS(bufferInfo.presentationTimeUs)}s size:${bufferInfo.size} offset: ${bufferInfo.offset} cnt: $cnt")
     }
 
+
+    /**
+     * Decoder 对当前资源文件进行解码，直到找到目标时间戳的帧，[doReadSample] 执行的是从资源文件中读取数据，返回的时间即：DTS，
+     * 然后交给 MediaCodec 解码，[renderBuffer] 才是渲染展示的逻辑，返回的时间即：PTS
+     *
+     * @param targetTimeUs 资源里面目标播放时间戳
+     * @return 解码状态
+     */
     override fun readSample(targetTimeUs: Long): SampleState {
-        if (isReleased) {
-            return SampleState()
-        }
+        if (isReleased) return SampleState()
         // 向 MediaCodec 添加解码的数据，在没有 EOS 之前一直添加
-        var needRender = true
+        var finishTask = false
         var sampleState = SampleState()
         if (!readSampleDone) {
-            val bufferTime = doReadSample()
-            needRender = bufferTime >= targetTimeUs
+            val dts = doReadSample()
+            VLog.v("video dts:${usToS(dts)}s")
         }
 
         // 从 MediaCodec 队列中获取解码后的数据
         if (!isDecodeDone) {
-            sampleState = renderBuffer(needRender)
+            sampleState = renderBuffer { decodeBufferTime ->
+                // 解码直到找到目标的时间戳
+                finishTask = decodeBufferTime >= targetTimeUs
+                finishTask
+            }
         }
         // seek 逻辑可能会触发这里，查找帧如果没有找到则一直循环查找
-        if (!needRender && !isDecodeDone) {
+        if (!finishTask && !isDecodeDone) {
             sampleState = readSample(targetTimeUs)
         }
         return sampleState
@@ -61,5 +71,5 @@ class VideoDecoder(val asset: Asset, val surface: Surface) : BaseDecoder(asset) 
 
     override fun decodeType(): IDecoder.DecodeType = IDecoder.DecodeType.Video
 
-    override fun getCurrentPlayUs(): Long = currentPlayPositionUs
+    override fun currentPts(): Long = currentPlayPositionUs
 }

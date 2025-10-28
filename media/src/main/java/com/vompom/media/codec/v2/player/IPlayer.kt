@@ -1,7 +1,7 @@
 package com.vompom.media.codec.v2.player
 
 import android.view.Surface
-import com.vompom.media.codec.v2.docode.model.Asset
+import com.vompom.media.codec.v2.docode.model.ClipAsset
 
 /**
  *
@@ -11,7 +11,7 @@ import com.vompom.media.codec.v2.docode.model.Asset
  */
 
 interface IPlayer {
-    fun bindPlayer(videoList: List<Asset>, surface: Surface)
+    fun bindPlayer(videoList: List<ClipAsset>, surface: Surface)
     fun play()
     fun pause()
     fun seekTo(positionUs: Long)

@@ -6,7 +6,7 @@ import android.os.Message
 import android.view.Surface
 import com.vompom.media.codec.v2.docode.decorder.AudioDecoder
 import com.vompom.media.codec.v2.docode.decorder.VideoDecoder
-import com.vompom.media.codec.v2.docode.model.Asset
+import com.vompom.media.codec.v2.docode.model.ClipAsset
 import com.vompom.media.codec.v2.docode.model.TrackSegment
 import com.vompom.media.codec.v2.docode.track.AudioDecoderTrack
 import com.vompom.media.codec.v2.docode.track.VideoDecoderTrack
@@ -42,26 +42,23 @@ class VMPlayer : IPlayer, Handler.Callback {
 
     private constructor()
 
-    override fun bindPlayer(assets: List<Asset>, surface: Surface) {
+    override fun bindPlayer(assets: List<ClipAsset>, surface: Surface) {
         segments = createTrackSegments(assets)
-
-        val videoDecoderTrack = VideoDecoderTrack(segments, surface)
-        val audioDecoderTrack = AudioDecoderTrack(segments)
 
         playerThread = PlayerThread(
             this,
-            videoDecoderTrack,
-            audioDecoderTrack
+            VideoDecoderTrack(segments, surface),
+            AudioDecoderTrack(segments)
         )
         playerThread?.sendMessage(PlayerThread.ACTION_PREPARE)
     }
 
-    private fun createTrackSegments(assets: List<Asset>): List<TrackSegment> {
+    private fun createTrackSegments(assets: List<ClipAsset>): List<TrackSegment> {
         var preDurationUs = 0L
         val trackSegmentList = assets.map {
             val segment = TrackSegment(it)
-            segment.startUs = preDurationUs
-            preDurationUs += segment.durationUs
+            segment.timelineRange.updateStartUs(preDurationUs)
+            preDurationUs += segment.timelineRange.durationUs
             segment
         }
         return trackSegmentList
@@ -90,7 +87,7 @@ class VMPlayer : IPlayer, Handler.Callback {
     override fun duration(): Long {
         if (durationUs == -1L) {
             durationUs = segments.sumOf {
-                it.durationUs
+                it.timelineRange.durationUs
             }
         }
         return durationUs

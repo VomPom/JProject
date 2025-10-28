@@ -18,6 +18,7 @@ class PlayerThreadAudio : Handler.Callback {
     private val videoHandler: Handler?
     private val audioDecoderTrack: IDecoderTrack
     private var audioHandler: Handler? = null
+    private var nextDecodePosition = 0L
 
     private var loop = false
     var handlerThread: HandlerThread? = null
@@ -61,6 +62,8 @@ class PlayerThreadAudio : Handler.Callback {
 
     private fun play() {
         loop = true
+        // 音频首帧直接seek到目标位置
+        seek(0)
         readSample(0)
     }
 
@@ -77,18 +80,20 @@ class PlayerThreadAudio : Handler.Callback {
         audioDecoderTrack.release()
     }
 
-    private fun seek(targetUs: Long) {
-        audioDecoderTrack.seek(targetUs)
+    private fun seek(targetUs: Long): Long {
+        nextDecodePosition = audioDecoderTrack.seek(targetUs)
+        return nextDecodePosition
     }
 
     private fun readSample(targetTime: Long) {
         audioDecoderTrack.readSample(targetTime)
+        nextDecodePosition = playedUs()
         scheduleReadSample()
     }
 
     private fun scheduleReadSample() {
         if (loop) {
-            sendMessageDelay(PlayerThread.ACTION_READ_SAMPLE, 0L, 0L)
+            sendMessageDelay(PlayerThread.ACTION_READ_SAMPLE, nextDecodePosition, 0L)
         }
     }
 
@@ -105,5 +110,5 @@ class PlayerThreadAudio : Handler.Callback {
         }
     }
 
-    fun getCurrentPlayUs(): Long = audioDecoderTrack.getCurrentPlayUs()
+    fun playedUs(): Long = audioDecoderTrack.playedUs()
 }
