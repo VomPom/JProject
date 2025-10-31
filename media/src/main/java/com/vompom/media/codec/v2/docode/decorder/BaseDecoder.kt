@@ -182,25 +182,6 @@ abstract class BaseDecoder : IDecoder {
         return SampleState(bufferTime, state)
     }
 
-
-    override fun seek(timeUs: Long): Long {
-        // 这种情况直接 read 会比 seek 更好
-        if (isMoreCloseToKeyFrame(timeUs)) {
-            return timeUs
-        }
-        return extractor.seek(timeUs)
-    }
-
-    /**
-     * 当前解码的位置比 seek 的关键帧位置更靠近目标点的话，并且当前解码点小于目标位置
-     * 适用于向后 seek 的场景
-     */
-    private fun isMoreCloseToKeyFrame(targetUs: Long): Boolean {
-        val keyFrame = mirrorExtractor.seek(targetUs)
-        val currentUs = currentPts()
-        return (keyFrame <= currentUs && currentUs <= targetUs) && targetUs > 0
-    }
-
     override fun setProgressListener(onProgress: (Long, Long) -> Unit) {
         this.onProgress = onProgress
     }

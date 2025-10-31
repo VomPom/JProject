@@ -89,8 +89,9 @@ class PlayerV2Activity : BaseActivity() {
             override fun surfaceCreated(holder: SurfaceHolder) {
                 player.bindPlayer(
                     listOf(
+                        ClipAsset(ResUtils.video10s, TimeRange.create(0f, 10f)),
                         ClipAsset(ResUtils.testHok, TimeRange.create(2f, 3f)),
-                        ClipAsset(ResUtils.video10s, TimeRange.create(2f, 3f)),
+                        ClipAsset(ResUtils.testWz, TimeRange.create(0f, 3f)),
                     ), holder.surface
                 )
                 player.play()

@@ -1,6 +1,7 @@
 package com.vompom.media.codec.v2.docode.track
 
 import com.vompom.media.codec.v2.docode.decorder.IDecoder
+import com.vompom.media.codec.v2.docode.model.SampleState
 import com.vompom.media.codec.v2.docode.model.TrackSegment
 
 /**
@@ -47,6 +48,8 @@ abstract class BaseDecoderTrack : IDecoderTrack {
             currentSegmentIndex = 0
         }
         doCreateDecoder()
+        // 在切换下一个片段时候直接 seek 到起始资源的位置
+        currentDecoder?.seek(currentSegment().sourceRange.startUs)
     }
 
     fun doCreateDecoder() {
@@ -80,27 +83,39 @@ abstract class BaseDecoderTrack : IDecoderTrack {
         return ptsAfterSeek ?: targetUs
     }
 
+    override fun readSample(playTimeUs: Long): SampleState {
+        if (isNeedDecodeNext(playTimeUs)) {
+            nextSegment()
+        }
+        val readSampleTimeUs = calSegmentSampleTime(playTimeUs)
+        val state = currentDecoder!!.readSample(readSampleTimeUs)
+        updateCurrentPlayUs(state.frameTimeUs)
+        if (state.stateCode == IDecoder.SAMPLE_STATE_FINISH) {
+            nextSegment()
+        }
+        return state
+    }
+
     /**
      * 通过当前播放时间计算当前片段的采样时间
-     * @param targetTime  在时间轨道上面的播放时间
+     * @param playTimeUs  在时间轨道上面的播放时间
      * @return  在对应的片段资源上的时间
      */
-    fun calSegmentSampleTime(targetTime: Long): Long {
+    fun calSegmentSampleTime(playTimeUs: Long): Long {
         val segment = currentSegment()
         val segmentStartTime = segment.timelineRange.startUs
         val segmentEndTime = segment.timelineRange.endUs
 
         // 需要重新播放当前视频
-        if (targetTime >= segmentEndTime) {
+        if (playTimeUs >= segmentEndTime) {
             return segment.sourceRange.startUs
         }
         // 理论上来说应该都是走到这个逻辑里面
         // 真正要读取时间为：播放时间-片段在时间轴上开始的时间+片段资源开始的时间
-        if (targetTime >= segmentStartTime) {
-            return targetTime - segmentStartTime + segment.sourceRange.startUs
+        if (playTimeUs >= segmentStartTime) {
+            return playTimeUs - segmentStartTime + segment.sourceRange.startUs
         }
-//        throw RuntimeException("calSegmentSampleTime error,targetTime:${targetTime} segmentStartTime:${segmentStartTime}")
-        return targetTime
+        return playTimeUs
     }
 
     /**

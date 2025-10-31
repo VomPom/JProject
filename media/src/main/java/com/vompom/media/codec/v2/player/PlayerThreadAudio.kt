@@ -5,6 +5,7 @@ import android.os.HandlerThread
 import android.os.Message
 import com.vompom.media.codec.v2.docode.model.PlayerMessage
 import com.vompom.media.codec.v2.docode.track.IDecoderTrack
+import com.vompom.media.codec.v2.utils.MessageUtils
 
 
 /**
@@ -63,8 +64,9 @@ class PlayerThreadAudio : Handler.Callback {
     private fun play() {
         loop = true
         // 音频首帧直接seek到目标位置
-        seek(0)
-        readSample(0)
+        val playTime = playedUs()
+        seek(playTime)
+        readSample(playTime)
     }
 
     private fun pause() {
@@ -81,6 +83,7 @@ class PlayerThreadAudio : Handler.Callback {
     }
 
     private fun seek(targetUs: Long): Long {
+        MessageUtils.removePendingMessage(PlayerThread.ACTION_READ_SAMPLE, audioHandler)
         nextDecodePosition = audioDecoderTrack.seek(targetUs)
         return nextDecodePosition
     }

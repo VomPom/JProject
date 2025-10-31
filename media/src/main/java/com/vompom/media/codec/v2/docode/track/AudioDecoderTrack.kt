@@ -2,7 +2,6 @@ package com.vompom.media.codec.v2.docode.track
 
 import com.vompom.media.codec.v2.docode.decorder.AudioDecoder
 import com.vompom.media.codec.v2.docode.decorder.IDecoder
-import com.vompom.media.codec.v2.docode.model.SampleState
 import com.vompom.media.codec.v2.docode.model.TrackSegment
 
 /**
@@ -22,24 +21,15 @@ class AudioDecoderTrack() : BaseDecoderTrack() {
         nextSegment()
     }
 
+    override fun seek(targetUs: Long): Long {
+        currentPlayUs = targetUs
+        return super.seek(targetUs)
+    }
+
     override fun createDecoder(segment: TrackSegment): IDecoder {
         val decoder = AudioDecoder(segment.asset)
         decoder.prepare()
         return decoder
-    }
-
-    override fun readSample(playTimeUs: Long): SampleState {
-        if (isNeedDecodeNext(playTimeUs)) {
-            nextSegment()
-        }
-        val readSampleTimeUs = calSegmentSampleTime(playTimeUs)
-        val state = currentDecoder!!.readSample(readSampleTimeUs)
-        updateCurrentPlayUs(state.frameTimeUs)
-        // 准备下一个片段的 Codec
-        if (state.stateCode == IDecoder.SAMPLE_STATE_FINISH) {
-            nextSegment()
-        }
-        return state
     }
 
 }

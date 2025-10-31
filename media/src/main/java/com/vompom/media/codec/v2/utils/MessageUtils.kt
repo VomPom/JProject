@@ -31,6 +31,11 @@ object MessageUtils {
         return message
     }
 
+    fun removePendingMessage(what: Int, handler: Handler?) {
+        if (handler == null) return
+        handler.removeMessages(what)
+    }
+
     @SuppressLint("DiscouragedPrivateApi")
     fun getMessageByWhat(what: Int, handler: Handler?): List<Message> {
         if (handler == null) return emptyList()

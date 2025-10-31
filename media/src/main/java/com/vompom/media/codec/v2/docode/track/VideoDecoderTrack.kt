@@ -3,9 +3,7 @@ package com.vompom.media.codec.v2.docode.track
 import android.view.Surface
 import com.vompom.media.codec.v2.docode.decorder.IDecoder
 import com.vompom.media.codec.v2.docode.decorder.VideoDecoder
-import com.vompom.media.codec.v2.docode.model.SampleState
 import com.vompom.media.codec.v2.docode.model.TrackSegment
-import com.vompom.media.codec.v2.utils.VLog
 
 /**
  *
@@ -33,19 +31,4 @@ class VideoDecoderTrack() : BaseDecoderTrack() {
         return decoder
     }
 
-    override fun readSample(playTimeUs: Long): SampleState {
-        VLog.d("video readSample playTimeUs:$playTimeUs")
-        if (isNeedDecodeNext(playTimeUs)) {
-            nextSegment()
-        }
-        val readSampleTimeUs = calSegmentSampleTime(playTimeUs)
-        // todo:: 首帧播放的时候，可能需要一次 seek 操作
-        val state = currentDecoder!!.readSample(readSampleTimeUs)
-        updateCurrentPlayUs(state.frameTimeUs)
-        // 准备下一个片段的 Codec
-        if (state.stateCode == IDecoder.SAMPLE_STATE_FINISH) {
-            nextSegment()
-        }
-        return state
-    }
 }

@@ -39,7 +39,7 @@ public class MyExtractor {
     private void init() {
         try {
             mediaExtractor = new MediaExtractor();
-            String videoPath = ResUtils.INSTANCE.getTestVideo();
+            String videoPath = ResUtils.INSTANCE.getTestWz();
             Log.d("MyExtractor", "Trying to set data source: " + videoPath);
 
             // 检查文件是否存在

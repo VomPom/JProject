@@ -86,8 +86,8 @@ class AudioDecoder(asset: Asset) : BaseDecoder(asset) {
     }
 
     override fun seek(timeUs: Long): Long {
-        val ptsAfterSeek = super.seek(timeUs)
-        currentPts = timeUs
+        val ptsAfterSeek = extractor.seek(timeUs)
+        currentPts = ptsAfterSeek
         return ptsAfterSeek
     }
 

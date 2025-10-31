@@ -39,7 +39,7 @@ class PlayWithoutAudioActivity : BaseActivity(), SurfaceTextureListener {
         width: Int,
         height: Int
     ) {
-        val videoFile = File(ResUtils.testVideo)
+        val videoFile = File(ResUtils.testWz)
         val moviePlayer = PlayerWithoutAudio(videoFile, Surface(surface), object : PlayerWithoutAudio.FrameCallback {
             override fun preRender(presentationTimeUsec: Long) {
                 Logger.d("play:${presentationTimeUsec / 1000 / 1000.0f}s")

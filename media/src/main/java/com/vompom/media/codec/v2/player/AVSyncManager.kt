@@ -10,7 +10,23 @@ import kotlin.math.abs
  *
  * Created by @juliswang on 2025/10/28 21:15
  *
- * @Description
+ * @Description 音视频同步管理器，负责协调音频和视频的播放时序，确保音画同步
+ *
+ * 主要功能：
+ * 1. 实现音视频同步算法，以音频时钟为基准，调节视频播放速度
+ * 2. 计算视频帧的等待时间，控制视频帧的渲染时机以匹配音频进度
+ * 3. 处理seek操作期间的同步状态，避免seek时的音视频不同步问题
+ * 4. 检测片段边界跳跃，在多片段播放时提供快速同步策略
+ * 5. 监控同步质量，统计同步误差和连续错误次数
+ * 6. 提供同步阈值管理，区分正常同步、快速追赶和限制等待等不同策略
+ * 7. 支持暂停状态处理，暂停时不进行同步计算
+ *
+ * 同步策略：
+ * - 正常情况：视频等待音频，确保音画同步
+ * - 音频超前过多：视频快速追赶，避免长时间延迟
+ * - 视频超前过多：限制等待时间，防止卡顿
+ * - seek期间：跳过同步检查，快速完成定位
+ *
  */
 
 class AVSyncManager {
@@ -105,7 +121,7 @@ class AVSyncManager {
         // 如果视频远远超前，限制等待时间
         if (diffUs > MAX_ALLOWED_DIFF_US) {
             val waitTime = usToMs(diffUs - MAX_ALLOWED_DIFF_US)
-            VLog.d("Video ahead too much, limited wait: waitTime=${waitTime}ms")
+            VLog.d("Video ahead too much, limited wait, audioTime:${audioTimeUs} videoTime:${videoTimeUs} waitTime=${waitTime}ms")
             return waitTime
         }
 
@@ -113,15 +129,12 @@ class AVSyncManager {
         val waitTime = if (diffUs > 0) usToMs(diffUs) else 0L
 
         if (absDiff > SYNC_THRESHOLD_US) {
-            VLog.d("Sync adjustment: audioUs=$audioTimeUs, videoUs=$videoTimeUs, diffUs=$diffUs, waitMs=$waitTime")
+            VLog.d(
+                "videoPlayS=${usToS(videoTimeUs.toFloat())}," +
+                        "audioPlayS=${usToS(audioTimeUs.toFloat())}," +
+                        "waitTimeS=${msToS(waitTime.toFloat())}"
+            )
         }
-        VLog.d(
-            "videoPlayS=${usToS(videoTimeUs.toFloat())},audioPlayS=${usToS(audioTimeUs.toFloat())},waitTimeS=${
-                msToS(
-                    waitTime.toFloat()
-                )
-            } pause=$paused"
-        )
         return waitTime
     }
 
