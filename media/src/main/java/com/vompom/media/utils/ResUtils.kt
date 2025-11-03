@@ -123,6 +123,7 @@ object ResUtils {
 
     // 使用 lazy 初始化，只有在调用时才获取路径
     val testHok: String by lazy { getFilePath("hok.mp4")!! }
+    val testHokV: String by lazy { getFilePath("hok_v.mp4")!! }
     val testWz: String by lazy { getFilePath("wz.mp4")!! }
     val video30s: String by lazy { getFilePath("30s.mp4")!! }
     val video10s: String by lazy { getFilePath("10s.mp4")!! }

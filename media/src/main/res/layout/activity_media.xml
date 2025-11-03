@@ -10,10 +10,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <SurfaceView
-        android:id="@+id/sv_video"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+    <FrameLayout
+        android:id="@+id/fl_player"
+        android:layout_width="wrap_content"
+        android:layout_height="500dp"
+        android:background="@color/grey" />
+
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -41,6 +43,13 @@
             android:layout_height="wrap_content"
             android:layout_gravity="right"
             android:text="stop" />
+
+        <Button
+            android:id="@+id/btn_export"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:text="Export" />
     </LinearLayout>
 
     <LinearLayout

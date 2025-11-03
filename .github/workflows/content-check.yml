@@ -1,0 +1,68 @@
+name: Content Check
+
+on:
+  push:
+    branches: [ main, master, develop ]
+  pull_request:
+    branches: [ main, master, develop ]
+
+jobs:
+  check-forbidden-content:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Check for forbidden content from local.properties
+        run: |
+          echo "🔍 Checking for forbidden content..."
+          
+          if [ -f "local.properties" ]; then
+            FORBIDDEN_CONTENT=$(grep "^forbidden=" local.properties | cut -d'=' -f2- | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')
+          
+            if [ -n "$FORBIDDEN_CONTENT" ]; then
+              echo "📋 Forbidden content configured: '$FORBIDDEN_CONTENT'"
+          
+              # Check for forbidden content in all files
+              if grep -r -i "$FORBIDDEN_CONTENT" . --exclude-dir=.git --exclude-dir=.github --exclude=local.properties; then
+                echo ""
+                echo "❌ BUILD FAILED!"
+                echo "🚫 Found forbidden content '$FORBIDDEN_CONTENT' in the repository."
+                echo ""
+                echo "💡 Please remove all instances of '$FORBIDDEN_CONTENT' from your code."
+                echo "💡 You can modify the forbidden content in local.properties"
+                echo ""
+                exit 1
+              else
+                echo "✅ No forbidden content found."
+              fi
+            else
+              echo "⚠️ Warning: No 'forbidden' key found in local.properties"
+              echo "✅ No forbidden content configured."
+            fi
+          else
+            echo "⚠️ Warning: local.properties file not found"
+            echo "✅ No forbidden content configured."
+          fi
+
+      - name: Check commit messages for forbidden content
+        run: |
+          echo "🔍 Checking commit messages..."
+          
+          if [ -f "local.properties" ]; then
+            FORBIDDEN_CONTENT=$(grep "^forbidden=" local.properties | cut -d'=' -f2- | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')
+          
+            if [ -n "$FORBIDDEN_CONTENT" ]; then
+              # Get commit messages from the current push
+              git log --oneline ${{ github.event.before }}..${{ github.sha }} | while read commit; do
+                if echo "$commit" | grep -i "$FORBIDDEN_CONTENT" > /dev/null; then
+                  echo "❌ Found forbidden content '$FORBIDDEN_CONTENT' in commit message: $commit"
+                  exit 1
+                fi
+              done
+            fi
+          fi
+          
+          echo "✅ Commit messages are clean."

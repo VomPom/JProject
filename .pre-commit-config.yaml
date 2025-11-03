@@ -1,0 +1,18 @@
+repos:
+  - repo: local
+    hooks:
+      - id: check-forbidden-content
+        name: Check for forbidden content from local.properties
+        entry:
+          bash -c 'if [ -f "local.properties" ]; then FORBIDDEN=$(grep "^forbidden=" local.properties | cut -d= -f2- | sed "s/^[[:space:]]*//;s/[[:space:]]*$//"); if [ -n "$FORBIDDEN" ]; then if git diff --cached --name-only | xargs grep -l "$FORBIDDEN" 2>/dev/null; then echo "❌ Found forbidden content: $FORBIDDEN"; exit 1; fi; fi; fi'
+        language: system
+        pass_filenames: false
+        stages: [ commit ]
+
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.4.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-added-large-files
