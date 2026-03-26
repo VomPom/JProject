@@ -21,6 +21,7 @@
         <activity android:name=".pag.SimplePagActivity" />
         <activity android:name=".pag.PAGSurfaceTextureIdActivity" />
         <activity android:name=".codec.v1.player.PlayWithoutAudioActivity" />
+        <activity android:name=".frames.ExtractMpegFramesActivity" />
     </application>
 
 </manifest>

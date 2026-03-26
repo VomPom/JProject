@@ -35,12 +35,6 @@
         android:text=""
         android:textColor="@color/black" />
 
-    <Button
-        android:id="@+id/btn_pcm_to_wav"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:text="pcm转wav" />
 
     <TextView
         android:id="@+id/tv_pcm_to_wav_tips"

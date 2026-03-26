@@ -34,7 +34,7 @@ public class MediaPlayerActivity extends BaseActivity implements View.OnClickLis
     protected void initView() {
         SurfaceView surfaceView = findViewById(R.id.sv_video);
         viewBg = findViewById(R.id.view_bg);
-        findViewById(R.id.btn_recording_start).setOnClickListener(this);
+        findViewById(R.id.btn_play).setOnClickListener(this);
         findViewById(R.id.btn_stop).setOnClickListener(this);
         findViewById(R.id.btn_pause).setOnClickListener(this);
 
@@ -89,7 +89,7 @@ public class MediaPlayerActivity extends BaseActivity implements View.OnClickLis
     @Override
     public void onClick(View v) {
         int viewId = v.getId();
-        if (viewId == R.id.btn_recording_start) {
+        if (viewId == R.id.btn_play) {
             mPlayer.start();
         } else if (viewId == R.id.btn_pause) {
             mPlayer.pause();

@@ -66,7 +66,7 @@ public class AudioRecordTrackActivity extends BaseActivity implements View.OnCli
     private byte[] audioData = null;
     private AudioRecord audioRecord;
 
-    private TextView tvTips, tvPcm2WavTips, tvErrorTips;
+    private TextView tvTips, tvErrorTips;
     private final int minBufferSize = AudioRecord.getMinBufferSize(
             SAMPLE_RATE,
             CHANNEL_CONFIG,
@@ -81,11 +81,9 @@ public class AudioRecordTrackActivity extends BaseActivity implements View.OnCli
         findViewById(R.id.btn_recording_stop).setOnClickListener(this);
         findViewById(R.id.btn_play_in_stream).setOnClickListener(this);
         findViewById(R.id.btn_play_in_static).setOnClickListener(this);
-        findViewById(R.id.btn_pcm_to_wav).setOnClickListener(this);
 
         tvTips = findViewById(R.id.tv_tips);
         tvErrorTips = findViewById(R.id.tv_error_tips);
-        tvPcm2WavTips = findViewById(R.id.tv_pcm_to_wav_tips);
     }
 
     @RequiresPermission(Manifest.permission.RECORD_AUDIO)
@@ -117,8 +115,8 @@ public class AudioRecordTrackActivity extends BaseActivity implements View.OnCli
             playInModeStream();
         } else if (viewId == R.id.btn_play_in_static) {
             playInModeStatic();
-        } else if (viewId == R.id.btn_pcm_to_wav) {
-            pcmToWav();
+        } else {
+            //no-op
         }
     }
 
@@ -130,15 +128,6 @@ public class AudioRecordTrackActivity extends BaseActivity implements View.OnCli
             audioRecord = null;
             recordingThread = null;
         }
-    }
-
-    @SuppressLint("SetTextI18n")
-    private void pcmToWav() {
-        PcmToWavUtil pcmToWavUtil = new PcmToWavUtil(SAMPLE_RATE, CHANNEL_CONFIG, AUDIO_FORMAT);
-        String sourcePath = SAVE_PATH + "/" + PCM_NAME;
-        String outPath = SAVE_PATH + "/test.wav";
-        tvPcm2WavTips.setText("录音文件保存在：" + outPath);
-        pcmToWavUtil.pcmToWav(sourcePath, outPath);
     }
 
     @SuppressLint("SetTextI18n")

@@ -1,0 +1,66 @@
+plugins {
+    id 'com.android.library'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'kotlin-parcelize'
+}
+apply from: '../deps.gradle'
+android {
+    compileSdkVersion Ver.compile_sdk
+    buildToolsVersion Ver.build_tools
+
+    defaultConfig {
+        minSdkVersion Ver.min_sdk
+        targetSdkVersion Ver.target_sdk
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+    buildFeatures {
+        viewBinding true
+    }
+}
+
+dependencies {
+    testImplementation Deps.test.junit
+    androidTestImplementation Deps.test.junit_ext
+    androidTestImplementation Deps.test.espresso
+
+    implementation Deps.androidx.activity
+    implementation Deps.androidx.fragment
+
+    implementation Deps.androidx.appcompat
+    implementation Deps.androidx.material
+
+    implementation Deps.kotlin.stdlib
+    implementation Deps.android.lifecycle.livedata
+    implementation Deps.android.lifecycle.viewmodel
+    implementation Deps.android.lifecycle.livedata_ktx
+
+    // retrofit2 + okhttp
+    implementation Deps.square.okhttp
+    implementation Deps.square.retrofit2
+    implementation Deps.square.retrofit2Gson
+    implementation Deps.square.loggingInterceptor
+
+    // glide
+    implementation Deps.glide.core
+    implementation Deps.glide.compiler
+    implementation Deps.glide.okhttp3_integration
+
+    implementation Deps.third.mmkv
+
+    implementation project(':jwbase')
+
+}

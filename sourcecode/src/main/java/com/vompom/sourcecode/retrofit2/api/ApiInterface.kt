@@ -1,0 +1,65 @@
+package com.vompom.sourcecode.retrofit2.api
+
+import com.vompom.sourcecode.retrofit2.response.BaseResponse
+import com.vompom.sourcecode.retrofit2.viewmodel.ArticleList
+import retrofit2.Call
+import retrofit2.http.Field
+import retrofit2.http.FormUrlEncoded
+import retrofit2.http.GET
+import retrofit2.http.POST
+import retrofit2.http.Path
+import retrofit2.http.Query
+
+/**
+ * API接口类
+ */
+interface ApiInterface {
+    /**
+     * 首页资讯
+     * @param page    页码
+     * @param pageSize 每页数量
+     */
+    @GET("/article/list/{page}/json")
+    suspend fun getHomeList(
+        @Path("page") page: Int,
+        @Query("page_size") pageSize: Int
+    ): BaseResponse<ArticleList>?
+
+
+    /**
+     * 非协程的实现
+     *
+     * @param page    页码
+     * @param pageSize 每页数量
+     */
+    @GET("/article/list/{page}/json")
+    fun getHomeListNoSuspend(
+        @Path("page") page: Int,
+        @Query("page_size") pageSize: Int
+    ): Call<BaseResponse<ArticleList>>?
+
+    /**
+     * 非协程的实现 for VMNetwork Fit
+     *
+     * @param page    页码
+     * @param pageSize 每页数量
+     */
+    @GET("/article/list/{page}/json")
+    fun getHomeListNoSuspend2(
+        @Path("page") page: Int,
+        @Query("page_size") pageSize: Int
+    ): okhttp3.Call?
+
+    /**
+     * 搜索结果
+     * @param page   页码
+     * @param keyWord  关键词，支持多个，空格分开
+     */
+    @POST("article/query/{page}/json")
+    @FormUrlEncoded
+    suspend fun searchResult(
+        @Path("page") page: Int,
+        @Field("k") keyWord: String
+    ): BaseResponse<ArticleList>?
+
+}

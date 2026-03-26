@@ -203,6 +203,7 @@ void FBOSample::Draw(int screenW, int screenH) {
     glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
     glViewport(0, 0, m_RenderImage.width, m_RenderImage.height);
 
+    // 绑定FBO，后续渲染将输出到FBO纹理
     // Do FBO off screen rendering
     glBindFramebuffer(GL_FRAMEBUFFER, m_FboId);
 
@@ -217,23 +218,25 @@ void FBOSample::Draw(int screenW, int screenH) {
     glBindTexture(GL_TEXTURE_2D, m_ImageTextureId);
     glUniform1i(m_FboSamplerLoc, 0);
     GO_CHECK_GL_ERROR();
+    // 执行渲染，结果保存到m_FboTextureId
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, (const void *) 0);
     GO_CHECK_GL_ERROR();
     glBindVertexArray(0);
     glBindTexture(GL_TEXTURE_2D, 0);
 
-	uint8_t *pBuffer = new uint8_t[m_RenderImage.width * m_RenderImage.height * 4];
+    uint8_t *pBuffer = new uint8_t[m_RenderImage.width * m_RenderImage.height * 4];
 
-	NativeImage nativeImage = m_RenderImage;
-	nativeImage.format = IMAGE_FORMAT_RGBA;
-	nativeImage.ppPlane[0] = pBuffer;
-	FUN_BEGIN_TIME("FBO glReadPixels")
-		glReadPixels(0, 0, nativeImage.width, nativeImage.height, GL_RGBA, GL_UNSIGNED_BYTE, pBuffer);
-	FUN_END_TIME("FBO cost glReadPixels")
+    NativeImage nativeImage = m_RenderImage;
+    nativeImage.format = IMAGE_FORMAT_RGBA;
+    nativeImage.ppPlane[0] = pBuffer;
+    FUN_BEGIN_TIME("FBO glReadPixels")
+        glReadPixels(0, 0, nativeImage.width, nativeImage.height, GL_RGBA, GL_UNSIGNED_BYTE, pBuffer);
+    FUN_END_TIME("FBO cost glReadPixels")
 
-	NativeImageUtil::DumpNativeImage(&nativeImage, "/sdcard/", "NDK");
-	delete []pBuffer;
+    NativeImageUtil::DumpNativeImage(&nativeImage, "/sdcard/", "NDK");
+    delete[]pBuffer;
 
+    // 切换回默认帧缓冲（屏幕）
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
     // 普通渲染

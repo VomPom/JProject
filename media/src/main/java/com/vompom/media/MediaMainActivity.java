@@ -1,11 +1,13 @@
 package com.vompom.media;
 
 import android.Manifest;
+import android.graphics.Bitmap;
 
 import androidx.core.app.ActivityCompat;
 
 import com.vompom.media.audio.AudioMainActivity;
 import com.vompom.media.camera.CameraMainActivity;
+import com.vompom.media.codec.DCT;
 import com.vompom.media.codec.MediaCodecMainActivity;
 import com.vompom.media.drawimage.DrawImageActivity;
 import com.vompom.media.frames.ExtractMpegFramesActivity;
@@ -15,6 +17,8 @@ import com.vompom.media.screenrecord.ScreenRecordActivity;
 import com.vompom.media.utils.ResUtils;
 
 import wang.julis.jwbase.basecompact.baseList.BaseListActivity;
+import wang.julis.jwbase.utils.ImageUtils;
+import wang.julis.jwbase.utils.Logger;
 
 /*******************************************************
  *
@@ -32,14 +36,27 @@ public class MediaMainActivity extends BaseListActivity {
     protected void initData() {
         addItem("MediaPlayer播放视频", MediaPlayerActivity.class);
         addItem("MediaCodec", MediaCodecMainActivity.class);
+        addItem("音频", AudioMainActivity.class);
         addItem("多种方式绘制图片", DrawImageActivity.class);
-        addItem("Audio", AudioMainActivity.class);
         addItem("摄像头捕获数据", CameraMainActivity.class);
         addItem("手机录屏", ScreenRecordActivity.class);
         addItem("提取帧", ExtractMpegFramesActivity.class);
         addItem("MediaProjectionDemo", MediaProjectionDemoActivity.class);
+        addItem("DCT(离散余弦变换)", () -> {
+            testDCT();
+            return null;
+        });
         check();
         ResUtils.INSTANCE.init(this);
+    }
+
+    private void testDCT() {
+        Bitmap b = ImageUtils.getBitmapFromAssets(this, "julis.png");
+        Bitmap applyDCT = DCT.Companion.applyDCT(b);
+        ImageUtils.saveImageToGallery(this, applyDCT);
+        Bitmap applyIDCT = DCT.Companion.applyIDCT(applyDCT);
+        ImageUtils.saveImageToGallery(this, applyIDCT);
+        Logger.INSTANCE.d("DCT", "applyDCT  applyIDCT finished.");
     }
 
     private void check() {

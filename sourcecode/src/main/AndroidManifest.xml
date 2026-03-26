@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.vompom.sourcecode">
+
+    <application>
+        <activity android:name=".coroutine.CoroutineMainActivity" />
+        <activity android:name=".SourceMainActivity" />
+        <activity android:name=".little.GlideActivity" />
+    </application>
+</manifest>

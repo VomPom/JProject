@@ -183,7 +183,7 @@ public class ImageRenderer extends BaseGLSL implements GLSurfaceView.Renderer {
         if (mBitmap != null && !mBitmap.isRecycled()) {
             //生成纹理
             GLES20.glGenTextures(1, texture, 0);
-            //生成纹理
+            //绑定纹理
             GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, texture[0]);
             //设置缩小过滤为使用纹理中坐标最接近的一个像素的颜色作为需要绘制的像素颜色
             GLES20.glTexParameterf(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MIN_FILTER, GLES20.GL_NEAREST);

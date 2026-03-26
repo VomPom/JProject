@@ -2,6 +2,7 @@ package com.vompom.media.utils
 
 import android.content.Context
 import android.util.Log
+import wang.julis.jwbase.basecompact.NaApplication
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -114,18 +115,25 @@ object ResUtils {
         }
     }
 
+    fun createSavePath(fileName: String): String {
+        val context: Context = NaApplication.getApp()
+        return context.getExternalFilesDir(null)!!.path.plus(fileName)
+    }
+
+    val testHok by path("hok.mp4")
+    val testHokV by path("hok_v.mp4")
+    val testWz by path("wz.mp4")
+    val video30s by path("30s.mp4")
+    val video10s by path("10s.mp4")
+    val h264 by path("h264.h264")
+    val pcm16k16bit by path("16k16bit.pcm")
+    val pcm44_1k32bit by path("44_1k32bit.pcm")
+
     /**
      * 通过文件名获取沙盒目录中的文件绝对路径
      * @param fileName 文件名
      * @return 文件的绝对路径，如果文件不存在则返回 null
      */
-    fun getFilePath(fileName: String): String? = copiedFilesCache[fileName]
+    private fun path(fileName: String): Lazy<String> = lazy { copiedFilesCache[fileName]!! }
 
-    // 使用 lazy 初始化，只有在调用时才获取路径
-    val testHok: String by lazy { getFilePath("hok.mp4")!! }
-    val testHokV: String by lazy { getFilePath("hok_v.mp4")!! }
-    val testWz: String by lazy { getFilePath("wz.mp4")!! }
-    val video30s: String by lazy { getFilePath("30s.mp4")!! }
-    val video10s: String by lazy { getFilePath("10s.mp4")!! }
-    val h264: String by lazy { getFilePath("h264.h264")!! }
 }

@@ -9,13 +9,13 @@ import com.julis.annotation.Page;
 import com.vompom.media.MediaMainActivity;
 import com.vompom.media.codec.MediaCodecMainActivity;
 import com.vompom.media.pag.PAGMainActivity;
+import com.vompom.sourcecode.SourceMainActivity;
 
 import julis.wang.kotlinlearn.KotlinMainActivity;
 import julis.wang.learnopengl.opengl.OpenGLNDKListActivity;
 import wang.julis.jproject.example.anim.AnimationMainActivity;
 import wang.julis.jproject.example.little.LittleMainActivity;
 import wang.julis.jproject.example.little.ToolsMainActivity;
-import wang.julis.jproject.example.source.SourceMainActivity;
 import wang.julis.jproject.example.thread.ThreadMainActivity;
 import wang.julis.jwbase.basecompact.baseList.BaseListActivity;
 import wang.julis.learncpp.CppMainActivity;
@@ -31,7 +31,7 @@ import wang.julis.learncpp.CppMainActivity;
 @Page("main")
 public class MainActivity extends BaseListActivity {
     public static final String HOST = "main";
-    private final boolean quickJump = true;
+    private final boolean quickJump = false;
 
     private final Class<?> debugClass = MediaCodecMainActivity.class;
 

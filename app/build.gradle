@@ -9,7 +9,7 @@ android {
     buildToolsVersion Ver.build_tools
 
     defaultConfig {
-        applicationId "cn.julis.app"
+        applicationId "com.vompom.jproject"
         minSdkVersion Ver.min_sdk
         targetSdkVersion Ver.target_sdk
         versionCode 1
@@ -54,18 +54,7 @@ dependencies {
     implementation Deps.android.lifecycle.livedata_ktx
     implementation Deps.android.lifecycle.viewModelKtx
 
-    // retrofit2 + okhttp
     implementation Deps.square.okhttp
-    implementation Deps.square.retrofit2
-    implementation Deps.square.retrofit2Gson
-    implementation Deps.square.loggingInterceptor
-
-    // glide
-    implementation Deps.glide.core
-    implementation Deps.glide.compiler
-    implementation Deps.glide.okhttp3_integration
-
-    implementation Deps.third.mmkv
 
     implementation project(':media')
     implementation project(':kotlinLearn')
@@ -73,6 +62,7 @@ dependencies {
     implementation project(':jwbase')
     implementation project(':learnCpp')
     implementation project(':lib_router')
+    implementation project(':sourcecode')
 
     kapt project(':compiler')
 

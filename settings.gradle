@@ -12,5 +12,5 @@ include ':compiler'
 project(':compiler').projectDir = new File(rootDir, 'router/compiler')
 
 
-include ':datastructure'
 include ':media'
+include ':sourcecode'
